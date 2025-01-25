@@ -1,6 +1,6 @@
 [versions]
 agp = "8.7.3"
-kotlin = "2.0.0"
+kotlin = "2.0.20"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -11,7 +11,11 @@ composeBom = "2025.01.00"
 appcompat = "1.7.0"
 material = "1.12.0"
 jetbrainsKotlinJvm = "2.0.0"
-runtimeAndroid = "1.7.6"
+hilt = "2.53"
+hiltNavigationCompose = "1.2.0"
+kotlinxSerialization = "1.7.3"
+ksp = "2.0.20-1.0.25"
+navigationCompose = "2.8.5"
 
 minSdk = "26"
 compileSdk = "35"
@@ -33,7 +37,21 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroid" }
+
+# https://developer.android.com/jetpack/androidx/releases/hilt?hl=ko
+hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+
+# https://mvnrepository.com/artifact/com.google.dagger/hilt-core
+hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "hilt" }
+
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+
+# Navigation
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+
+# Serialized
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -42,3 +60,8 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 android-library = { id = "com.android.library", version.ref = "agp" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 
+# https://developer.android.com/jetpack/androidx/releases/hilt?hl=ko
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+
+# Ksp
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
