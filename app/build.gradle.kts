@@ -44,6 +44,7 @@ android {
 dependencies {
     implementation(project(":feature:main"))
 
+    implementation(libs.navigation.compose)
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
 }
