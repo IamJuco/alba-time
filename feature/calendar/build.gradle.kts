@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
+    implementation(libs.korean.lunar.calendar)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

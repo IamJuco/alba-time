@@ -16,9 +16,11 @@ hiltNavigationCompose = "1.2.0"
 kotlinxSerialization = "1.7.3"
 ksp = "2.0.20-1.0.25"
 navigationCompose = "2.8.5"
+koreanLunarCalendar = "1.0"
 
 minSdk = "26"
 compileSdk = "35"
+roomRuntime = "2.6.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -52,6 +54,12 @@ navigation-compose = { group = "androidx.navigation", name = "navigation-compose
 
 # Serialized
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+
+# Room https://developer.android.com/training/data-storage/room?hl=ko
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+
+# lunarConverter https://github.com/FrancescoJo/korean-lunar-calendar
+korean-lunar-calendar = { module = "com.github.FrancescoJo:korean-lunar-calendar", version.ref = "koreanLunarCalendar" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
