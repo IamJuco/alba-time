@@ -1,14 +1,10 @@
 package com.juco.feature.home
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,27 +17,27 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun HomeRoute(
     padding: PaddingValues,
-    onShowSnackBar: (String) -> Unit
+    onShowSnackBar: (String) -> Unit,
+    navigateToWorkPlaceAdder: () -> Unit
 ) {
     HomeScreen(
-        padding = padding
+        padding = padding,
+        navigateToWorkPlaceAdder = navigateToWorkPlaceAdder
     )
 }
 
 @Composable
 fun HomeScreen(
-    padding: PaddingValues
+    padding: PaddingValues,
+    navigateToWorkPlaceAdder: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -57,7 +53,8 @@ fun HomeScreen(
             colors = CardDefaults.cardColors(containerColor = Color(0xFF343538)),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 10.dp
-            )
+            ),
+            onClick = navigateToWorkPlaceAdder
         ) {
             Column(
                 modifier = Modifier
@@ -85,8 +82,8 @@ fun HomeScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewHomeScreen() {
-    HomeScreen(padding = PaddingValues())
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewHomeScreen() {
+//    HomeScreen(padding = PaddingValues())
+//}

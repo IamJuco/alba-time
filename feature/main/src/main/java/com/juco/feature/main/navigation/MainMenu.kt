@@ -2,6 +2,7 @@ package com.juco.feature.main.navigation
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
+import com.juco.domain.navigation.MainMenuRoute
 import com.juco.domain.navigation.RouteModel
 import com.juco.feature.main.R
 
@@ -14,12 +15,12 @@ enum class MainMenu(
     HOME(
         iconResId = R.drawable.ic_home_24dp,
         contentDescription = "Home",
-        route = RouteModel.Home,
+        route = MainMenuRoute.Home,
     ),
     CALENDAR(
         iconResId = R.drawable.ic_calendar_24dp,
         contentDescription = "Calendar",
-        route = RouteModel.Calendar,
+        route = MainMenuRoute.Calendar,
     );
 
     companion object {

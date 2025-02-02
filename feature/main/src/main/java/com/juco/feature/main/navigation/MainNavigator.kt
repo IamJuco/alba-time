@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.juco.feature.calendar.navigation.navigateCalendar
 import com.juco.feature.home.navigation.navigateHome
+import com.juco.workplacesetting.navigation.navigateWorkPlaceAdder
 
 class MainNavigator(
     val navController: NavHostController
@@ -40,6 +41,8 @@ class MainNavigator(
             MainMenu.CALENDAR -> navController.navigateCalendar(navOptions)
         }
     }
+
+    fun navigateToWorkPlaceAdder() = navController.navigateWorkPlaceAdder(navOptions = singleTopOptions)
 
     fun popBackStack() {
         navController.popBackStack()
