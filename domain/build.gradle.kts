@@ -20,4 +20,6 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.hilt.core)
     ksp(libs.hilt.compiler)
+
+    implementation(libs.kotlinx.coroutines.core)
 }
