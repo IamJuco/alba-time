@@ -9,8 +9,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,21 +29,37 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.juco.domain.model.WorkPlace
 
 @Composable
 fun WorkPlaceAdderRoute(
-    padding: PaddingValues = PaddingValues()
+    padding: PaddingValues = PaddingValues(),
+    viewModel: WorkPlaceViewModel = hiltViewModel()
 ) {
-    WorkPlaceAdderScreen(padding)
+    val workPlaceName by viewModel.workPlaceName.collectAsStateWithLifecycle()
+    val wage by viewModel.wage.collectAsStateWithLifecycle()
+
+    WorkPlaceAdderScreen(
+        padding = padding,
+        workPlaceName = workPlaceName,
+        onWorkPlaceNameChange = { viewModel.workPlaceName.value = it },
+        wage = wage,
+        onWageChange = { viewModel.wage.value = it },
+        onSaveClick = { viewModel.saveWorkPlace() }
+    )
 }
 
 @Composable
 fun WorkPlaceAdderScreen(
-    padding: PaddingValues
+    padding: PaddingValues,
+    workPlaceName: String,
+    onWorkPlaceNameChange: (String) -> Unit,
+    wage: String,
+    onWageChange: (String) -> Unit,
+    onSaveClick: () -> Unit
 ) {
-    var workPlaceName by remember { mutableStateOf("") }
-    var wage by remember { mutableStateOf("") }
-
     Column(
         Modifier
             .padding(padding)
@@ -50,27 +69,37 @@ fun WorkPlaceAdderScreen(
             text = "근무지 추가",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(16.dp).align(Alignment.CenterHorizontally)
+            modifier = Modifier
+                .padding(16.dp)
+                .align(Alignment.CenterHorizontally)
         )
 
         Column(Modifier.padding(16.dp)) {
             Text("근무지 명", fontWeight = FontWeight.Bold, fontSize = 24.sp)
             TextField(
                 text = workPlaceName,
-                onValueChange = { workPlaceName = it },
+                onValueChange = onWorkPlaceNameChange,
                 placeholder = "근무지명을 입력하세요"
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text("시급", fontWeight = FontWeight.Bold, fontSize = 24.sp)
             TextField(
                 text = wage,
-                onValueChange = { wage = it },
+                onValueChange = onWageChange,
                 placeholder = "시급을 입력하세요",
                 keyboardType = KeyboardType.Number
             )
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = onSaveClick,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("저장")
+            }
         }
     }
 }
+
 
 @Composable
 fun TextField(
@@ -108,9 +137,9 @@ fun TextField(
     }
 }
 
-
-@Composable
-@Preview(showBackground = true)
-fun PreviewWorkPlaceAdderScreen() {
-    WorkPlaceAdderScreen(padding = PaddingValues())
-}
+//
+//@Composable
+//@Preview(showBackground = true)
+//fun PreviewWorkPlaceAdderScreen() {
+//    WorkPlaceAdderScreen(padding = PaddingValues())
+//}
