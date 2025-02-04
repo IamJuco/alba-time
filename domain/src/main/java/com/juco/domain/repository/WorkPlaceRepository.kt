@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface WorkPlaceRepository {
     suspend fun saveWorkPlace(name: String, wage: Int): Long
     suspend fun getWorkPlaceById(id: Int): WorkPlace?
+    suspend fun deleteWorkPlace(workPlace: WorkPlace)
     fun observeWorkPlaces(): Flow<List<WorkPlace>>
 }

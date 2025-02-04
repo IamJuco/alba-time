@@ -2,6 +2,7 @@ package com.juco.data.repository
 
 import com.juco.data.datasource.WorkPlaceDataSource
 import com.juco.data.mapper.toDomain
+import com.juco.data.mapper.toEntity
 import com.juco.domain.model.WorkPlace
 import com.juco.domain.repository.WorkPlaceRepository
 import kotlinx.coroutines.flow.Flow
@@ -9,18 +10,22 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class WorkPlaceRepositoryImpl @Inject constructor(
-    private val localDataSource: WorkPlaceDataSource
+    private val workPlaceDataSource: WorkPlaceDataSource
 ) : WorkPlaceRepository {
     override suspend fun saveWorkPlace(name: String, wage: Int): Long {
-        return localDataSource.addWorkPlace(name, wage)
+        return workPlaceDataSource.saveWorkPlace(name, wage)
     }
 
     override suspend fun getWorkPlaceById(id: Int): WorkPlace? {
-        return localDataSource.getWorkPlace(id)?.toDomain()
+        return workPlaceDataSource.getWorkPlaceById(id)?.toDomain()
+    }
+
+    override suspend fun deleteWorkPlace(workPlace: WorkPlace) {
+        workPlaceDataSource.deleteWorkPlace(workPlace.toEntity())
     }
 
     override fun observeWorkPlaces(): Flow<List<WorkPlace>> {
-        return localDataSource.getAllWorkPlaces().map { list ->
+        return workPlaceDataSource.getAllWorkPlaces().map { list ->
             list.map { it.toDomain() }
         }
     }

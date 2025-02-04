@@ -1,6 +1,7 @@
 package com.juco.feature.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -41,7 +42,8 @@ fun HomeRoute(
     HomeScreen(
         padding = padding,
         navigateToWorkPlaceAdder = navigateToWorkPlaceAdder,
-        workPlaces = workPlaces
+        workPlaces = workPlaces,
+        onDeleteWorkPlace = { viewModel.deleteWorkPlace(it) }
     )
 }
 
@@ -49,7 +51,8 @@ fun HomeRoute(
 fun HomeScreen(
     padding: PaddingValues,
     navigateToWorkPlaceAdder: () -> Unit,
-    workPlaces: List<WorkPlace>
+    workPlaces: List<WorkPlace>,
+    onDeleteWorkPlace: (WorkPlace) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -59,8 +62,12 @@ fun HomeScreen(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(workPlaces) { workPlace ->
-            WorkPlaceCard(workPlace)
+            WorkPlaceCard(
+                workPlace = workPlace,
+                onDeleteClick = onDeleteWorkPlace
+            )
         }
+
         item {
             Spacer(modifier = Modifier.height(16.dp))
             Card(
@@ -100,14 +107,17 @@ fun HomeScreen(
     }
 }
 
-
 @Composable
-fun WorkPlaceCard(workPlace: WorkPlace) {
+fun WorkPlaceCard(
+    workPlace: WorkPlace,
+    onDeleteClick: (WorkPlace) -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .height(100.dp),
+            .height(100.dp)
+            .clickable { onDeleteClick(workPlace) },
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFF525252)),
         elevation = CardDefaults.cardElevation(
@@ -135,6 +145,7 @@ fun WorkPlaceCard(workPlace: WorkPlace) {
         }
     }
 }
+
 
 //@Preview(showBackground = true)
 //@Composable
