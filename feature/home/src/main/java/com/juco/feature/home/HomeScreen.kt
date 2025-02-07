@@ -145,10 +145,3 @@ fun WorkPlaceCard(
         }
     }
 }
-
-
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewHomeScreen() {
-//    HomeScreen(padding = PaddingValues())
-//}

@@ -138,7 +138,6 @@ fun WorkPlaceAdderScreen(
     }
 }
 
-
 @Composable
 fun TextField(
     text: String,
@@ -212,10 +211,3 @@ fun WorkDayOption(
         Text(text = text, fontSize = 18.sp)
     }
 }
-
-//
-//@Composable
-//@Preview(showBackground = true)
-//fun PreviewWorkPlaceAdderScreen() {
-//    WorkPlaceAdderScreen(padding = PaddingValues())
-//}
