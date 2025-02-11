@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class WorkPlaceEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
-    val wage: Int
+    val wage: Int,
+    val workDays: String
 )
