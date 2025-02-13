@@ -7,13 +7,14 @@ import com.juco.domain.model.WorkPlace
 import com.juco.domain.repository.WorkPlaceRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.time.LocalDate
 import javax.inject.Inject
 
 class WorkPlaceRepositoryImpl @Inject constructor(
     private val workPlaceDataSource: WorkPlaceDataSource
 ) : WorkPlaceRepository {
-    override suspend fun saveWorkPlace(name: String, wage: Int): Long {
-        return workPlaceDataSource.saveWorkPlace(name, wage)
+    override suspend fun saveWorkPlace(name: String, wage: Int, workDays: List<LocalDate>): Long {
+        return workPlaceDataSource.saveWorkPlace(name, wage, workDays)
     }
 
     override suspend fun getWorkPlaceById(id: Int): WorkPlace? {
