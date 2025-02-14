@@ -2,7 +2,7 @@ package com.juco.data.datasource
 
 import com.juco.data.local.dao.WorkPlaceDao
 import com.juco.data.local.entity.WorkPlaceEntity
-import com.juco.data.mapper.toDateString
+import com.juco.data.util.toDateString
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 import javax.inject.Inject
