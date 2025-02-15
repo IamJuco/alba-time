@@ -18,7 +18,7 @@ class WorkPlaceViewModel @Inject constructor(
     fun saveWorkPlace() {
         val wageValue = wage.value.toIntOrNull() ?: return
         viewModelScope.launch {
-            repository.saveWorkPlace(workPlaceName.value, wageValue)
+            repository.saveWorkPlace(workPlaceName.value, wageValue, emptyList())
             workPlaceName.value = ""
             wage.value = ""
         }
