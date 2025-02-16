@@ -28,7 +28,9 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,12 +41,16 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.fj.koreanlunarcalendar.KoreanLunarCalendarUtils
 import com.github.fj.koreanlunarcalendar.KoreanLunarDate
+import com.juco.domain.model.WorkPlace
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.YearMonth
@@ -52,23 +58,35 @@ import java.time.YearMonth
 @Composable
 fun CalendarRoute(
     padding: PaddingValues,
-    onShowSnackBar: (String) -> Unit
+    onShowSnackBar: (String) -> Unit,
+    viewModel: CalendarViewModel = hiltViewModel()
 ) {
+    val monthlyWorkPlaces by viewModel.monthlyWorkPlaces.collectAsStateWithLifecycle()
+
     CalendarScreen(
-        padding = padding
+        padding = padding,
+        monthlyWorkPlaces = monthlyWorkPlaces,
+        onSelectYearMonth = { year, month ->
+            viewModel.loadWorkPlacesForMonth(year, month)
+        }
     )
 }
 
 @Composable
-fun CalendarScreen(padding: PaddingValues) {
+fun CalendarScreen(
+    padding: PaddingValues,
+    monthlyWorkPlaces: List<WorkPlace>,
+    onSelectYearMonth: (Int, Int) -> Unit
+) {
     val currentDate = LocalDate.now()
     val minYear = 2010
     val maxYear = 2049
-    val totalMonths = (maxYear - minYear + 1) * 12 // 총 월 수
-    val initialPage = (currentDate.year - minYear) * 12 + (currentDate.monthValue - 1) // 현재 날짜에 해당하는 초기 페이지 ( 유저가 처음 접속했을때 보이는 날짜 )
+    val totalMonths = (maxYear - minYear + 1) * 12
+    val initialPage = (currentDate.year - minYear) * 12 + (currentDate.monthValue - 1)
+
     val pagerState = rememberPagerState(
         initialPage = initialPage,
-        pageCount = { totalMonths } // 최근 PagerState 활용법이 바뀐듯, 이렇게 pageCount 써야함
+        pageCount = { totalMonths }
     )
 
     val coroutineScope = rememberCoroutineScope()
@@ -77,8 +95,15 @@ fun CalendarScreen(padding: PaddingValues) {
     val currentYearMonth = remember(pagerState.currentPage) {
         derivedStateOf {
             val offset = pagerState.currentPage
-            YearMonth.of(minYear, 1).plusMonths(offset.toLong()) // 최소 연도에서 오프셋 추가
+            YearMonth.of(minYear, 1).plusMonths(offset.toLong())
         }
+    }
+
+    LaunchedEffect(currentYearMonth.value) {
+        onSelectYearMonth(
+            currentYearMonth.value.year,
+            currentYearMonth.value.monthValue
+        )
     }
 
     Column(
@@ -99,7 +124,12 @@ fun CalendarScreen(padding: PaddingValues) {
             state = pagerState
         ) { pageIndex ->
             val yearMonth = YearMonth.of(minYear, 1).plusMonths(pageIndex.toLong())
-            CalendarView(year = yearMonth.year, month = yearMonth.monthValue)
+
+            CalendarView(
+                year = yearMonth.year,
+                month = yearMonth.monthValue,
+                workPlaces = monthlyWorkPlaces
+            )
         }
 
         if (showDialog.value) {
@@ -109,7 +139,10 @@ fun CalendarScreen(padding: PaddingValues) {
                 onConfirm = { year, month ->
                     val selectedYearMonth = YearMonth.of(year, month)
                     val baseYearMonth = YearMonth.of(minYear, 1)
-                    val monthDifference = java.time.temporal.ChronoUnit.MONTHS.between(baseYearMonth, selectedYearMonth).toInt()
+                    val monthDifference = java.time.temporal.ChronoUnit.MONTHS.between(
+                        baseYearMonth,
+                        selectedYearMonth
+                    ).toInt()
                     coroutineScope.launch {
                         pagerState.scrollToPage(monthDifference)
                     }
@@ -122,7 +155,11 @@ fun CalendarScreen(padding: PaddingValues) {
 }
 
 @Composable
-fun CalendarView(year: Int, month: Int) {
+fun CalendarView(
+    year: Int,
+    month: Int,
+    workPlaces: List<WorkPlace>
+) {
     // 캘린더를 화면크기에 맞게 하기위해 화면크기를 가져옴
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
@@ -135,7 +172,14 @@ fun CalendarView(year: Int, month: Int) {
     val daysInMonth = YearMonth.of(year, month).lengthOfMonth()
     val firstDayOfWeek = LocalDate.of(year, month, 1).dayOfWeek.value % 7 // 0=일요일
     // 셀 개수 계산 ( 날짜가 없는 줄의 요일은 셀을 안쓰기 위해 )
-    val totalCells = ((firstDayOfWeek + daysInMonth + 6) / 7) * 7 // 항상 7의 배수로 계산
+    val totalCells = ((firstDayOfWeek + daysInMonth + 6) / 7) * 7
+
+    // 📌 근무지 정보를 날짜별로 매핑
+    val workPlacesByDate = remember(workPlaces) {
+        workPlaces.flatMap { workPlace ->
+            workPlace.workDays.map { date -> date to workPlace }
+        }.groupBy({ it.first }, { it.second })
+    }
 
     // 양력 법정 공휴일
     val solarHolidays = listOf(
@@ -209,6 +253,7 @@ fun CalendarView(year: Int, month: Int) {
                     val day = index - firstDayOfWeek + 1
                     val date = LocalDate.of(year, month, day)
                     val isHoliday = holidays.contains(date)
+                    val dayWorkPlaces = workPlacesByDate[date] ?: emptyList()
 
                     Box(
                         modifier = Modifier
@@ -237,16 +282,36 @@ fun CalendarView(year: Int, month: Int) {
                                 }
                             )
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = "Event",
-                                fontSize = 12.sp,
-                                color = Color.Gray
-                            )
+                            if (dayWorkPlaces.isNotEmpty()) {
+                                WorkPlaceCard(dayWorkPlaces)
+                            }
                         }
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+fun WorkPlaceCard(workPlaces: List<WorkPlace>) {
+    val displayText = when {
+        workPlaces.size == 1 -> workPlaces.first().name
+        else -> "${workPlaces.first().name} 외 ${workPlaces.size - 1}개"
+    }
+
+    Box(
+        modifier = Modifier
+            .background(Color.LightGray, RoundedCornerShape(8.dp))
+            .padding(horizontal = 6.dp, vertical = 2.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = displayText,
+            fontSize = 10.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = Color.DarkGray
+        )
     }
 }
 
@@ -418,10 +483,4 @@ fun YearOrMonthItem(
         textAlign = TextAlign.Center,
         color = if (isSelected) Color.Blue else Color.Black
     )
-}
-
-@Composable
-@Preview(showBackground = true)
-fun preview() {
-    CalendarScreen(padding = PaddingValues())
 }
