@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,6 +37,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.feature.workplacesetting.R
+import com.juco.workplacesetting.component.CustomCalendarDialog
+import com.juco.workplacesetting.model.WorkDayType
+import java.time.LocalDate
 
 @Composable
 fun WorkPlaceAdderRoute(
@@ -43,8 +48,8 @@ fun WorkPlaceAdderRoute(
 ) {
     val workPlaceName by viewModel.workPlaceName.collectAsStateWithLifecycle()
     val wage by viewModel.wage.collectAsStateWithLifecycle()
-
-    var selectedWorkDays by remember { mutableStateOf("설정 안됨") }
+    val workDays by viewModel.selectedWorkDays.collectAsStateWithLifecycle()
+    val selectedType by viewModel.selectedWorkDayType.collectAsStateWithLifecycle()
 
     WorkPlaceAdderScreen(
         padding = padding,
@@ -52,12 +57,18 @@ fun WorkPlaceAdderRoute(
         onWorkPlaceNameChange = { viewModel.workPlaceName.value = it },
         wage = wage,
         onWageChange = { viewModel.wage.value = it },
-        selectedWorkDays = selectedWorkDays,
-        onWorkDaysSelected = { selectedWorkDays = it },
+        selectedWorkDayType = selectedType,
+        selectedWorkDays = workDays,
+        onWorkDaysSelected = { workDayType ->
+            viewModel.selectedWorkDayType.value = workDayType
+            viewModel.setWorkDays(workDayType.dayOfWeeks)
+        },
+        onCustomWorkDaysSelected = { dates ->
+            viewModel.setCustomWorkDays(dates)
+        },
         onSaveClick = { viewModel.saveWorkPlace() }
     )
 }
-
 
 @Composable
 fun WorkPlaceAdderScreen(
@@ -66,17 +77,26 @@ fun WorkPlaceAdderScreen(
     onWorkPlaceNameChange: (String) -> Unit,
     wage: String,
     onWageChange: (String) -> Unit,
-    selectedWorkDays: String,
-    onWorkDaysSelected: (String) -> Unit,
+    selectedWorkDayType: WorkDayType?,
+    selectedWorkDays: List<LocalDate>,
+    onWorkDaysSelected: (WorkDayType) -> Unit,
+    onCustomWorkDaysSelected: (List<LocalDate>) -> Unit,
     onSaveClick: () -> Unit
 ) {
-    var showDialog by remember { mutableStateOf(false) }
+    var showWorkDayDialog by remember { mutableStateOf(false) }
 
-    Column(
-        Modifier
-            .padding(padding)
-            .fillMaxSize()
-    ) {
+    val workDaysSummary = remember(selectedWorkDays, selectedWorkDayType) {
+        if (selectedWorkDayType == WorkDayType.CUSTOM && selectedWorkDays.isNotEmpty()) {
+            val firstDay = selectedWorkDays.first()
+            val count = selectedWorkDays.size - 1
+            val formattedFirstDay = "${firstDay.monthValue}월 ${firstDay.dayOfMonth}일"
+            if (count > 0) "$formattedFirstDay 외 ${count}개" else formattedFirstDay
+        } else {
+            selectedWorkDayType?.displayName ?: "설정 안됨"
+        }
+    }
+
+    Column(Modifier.padding(padding).fillMaxSize()) {
         Text(
             text = "근무지 추가",
             fontSize = 20.sp,
@@ -93,7 +113,9 @@ fun WorkPlaceAdderScreen(
                 onValueChange = onWorkPlaceNameChange,
                 placeholder = "근무지명을 입력하세요"
             )
+
             Spacer(modifier = Modifier.height(16.dp))
+
             Text("시급", fontWeight = FontWeight.Bold, fontSize = 24.sp)
             TextField(
                 text = wage,
@@ -101,12 +123,13 @@ fun WorkPlaceAdderScreen(
                 placeholder = "시급을 입력하세요",
                 keyboardType = KeyboardType.Number
             )
+
             Spacer(modifier = Modifier.height(16.dp))
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { showDialog = true }
+                    .clickable { showWorkDayDialog = true }
                     .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -116,7 +139,7 @@ fun WorkPlaceAdderScreen(
                     fontSize = 24.sp
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = selectedWorkDays, color = Color.Gray, fontSize = 18.sp)
+                    Text(text = workDaysSummary, color = Color.Gray, fontSize = 18.sp)
                     Icon(
                         painter = painterResource(id = R.drawable.ic_dropdown_24dp),
                         contentDescription = "일하는 날짜 설정",
@@ -125,14 +148,28 @@ fun WorkPlaceAdderScreen(
                 }
             }
 
-            if (showDialog) {
+            if (showWorkDayDialog) {
                 WorkDaySelectionDialog(
-                    onDismiss = { showDialog = false },
-                    onSelect = { selectedOption ->
-                        onWorkDaysSelected(selectedOption)
-                        showDialog = false
+                    initialSelectedDates = selectedWorkDays,
+                    onDismiss = { showWorkDayDialog = false },
+                    onSelect = { workDayType ->
+                        onWorkDaysSelected(workDayType)
+                        showWorkDayDialog = false
+                    },
+                    onCustomWorkDaysSelected = { dates ->
+                        onCustomWorkDaysSelected(dates)
+                        showWorkDayDialog = false
                     }
                 )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = onSaveClick,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("저장")
             }
         }
     }
@@ -176,37 +213,72 @@ fun TextField(
 
 @Composable
 fun WorkDaySelectionDialog(
+    initialSelectedDates: List<LocalDate>,
     onDismiss: () -> Unit,
-    onSelect: (String) -> Unit
+    onSelect: (WorkDayType) -> Unit,
+    onCustomWorkDaysSelected: (List<LocalDate>) -> Unit
 ) {
+    var showCalendarDialog by remember { mutableStateOf(false) }
+
+    if (showCalendarDialog) {
+        CustomCalendarDialog(
+            initialSelectedDates = initialSelectedDates,
+            onDismiss = { showCalendarDialog = false },
+            onConfirm = { selectedDates ->
+                onCustomWorkDaysSelected(selectedDates)
+                showCalendarDialog = false
+                onDismiss()
+            }
+        )
+    }
+
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = "일하는 날짜 선택") },
+        title = { Text("일하는 날짜 선택") },
         text = {
             Column {
-                WorkDayOption("월~금 (주 5일 근무)", onSelect, onDismiss)
-                WorkDayOption("주말 (토, 일 근무)", onSelect, onDismiss)
-                WorkDayOption("직접 설정", onSelect, onDismiss)
+                WorkDayOption(
+                    text = WorkDayType.WEEKDAYS.displayName,
+                    onClick = {
+                        onSelect(WorkDayType.WEEKDAYS)
+                        onDismiss()
+                    }
+                )
+                WorkDayOption(
+                    text = WorkDayType.WEEKENDS.displayName,
+                    onClick = {
+                        onSelect(WorkDayType.WEEKENDS)
+                        onDismiss()
+                    }
+                )
+                WorkDayOption(
+                    text = WorkDayType.CUSTOM.displayName,
+                    onClick = {
+                        showCalendarDialog = true
+                    }
+                )
             }
         },
-        confirmButton = {}
+        confirmButton = {},
+        dismissButton = {
+            OutlinedButton(onClick = onDismiss) {
+                Text("취소")
+            }
+        }
     )
 }
 
 @Composable
 fun WorkDayOption(
     text: String,
-    onSelect: (String) -> Unit,
-    onDismiss: () -> Unit
+    onClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-                onSelect(text)
-                onDismiss()
-            }
-            .padding(16.dp)
+            .clickable { onClick() }
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.Start
     ) {
         Text(text = text, fontSize = 18.sp)
     }
