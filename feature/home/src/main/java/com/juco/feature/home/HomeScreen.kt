@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.domain.model.WorkPlace
+import com.juco.feature.home.component.WorkPlaceCard
 
 @Composable
 fun HomeRoute(
@@ -103,45 +104,6 @@ fun HomeScreen(
                     Spacer(modifier = Modifier.weight(1f))
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun WorkPlaceCard(
-    workPlace: WorkPlace,
-    onDeleteClick: (WorkPlace) -> Unit
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .height(100.dp)
-            .clickable { onDeleteClick(workPlace) },
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF525252)),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 5.dp
-        )
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = "근무지: ${workPlace.name}",
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-                fontSize = 18.sp
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "시급: ${workPlace.wage}원",
-                color = Color.White,
-                fontSize = 16.sp
-            )
         }
     }
 }
