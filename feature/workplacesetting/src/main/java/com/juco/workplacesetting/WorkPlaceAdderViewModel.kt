@@ -2,6 +2,8 @@ package com.juco.workplacesetting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.juco.domain.model.PayDayType
+import com.juco.domain.model.PayDay
 import com.juco.domain.repository.WorkPlaceRepository
 import com.juco.workplacesetting.model.WorkDayType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +22,12 @@ class WorkPlaceViewModel @Inject constructor(
     var wage = MutableStateFlow("")
     var selectedWorkDayType = MutableStateFlow<WorkDayType?>(null)
     var selectedWorkDays = MutableStateFlow<List<LocalDate>>(emptyList())
+    var selectedPayDay = MutableStateFlow(
+        PayDay(
+            type = PayDayType.MONTHLY,
+            value = "1일"
+        )
+    )
 
     fun setWorkDays(dayOfWeeks: Set<DayOfWeek>) {
         val today = LocalDate.now()
@@ -36,17 +44,28 @@ class WorkPlaceViewModel @Inject constructor(
         selectedWorkDays.value = dates
     }
 
+    fun setPayDay(payDay: PayDay) {
+        selectedPayDay.value = payDay
+    }
+
     fun saveWorkPlace() {
-        val name = workPlaceName.value
+        val name = workPlaceName.value.trim()
         val wageValue = wage.value.toIntOrNull() ?: return
         val workDays = selectedWorkDays.value
+        val payDay = selectedPayDay.value
 
         viewModelScope.launch {
-            repository.saveWorkPlace(name, wageValue, workDays)
+            repository.saveWorkPlace(
+                name = name,
+                wage = wageValue,
+                workDays = workDays,
+                payDay = payDay
+            )
             workPlaceName.value = ""
             wage.value = ""
             selectedWorkDays.value = emptyList()
             selectedWorkDayType.value = null
+            selectedPayDay.value = PayDay(PayDayType.MONTHLY, "1일")
         }
     }
 }

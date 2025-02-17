@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,26 +30,28 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.juco.domain.model.PayDayType
+import com.juco.domain.model.PayDay
 import com.juco.feature.workplacesetting.R
-import com.juco.workplacesetting.model.PayDayType
-import com.juco.workplacesetting.model.PayDayValue
+import com.juco.workplacesetting.util.displayName
 
 @Composable
 fun PayDaySelector(
-    selectedPayDayType: PayDayType,
-    selectedPayDayValue: PayDayValue,
-    onPayDayTypeChange: (PayDayType) -> Unit,
-    onPayDayValueChange: (PayDayValue) -> Unit
+    selectedPayDay: PayDay,
+    onPayDayChange: (PayDay) -> Unit
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    val payDayText = when (selectedPayDayValue) {
-        is PayDayValue.Monthly -> selectedPayDayValue.displayName
-        is PayDayValue.Weekly -> selectedPayDayValue.displayName
-        PayDayValue.Custom -> "직접 설정"
+    val payDayText = when (selectedPayDay.type) {
+        PayDayType.MONTHLY, PayDayType.WEEKLY -> "${selectedPayDay.value} 마다"
+        PayDayType.CUSTOM -> "직접 설정"
     }
 
-    val payDayOptions = PayDayType.entries.toTypedArray()
+    val payDayOptions = listOf(
+        PayDay(PayDayType.MONTHLY, "1일"),
+        PayDay(PayDayType.WEEKLY, "월요일"),
+        PayDay(PayDayType.CUSTOM)
+    )
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
@@ -61,24 +62,22 @@ fun PayDaySelector(
         ) {
             payDayOptions.forEach { option ->
                 Button(
-                    onClick = {
-                        onPayDayTypeChange(option)
-                    },
+                    onClick = { onPayDayChange(option) },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (selectedPayDayType == option) Color(0xFF90CAF9) else Color.LightGray,
-                        contentColor = if (selectedPayDayType == option) Color.White else Color.Black
+                        containerColor = if (selectedPayDay.type == option.type) Color(0xFF90CAF9) else Color.LightGray,
+                        contentColor = if (selectedPayDay.type == option.type) Color.White else Color.Black
                     ),
                     modifier = Modifier
                         .weight(1f)
                         .height(48.dp),
                     shape = RoundedCornerShape(12.dp)
                 ) {
-                    Text(option.displayName, fontSize = 14.sp)
+                    Text(option.type.displayName(), fontSize = 14.sp)
                 }
             }
         }
 
-        if (selectedPayDayType in listOf(PayDayType.MONTHLY, PayDayType.WEEKLY)) {
+        if (selectedPayDay.type != PayDayType.CUSTOM) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -92,22 +91,15 @@ fun PayDaySelector(
                         .padding(end = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = payDayText,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(payDayText, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    Spacer(Modifier.width(4.dp))
                     Icon(
                         painter = painterResource(id = R.drawable.ic_dropdown_24dp),
-                        contentDescription = "급여일 설정",
-                        modifier = Modifier.size(24.dp)
+                        contentDescription = "급여일 설정"
                     )
                 }
-
                 Text(
-                    text = "${selectedPayDayType.displayName}을 받습니다.",
+                    text = if (selectedPayDay.type == PayDayType.MONTHLY) "월급을 받습니다." else "주급을 받습니다.",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Gray
@@ -117,10 +109,10 @@ fun PayDaySelector(
 
         if (showDialog) {
             PayDaySelectionDialog(
-                payDayType = selectedPayDayType,
+                payDay = selectedPayDay,
                 onDismiss = { showDialog = false },
-                onConfirm = { value ->
-                    onPayDayValueChange(value)
+                onConfirm = { updatedPayDay ->
+                    onPayDayChange(updatedPayDay)
                     showDialog = false
                 }
             )
@@ -130,30 +122,24 @@ fun PayDaySelector(
 
 @Composable
 fun PayDaySelectionDialog(
-    payDayType: PayDayType,
+    payDay: PayDay,
     onDismiss: () -> Unit,
-    onConfirm: (PayDayValue) -> Unit
+    onConfirm: (PayDay) -> Unit
 ) {
     val monthlyOptions = listOf("1일", "5일", "10일", "15일", "20일", "25일", "말일")
     val weeklyOptions = listOf("월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일")
 
-    val options = when (payDayType) {
+    val options = when (payDay.type) {
         PayDayType.MONTHLY -> monthlyOptions
         PayDayType.WEEKLY -> weeklyOptions
         else -> emptyList()
     }
 
-    var selectedOption by remember { mutableStateOf(options.first()) }
+    var selectedOption by remember { mutableStateOf(payDay.value) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = {
-            Text(
-                text = "${payDayType.displayName}일 선택",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
-        },
+        title = { Text("급여일 선택", fontSize = 20.sp) },
         text = {
             Column {
                 options.forEach { option ->
@@ -181,12 +167,9 @@ fun PayDaySelectionDialog(
             }
         },
         confirmButton = {
-            Button(
-                onClick = {
-                    val selectedValue = PayDayValue.fromDisplayName(selectedOption, payDayType)
-                    onConfirm(selectedValue)
-                }
-            ) {
+            Button(onClick = {
+                onConfirm(PayDay(payDay.type, selectedOption))
+            }) {
                 Text("확인")
             }
         },

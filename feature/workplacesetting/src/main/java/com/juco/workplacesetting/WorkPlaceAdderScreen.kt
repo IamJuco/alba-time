@@ -11,12 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,12 +29,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.juco.domain.model.PayDay
 import com.juco.feature.workplacesetting.R
 import com.juco.workplacesetting.component.InputTextField
+import com.juco.workplacesetting.component.PayDaySelectionDialog
 import com.juco.workplacesetting.component.PayDaySelector
 import com.juco.workplacesetting.component.WorkDaySelectionDialog
-import com.juco.workplacesetting.model.PayDayType
-import com.juco.workplacesetting.model.PayDayValue
 import com.juco.workplacesetting.model.WorkDayType
 import java.time.LocalDate
 
@@ -50,6 +47,7 @@ fun WorkPlaceAdderRoute(
     val wage by viewModel.wage.collectAsStateWithLifecycle()
     val workDays by viewModel.selectedWorkDays.collectAsStateWithLifecycle()
     val selectedType by viewModel.selectedWorkDayType.collectAsStateWithLifecycle()
+    val selectedPayDay by viewModel.selectedPayDay.collectAsStateWithLifecycle()
 
     WorkPlaceAdderScreen(
         padding = padding,
@@ -59,6 +57,8 @@ fun WorkPlaceAdderRoute(
         onWageChange = { viewModel.wage.value = it },
         selectedWorkDayType = selectedType,
         selectedWorkDays = workDays,
+        selectedPayDay = selectedPayDay,
+        onPayDaySelected = { viewModel.setPayDay(it) },
         onWorkDaysSelected = { workDayType ->
             viewModel.selectedWorkDayType.value = workDayType
             viewModel.setWorkDays(workDayType.dayOfWeeks)
@@ -79,16 +79,14 @@ fun WorkPlaceAdderScreen(
     onWageChange: (String) -> Unit,
     selectedWorkDayType: WorkDayType?,
     selectedWorkDays: List<LocalDate>,
+    selectedPayDay: PayDay,
+    onPayDaySelected: (PayDay) -> Unit,
     onWorkDaysSelected: (WorkDayType) -> Unit,
     onCustomWorkDaysSelected: (List<LocalDate>) -> Unit,
     onSaveClick: () -> Unit
 ) {
     var showWorkDayDialog by remember { mutableStateOf(false) }
-
-    var selectedPayDayType by remember { mutableStateOf(PayDayType.MONTHLY) }
-    var selectedPayDayValue by remember {
-        mutableStateOf<PayDayValue>(PayDayValue.Monthly("1일"))
-    }
+    var showPayDayDialog by remember { mutableStateOf(false) }
 
     val workDaysSummary = remember(selectedWorkDays, selectedWorkDayType) {
         if (selectedWorkDayType == WorkDayType.CUSTOM && selectedWorkDays.isNotEmpty()) {
@@ -101,11 +99,7 @@ fun WorkPlaceAdderScreen(
         }
     }
 
-    Column(
-        modifier = Modifier
-            .padding(padding)
-            .fillMaxSize()
-    ) {
+    Column(Modifier.padding(padding).fillMaxSize()) {
         Text(
             text = "근무지 추가",
             fontSize = 20.sp,
@@ -142,11 +136,7 @@ fun WorkPlaceAdderScreen(
                     .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
-                    text = "일하는 날짜 설정",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp
-                )
+                Text("일하는 날짜 설정", fontWeight = FontWeight.Bold, fontSize = 24.sp)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(text = workDaysSummary, color = Color.Gray, fontSize = 18.sp)
                     Icon(
@@ -159,24 +149,16 @@ fun WorkPlaceAdderScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+
             Text(
                 text = "월급일 설정",
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp
             )
             PayDaySelector(
-                selectedPayDayType = selectedPayDayType,
-                selectedPayDayValue = selectedPayDayValue,
-                onPayDayTypeChange = { type ->
-                    selectedPayDayType = type
-                    selectedPayDayValue = when (type) {
-                        PayDayType.MONTHLY -> PayDayValue.Monthly("1일")
-                        PayDayType.WEEKLY -> PayDayValue.Weekly("월요일")
-                        PayDayType.CUSTOM -> PayDayValue.Custom
-                    }
-                },
-                onPayDayValueChange = { value ->
-                    selectedPayDayValue = value
+                selectedPayDay = selectedPayDay,
+                onPayDayChange = { payDay ->
+                    onPayDaySelected(payDay)
                 }
             )
 
@@ -191,6 +173,17 @@ fun WorkPlaceAdderScreen(
                     onCustomWorkDaysSelected = { dates ->
                         onCustomWorkDaysSelected(dates)
                         showWorkDayDialog = false
+                    }
+                )
+            }
+
+            if (showPayDayDialog) {
+                PayDaySelectionDialog(
+                    payDay = selectedPayDay,
+                    onDismiss = { showPayDayDialog = false },
+                    onConfirm = { updatedPayDay ->
+                        onPayDaySelected(updatedPayDay)
+                        showPayDayDialog = false
                     }
                 )
             }
