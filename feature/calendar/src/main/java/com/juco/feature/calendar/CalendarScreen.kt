@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -52,23 +54,8 @@ fun CalendarRoute(
     viewModel: CalendarViewModel = hiltViewModel()
 ) {
     val monthlyWorkPlaces by viewModel.monthlyWorkPlaces.collectAsStateWithLifecycle()
-
-    CalendarScreen(
-        padding = padding,
-        monthlyWorkPlaces = monthlyWorkPlaces,
-        onSelectYearMonth = { year, month ->
-            viewModel.loadWorkPlacesForMonth(year, month)
-        }
-    )
-}
-
-@Composable
-fun CalendarScreen(
-    padding: PaddingValues,
-    monthlyWorkPlaces: List<WorkPlace>,
-    onSelectYearMonth: (Int, Int) -> Unit
-) {
     val currentDate = LocalDate.now()
+
     val minYear = 2010
     val maxYear = 2049
     val totalMonths = (maxYear - minYear + 1) * 12
@@ -80,72 +67,94 @@ fun CalendarScreen(
     )
 
     val coroutineScope = rememberCoroutineScope()
-    val showDialog = remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }
 
-    val currentYearMonth = remember(pagerState.currentPage) {
+    val currentYearMonth by remember(pagerState.currentPage) {
         derivedStateOf {
-            val offset = pagerState.currentPage
-            YearMonth.of(minYear, 1).plusMonths(offset.toLong())
+            YearMonth.of(minYear, 1).plusMonths(pagerState.currentPage.toLong())
         }
     }
 
-    LaunchedEffect(currentYearMonth.value) {
-        onSelectYearMonth(
-            currentYearMonth.value.year,
-            currentYearMonth.value.monthValue
+    LaunchedEffect(currentYearMonth) {
+        viewModel.loadWorkPlacesForMonth(
+            currentYearMonth.year,
+            currentYearMonth.monthValue
         )
     }
 
+    CalendarScreen(
+        padding = padding,
+        monthlyWorkPlaces = monthlyWorkPlaces,
+        currentYearMonth = currentYearMonth,
+        pagerState = pagerState,
+        showDialog = showDialog,
+        onShowDialogChange = { showDialog = it },
+        onScrollToMonth = { year, month ->
+            val selectedYearMonth = YearMonth.of(year, month)
+            val baseYearMonth = YearMonth.of(minYear, 1)
+            val monthDifference = java.time.temporal.ChronoUnit.MONTHS.between(
+                baseYearMonth, selectedYearMonth
+            ).toInt()
+            coroutineScope.launch {
+                pagerState.scrollToPage(monthDifference)
+            }
+        }
+    )
+}
+
+@Composable
+fun CalendarScreen(
+    padding: PaddingValues,
+    monthlyWorkPlaces: List<WorkPlace>,
+    currentYearMonth: YearMonth,
+    pagerState: PagerState,
+    showDialog: Boolean,
+    onShowDialogChange: (Boolean) -> Unit,
+    onScrollToMonth: (Int, Int) -> Unit
+) {
     Column(
         modifier = Modifier
             .padding(padding)
             .fillMaxSize()
     ) {
+        // 날짜 헤더
         Text(
-            text = "${currentYearMonth.value.year}년 ${currentYearMonth.value.monthValue}월",
+            text = "${currentYearMonth.year}년 ${currentYearMonth.monthValue}월",
             fontSize = 24.sp,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(16.dp)
-                .clickable { showDialog.value = true }
+                .clickable { onShowDialogChange(true) }
         )
 
         HorizontalPager(
             state = pagerState
         ) { pageIndex ->
-            val yearMonth = YearMonth.of(minYear, 1).plusMonths(pageIndex.toLong())
+            val yearMonth = YearMonth.of(2010, 1).plusMonths(pageIndex.toLong())
 
-            CalendarView(
+            CalendarCell(
                 year = yearMonth.year,
                 month = yearMonth.monthValue,
                 workPlaces = monthlyWorkPlaces
             )
         }
 
-        if (showDialog.value) {
+        if (showDialog) {
             YearMonthPickerDialog(
-                initialYear = currentYearMonth.value.year,
-                initialMonth = currentYearMonth.value.monthValue,
+                initialYear = currentYearMonth.year,
+                initialMonth = currentYearMonth.monthValue,
                 onConfirm = { year, month ->
-                    val selectedYearMonth = YearMonth.of(year, month)
-                    val baseYearMonth = YearMonth.of(minYear, 1)
-                    val monthDifference = java.time.temporal.ChronoUnit.MONTHS.between(
-                        baseYearMonth,
-                        selectedYearMonth
-                    ).toInt()
-                    coroutineScope.launch {
-                        pagerState.scrollToPage(monthDifference)
-                    }
-                    showDialog.value = false
+                    onScrollToMonth(year, month)
+                    onShowDialogChange(false)
                 },
-                onCancel = { showDialog.value = false }
+                onCancel = { onShowDialogChange(false) }
             )
         }
     }
 }
 
 @Composable
-fun CalendarView(
+fun CalendarCell(
     year: Int,
     month: Int,
     workPlaces: List<WorkPlace>
