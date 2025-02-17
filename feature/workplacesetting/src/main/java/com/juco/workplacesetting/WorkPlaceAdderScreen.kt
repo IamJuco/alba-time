@@ -16,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,8 +33,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.feature.workplacesetting.R
-import com.juco.workplacesetting.component.CustomCalendarDialog
-import com.juco.workplacesetting.component.TextField
+import com.juco.workplacesetting.component.InputTextField
+import com.juco.workplacesetting.component.PayDaySelector
 import com.juco.workplacesetting.component.WorkDaySelectionDialog
 import com.juco.workplacesetting.model.WorkDayType
 import java.time.LocalDate
@@ -82,6 +83,9 @@ fun WorkPlaceAdderScreen(
 ) {
     var showWorkDayDialog by remember { mutableStateOf(false) }
 
+    var selectedPayDay by remember { mutableStateOf("월급") }
+    var showPayDayDialog by remember { mutableStateOf(false) }
+
     val workDaysSummary = remember(selectedWorkDays, selectedWorkDayType) {
         if (selectedWorkDayType == WorkDayType.CUSTOM && selectedWorkDays.isNotEmpty()) {
             val firstDay = selectedWorkDays.first()
@@ -105,7 +109,7 @@ fun WorkPlaceAdderScreen(
 
         Column(Modifier.padding(16.dp)) {
             Text("근무지 명", fontWeight = FontWeight.Bold, fontSize = 24.sp)
-            TextField(
+            InputTextField(
                 text = workPlaceName,
                 onValueChange = onWorkPlaceNameChange,
                 placeholder = "근무지명을 입력하세요"
@@ -114,7 +118,7 @@ fun WorkPlaceAdderScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text("시급", fontWeight = FontWeight.Bold, fontSize = 24.sp)
-            TextField(
+            InputTextField(
                 text = wage,
                 onValueChange = onWageChange,
                 placeholder = "시급을 입력하세요",
@@ -145,6 +149,19 @@ fun WorkPlaceAdderScreen(
                 }
             }
 
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "월급일 설정",
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp
+            )
+            PayDaySelector(
+                selectedSalaryType = selectedPayDay,
+                onSalaryTypeChange = { selectedPayDay = it },
+                onCustomSelected = { showPayDayDialog = true }
+            )
+
             if (showWorkDayDialog) {
                 WorkDaySelectionDialog(
                     initialSelectedDates = selectedWorkDays,
@@ -156,6 +173,34 @@ fun WorkPlaceAdderScreen(
                     onCustomWorkDaysSelected = { dates ->
                         onCustomWorkDaysSelected(dates)
                         showWorkDayDialog = false
+                    }
+                )
+            }
+
+            if (showPayDayDialog) {
+                AlertDialog(
+                    onDismissRequest = { showPayDayDialog = false },
+                    title = { Text("직접 설정") },
+                    text = {
+                        Column {
+                            Text("원하는 급여일을 입력해주세요")
+                            Spacer(modifier = Modifier.height(8.dp))
+                            TextField(
+                                value = "",
+                                onValueChange = {},
+                                placeholder = { Text("예: 매월 15일") }
+                            )
+                        }
+                    },
+                    confirmButton = {
+                        Button(onClick = { showPayDayDialog = false }) {
+                            Text("확인")
+                        }
+                    },
+                    dismissButton = {
+                        OutlinedButton(onClick = { showPayDayDialog = false }) {
+                            Text("취소")
+                        }
                     }
                 )
             }

@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TextField(
+fun InputTextField(
     text: String,
     onValueChange: (String) -> Unit,
     placeholder: String,
