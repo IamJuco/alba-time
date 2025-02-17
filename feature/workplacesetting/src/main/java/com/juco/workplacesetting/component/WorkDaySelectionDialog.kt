@@ -29,18 +29,6 @@ fun WorkDaySelectionDialog(
 ) {
     var showCalendarDialog by remember { mutableStateOf(false) }
 
-    if (showCalendarDialog) {
-        CustomCalendarDialog(
-            initialSelectedDates = initialSelectedDates,
-            onDismiss = { showCalendarDialog = false },
-            onConfirm = { selectedDates ->
-                onCustomWorkDaysSelected(selectedDates)
-                showCalendarDialog = false
-                onDismiss()
-            }
-        )
-    }
-
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("일하는 날짜 선택") },
@@ -75,6 +63,18 @@ fun WorkDaySelectionDialog(
             }
         }
     )
+
+    if (showCalendarDialog) {
+        CustomCalendarDialog(
+            initialSelectedDates = initialSelectedDates,
+            onDismiss = { showCalendarDialog = false },
+            onConfirm = { selectedDates ->
+                onCustomWorkDaysSelected(selectedDates)
+                showCalendarDialog = false
+                onDismiss()
+            }
+        )
+    }
 }
 
 @Composable

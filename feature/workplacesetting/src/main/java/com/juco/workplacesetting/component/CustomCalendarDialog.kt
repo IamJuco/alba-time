@@ -141,7 +141,7 @@ fun CalendarGrid(
                                     .aspectRatio(1f)
                                     .padding(4.dp)
                                     .background(
-                                        color = if (isSelected) Color.Green else Color.LightGray,
+                                        color = if (isSelected) Color(0xFF90CAF9) else Color.LightGray,
                                         shape = RoundedCornerShape(8.dp)
                                     )
                                     .clickable { onDateClick(date) },

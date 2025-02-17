@@ -36,6 +36,8 @@ import com.juco.feature.workplacesetting.R
 import com.juco.workplacesetting.component.InputTextField
 import com.juco.workplacesetting.component.PayDaySelector
 import com.juco.workplacesetting.component.WorkDaySelectionDialog
+import com.juco.workplacesetting.model.PayDayType
+import com.juco.workplacesetting.model.PayDayValue
 import com.juco.workplacesetting.model.WorkDayType
 import java.time.LocalDate
 
@@ -83,8 +85,10 @@ fun WorkPlaceAdderScreen(
 ) {
     var showWorkDayDialog by remember { mutableStateOf(false) }
 
-    var selectedPayDay by remember { mutableStateOf("월급") }
-    var showPayDayDialog by remember { mutableStateOf(false) }
+    var selectedPayDayType by remember { mutableStateOf(PayDayType.MONTHLY) }
+    var selectedPayDayValue by remember {
+        mutableStateOf<PayDayValue>(PayDayValue.Monthly("1일"))
+    }
 
     val workDaysSummary = remember(selectedWorkDays, selectedWorkDayType) {
         if (selectedWorkDayType == WorkDayType.CUSTOM && selectedWorkDays.isNotEmpty()) {
@@ -97,7 +101,11 @@ fun WorkPlaceAdderScreen(
         }
     }
 
-    Column(Modifier.padding(padding).fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .padding(padding)
+            .fillMaxSize()
+    ) {
         Text(
             text = "근무지 추가",
             fontSize = 20.sp,
@@ -157,9 +165,19 @@ fun WorkPlaceAdderScreen(
                 fontSize = 24.sp
             )
             PayDaySelector(
-                selectedSalaryType = selectedPayDay,
-                onSalaryTypeChange = { selectedPayDay = it },
-                onCustomSelected = { showPayDayDialog = true }
+                selectedPayDayType = selectedPayDayType,
+                selectedPayDayValue = selectedPayDayValue,
+                onPayDayTypeChange = { type ->
+                    selectedPayDayType = type
+                    selectedPayDayValue = when (type) {
+                        PayDayType.MONTHLY -> PayDayValue.Monthly("1일")
+                        PayDayType.WEEKLY -> PayDayValue.Weekly("월요일")
+                        PayDayType.CUSTOM -> PayDayValue.Custom
+                    }
+                },
+                onPayDayValueChange = { value ->
+                    selectedPayDayValue = value
+                }
             )
 
             if (showWorkDayDialog) {
@@ -173,34 +191,6 @@ fun WorkPlaceAdderScreen(
                     onCustomWorkDaysSelected = { dates ->
                         onCustomWorkDaysSelected(dates)
                         showWorkDayDialog = false
-                    }
-                )
-            }
-
-            if (showPayDayDialog) {
-                AlertDialog(
-                    onDismissRequest = { showPayDayDialog = false },
-                    title = { Text("직접 설정") },
-                    text = {
-                        Column {
-                            Text("원하는 급여일을 입력해주세요")
-                            Spacer(modifier = Modifier.height(8.dp))
-                            TextField(
-                                value = "",
-                                onValueChange = {},
-                                placeholder = { Text("예: 매월 15일") }
-                            )
-                        }
-                    },
-                    confirmButton = {
-                        Button(onClick = { showPayDayDialog = false }) {
-                            Text("확인")
-                        }
-                    },
-                    dismissButton = {
-                        OutlinedButton(onClick = { showPayDayDialog = false }) {
-                            Text("취소")
-                        }
                     }
                 )
             }
