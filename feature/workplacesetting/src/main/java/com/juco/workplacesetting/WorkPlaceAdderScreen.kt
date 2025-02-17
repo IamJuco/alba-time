@@ -1,9 +1,7 @@
 package com.juco.workplacesetting
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -13,8 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -29,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -38,6 +33,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.feature.workplacesetting.R
 import com.juco.workplacesetting.component.CustomCalendarDialog
+import com.juco.workplacesetting.component.TextField
+import com.juco.workplacesetting.component.WorkDaySelectionDialog
 import com.juco.workplacesetting.model.WorkDayType
 import java.time.LocalDate
 
@@ -172,114 +169,5 @@ fun WorkPlaceAdderScreen(
                 Text("저장")
             }
         }
-    }
-}
-
-@Composable
-fun TextField(
-    text: String,
-    onValueChange: (String) -> Unit,
-    placeholder: String,
-    keyboardType: KeyboardType = KeyboardType.Text
-) {
-    Column {
-        BasicTextField(
-            value = text,
-            onValueChange = onValueChange,
-            textStyle = TextStyle(fontSize = 16.sp),
-            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            decorationBox = { innerTextField ->
-                Box(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    if (text.isEmpty()) {
-                        Text(placeholder, color = Color.Gray)
-                    }
-                    innerTextField()
-                }
-            }
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(1.dp)
-                .background(Color.Gray)
-        )
-    }
-}
-
-@Composable
-fun WorkDaySelectionDialog(
-    initialSelectedDates: List<LocalDate>,
-    onDismiss: () -> Unit,
-    onSelect: (WorkDayType) -> Unit,
-    onCustomWorkDaysSelected: (List<LocalDate>) -> Unit
-) {
-    var showCalendarDialog by remember { mutableStateOf(false) }
-
-    if (showCalendarDialog) {
-        CustomCalendarDialog(
-            initialSelectedDates = initialSelectedDates,
-            onDismiss = { showCalendarDialog = false },
-            onConfirm = { selectedDates ->
-                onCustomWorkDaysSelected(selectedDates)
-                showCalendarDialog = false
-                onDismiss()
-            }
-        )
-    }
-
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text("일하는 날짜 선택") },
-        text = {
-            Column {
-                WorkDayOption(
-                    text = WorkDayType.WEEKDAYS.displayName,
-                    onClick = {
-                        onSelect(WorkDayType.WEEKDAYS)
-                        onDismiss()
-                    }
-                )
-                WorkDayOption(
-                    text = WorkDayType.WEEKENDS.displayName,
-                    onClick = {
-                        onSelect(WorkDayType.WEEKENDS)
-                        onDismiss()
-                    }
-                )
-                WorkDayOption(
-                    text = WorkDayType.CUSTOM.displayName,
-                    onClick = {
-                        showCalendarDialog = true
-                    }
-                )
-            }
-        },
-        confirmButton = {},
-        dismissButton = {
-            OutlinedButton(onClick = onDismiss) {
-                Text("취소")
-            }
-        }
-    )
-}
-
-@Composable
-fun WorkDayOption(
-    text: String,
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.Start
-    ) {
-        Text(text = text, fontSize = 18.sp)
     }
 }
