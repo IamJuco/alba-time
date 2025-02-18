@@ -24,6 +24,7 @@ rootProject.name = "simple-wage-calculator"
 include(":app")
 include(":data")
 include(":domain")
+include(":common")
 include(":feature:home")
 include(":feature:calendar")
 include(":feature:main")
