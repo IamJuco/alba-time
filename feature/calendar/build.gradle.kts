@@ -40,6 +40,7 @@ android {
 
 dependencies {
     implementation(project(":domain"))
+    implementation(project(":common"))
 
     implementation(libs.navigation.compose)
     implementation(libs.hilt.navigation.compose)
