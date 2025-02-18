@@ -33,7 +33,7 @@ fun PayDay.toJson(): String {
 
 fun String.fromJson(): PayDay {
     return runCatching { Gson().fromJson(this, PayDay::class.java) }
-        .getOrElse { PayDay(PayDayType.MONTHLY, "1일") }
+        .getOrElse { PayDay(PayDayType.MONTHLY, emptyList()) }
 }
 
 // LocalDate "yyyy-mm-dd" 형식을 String 으로 맵핑

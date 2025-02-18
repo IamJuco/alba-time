@@ -37,6 +37,7 @@ import com.juco.workplacesetting.component.InputTextField
 import com.juco.workplacesetting.component.PayDaySelectionDialog
 import com.juco.workplacesetting.component.PayDaySelector
 import com.juco.workplacesetting.component.WorkDaySelectionDialog
+import com.juco.workplacesetting.model.UiPayDay
 import com.juco.workplacesetting.model.WorkDayType
 import java.time.LocalDate
 
@@ -81,8 +82,8 @@ fun WorkPlaceAdderScreen(
     onWageChange: (String) -> Unit,
     selectedWorkDayType: WorkDayType?,
     selectedWorkDays: List<LocalDate>,
-    selectedPayDay: PayDay,
-    onPayDaySelected: (PayDay) -> Unit,
+    selectedPayDay: UiPayDay,
+    onPayDaySelected: (UiPayDay) -> Unit,
     onWorkDaysSelected: (WorkDayType) -> Unit,
     onCustomWorkDaysSelected: (List<LocalDate>) -> Unit,
     onSaveClick: () -> Unit

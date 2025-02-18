@@ -1,12 +1,14 @@
 package com.juco.domain.model
 
+import java.time.LocalDate
+
 data class PayDay(
     val type: PayDayType,
-    val value: String = "" // "1일", "월요일", "직접설정"
+    val dates: List<LocalDate>
 )
 
 enum class PayDayType {
-    MONTHLY,  // 월급
-    WEEKLY,   // 주급
-    CUSTOM    // 직접설정
+    MONTHLY,
+    WEEKLY,
+    CUSTOM
 }
