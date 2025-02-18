@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.domain.model.WorkPlace
+import com.juco.feature.calendar.component.WorkWageCard
 import com.juco.feature.calendar.component.WorkPlaceCard
 import com.juco.feature.calendar.component.YearMonthPickerDialog
 import com.juco.feature.calendar.util.lunarHolidays
@@ -117,7 +118,6 @@ fun CalendarScreen(
             .padding(padding)
             .fillMaxSize()
     ) {
-        // 날짜 헤더
         Text(
             text = "${currentYearMonth.year}년 ${currentYearMonth.monthValue}월",
             fontSize = 24.sp,
@@ -126,6 +126,23 @@ fun CalendarScreen(
                 .padding(16.dp)
                 .clickable { onShowDialogChange(true) }
         )
+
+        Row(
+            modifier = Modifier
+                .padding(4.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            monthlyWorkPlaces.forEach { workPlace ->
+                Box(
+                    modifier = Modifier.size(width = 60.dp, height = 32.dp)
+                ) {
+                    WorkPlaceCard(
+                        workPlaceName = workPlace.name
+                    )
+                }
+            }
+        }
 
         HorizontalPager(
             state = pagerState
@@ -273,7 +290,7 @@ fun CalendarCell(
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             if (dayWorkPlaces.isNotEmpty()) {
-                                WorkPlaceCard(dayWorkPlaces)
+                                WorkWageCard(dayWorkPlaces)
                             }
                         }
                     }
