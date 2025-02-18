@@ -50,7 +50,7 @@ class WorkPlaceViewModel @Inject constructor(
 
     fun saveWorkPlace() {
         val name = workPlaceName.value.trim()
-        val wageValue = wage.value.toIntOrNull() ?: return
+        val wageValue = wage.value.toLongOrNull() ?: return
         val workDays = selectedWorkDays.value
         val payDay = selectedPayDay.value
 

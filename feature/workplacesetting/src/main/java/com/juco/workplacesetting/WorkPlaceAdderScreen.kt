@@ -29,8 +29,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.juco.common.formatWithComma
 import com.juco.domain.model.PayDay
 import com.juco.feature.workplacesetting.R
+import com.juco.workplacesetting.component.InputNumberField
 import com.juco.workplacesetting.component.InputTextField
 import com.juco.workplacesetting.component.PayDaySelectionDialog
 import com.juco.workplacesetting.component.PayDaySelector
@@ -120,8 +122,8 @@ fun WorkPlaceAdderScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text("시급", fontWeight = FontWeight.Bold, fontSize = 24.sp)
-            InputTextField(
-                text = wage,
+            InputNumberField(
+                text = formatWithComma(wage),
                 onValueChange = onWageChange,
                 placeholder = "시급을 입력하세요",
                 keyboardType = KeyboardType.Number

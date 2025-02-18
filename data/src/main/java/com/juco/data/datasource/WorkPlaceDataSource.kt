@@ -12,7 +12,7 @@ import javax.inject.Inject
 interface WorkPlaceDataSource {
     suspend fun saveWorkPlace(
         name: String,
-        wage: Int,
+        wage: Long,
         workDays: List<LocalDate>,
         payDay: PayDay
     ): Long
@@ -28,7 +28,7 @@ class WorkPlaceDataSourceImpl @Inject constructor(
 
     override suspend fun saveWorkPlace(
         name: String,
-        wage: Int,
+        wage: Long,
         workDays: List<LocalDate>,
         payDay: PayDay
     ): Long {

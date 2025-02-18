@@ -8,7 +8,7 @@ import java.time.LocalDate
 interface WorkPlaceRepository {
     suspend fun saveWorkPlace(
         name: String,
-        wage: Int,
+        wage: Long,
         workDays: List<LocalDate>,
         payDay: PayDay
     ): Long

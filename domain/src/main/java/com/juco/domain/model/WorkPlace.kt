@@ -5,7 +5,7 @@ import java.time.LocalDate
 data class WorkPlace(
     val id: Int = 0,
     val name: String,
-    val wage: Int,
+    val wage: Long,
     val workDays: List<LocalDate>,
     val payDay: PayDay
 )

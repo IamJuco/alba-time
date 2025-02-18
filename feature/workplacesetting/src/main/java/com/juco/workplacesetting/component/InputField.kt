@@ -52,3 +52,42 @@ fun InputTextField(
         )
     }
 }
+
+@Composable
+fun InputNumberField(
+    text: String,
+    onValueChange: (String) -> Unit,
+    placeholder: String,
+    keyboardType: KeyboardType = KeyboardType.Number
+) {
+    Column {
+        BasicTextField(
+            value = text,
+            onValueChange = { input ->
+                val filteredInput = input.filter { it.isDigit() }
+                onValueChange(filteredInput)
+            },
+            textStyle = TextStyle(fontSize = 16.sp),
+            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            decorationBox = { innerTextField ->
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    if (text.isEmpty()) {
+                        Text(placeholder, color = Color.Gray)
+                    }
+                    innerTextField()
+                }
+            }
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(1.dp)
+                .background(Color.Gray)
+        )
+    }
+}

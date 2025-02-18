@@ -17,7 +17,7 @@ class WorkPlaceRepositoryImpl @Inject constructor(
 
     override suspend fun saveWorkPlace(
         name: String,
-        wage: Int,
+        wage: Long,
         workDays: List<LocalDate>,
         payDay: PayDay
     ): Long {

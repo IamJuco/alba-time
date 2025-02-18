@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.juco.common.formatWithComma
 import com.juco.domain.model.WorkPlace
 
 // Home에서 보일 근무지 카드
@@ -52,7 +53,7 @@ fun WorkPlaceCard(
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "시급: ${workPlace.wage}원",
+                text = "시급: ${formatWithComma(workPlace.wage)}원",
                 color = Color.White,
                 fontSize = 16.sp
             )
