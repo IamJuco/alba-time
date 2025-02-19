@@ -1,7 +1,9 @@
 package com.juco.workplacesetting
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -30,14 +32,17 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.common.formatWithComma
-import com.juco.domain.model.PayDay
 import com.juco.feature.workplacesetting.R
 import com.juco.workplacesetting.component.InputNumberField
 import com.juco.workplacesetting.component.InputTextField
 import com.juco.workplacesetting.component.PayDaySelectionDialog
 import com.juco.workplacesetting.component.PayDaySelector
+import com.juco.workplacesetting.component.SamsungStyleTimePickerDialog
 import com.juco.workplacesetting.component.WorkDaySelectionDialog
+import com.juco.workplacesetting.mapper.toLocalTime
+import com.juco.workplacesetting.mapper.toTimeString
 import com.juco.workplacesetting.model.UiPayDay
+import com.juco.workplacesetting.model.UiWorkTime
 import com.juco.workplacesetting.model.WorkDayType
 import java.time.LocalDate
 
@@ -51,6 +56,7 @@ fun WorkPlaceAdderRoute(
     val workDays by viewModel.selectedWorkDays.collectAsStateWithLifecycle()
     val selectedType by viewModel.selectedWorkDayType.collectAsStateWithLifecycle()
     val selectedPayDay by viewModel.selectedPayDay.collectAsStateWithLifecycle()
+    val workTime by viewModel.workTime.collectAsStateWithLifecycle()
 
     WorkPlaceAdderScreen(
         padding = padding,
@@ -69,6 +75,8 @@ fun WorkPlaceAdderRoute(
         onCustomWorkDaysSelected = { dates ->
             viewModel.setCustomWorkDays(dates)
         },
+        workTime = workTime,
+        onWorkTimeChange = { viewModel.setWorkTime(it) },
         onSaveClick = { viewModel.saveWorkPlace() }
     )
 }
@@ -86,10 +94,15 @@ fun WorkPlaceAdderScreen(
     onPayDaySelected: (UiPayDay) -> Unit,
     onWorkDaysSelected: (WorkDayType) -> Unit,
     onCustomWorkDaysSelected: (List<LocalDate>) -> Unit,
+    workTime: UiWorkTime,
+    onWorkTimeChange: (UiWorkTime) -> Unit,
     onSaveClick: () -> Unit
 ) {
     var showWorkDayDialog by remember { mutableStateOf(false) }
     var showPayDayDialog by remember { mutableStateOf(false) }
+
+    var showStartTimePicker by remember { mutableStateOf(false) }
+    var showEndTimePicker by remember { mutableStateOf(false) }
 
     val workDaysSummary = remember(selectedWorkDays, selectedWorkDayType) {
         if (selectedWorkDayType == WorkDayType.CUSTOM && selectedWorkDays.isNotEmpty()) {
@@ -102,7 +115,11 @@ fun WorkPlaceAdderScreen(
         }
     }
 
-    Column(Modifier.padding(padding).fillMaxSize()) {
+    Column(
+        Modifier
+            .padding(padding)
+            .fillMaxSize()
+    ) {
         Text(
             text = "근무지 추가",
             fontSize = 20.sp,
@@ -132,14 +149,75 @@ fun WorkPlaceAdderScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            Text("일하는 시간 설정", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable { showStartTimePicker = true }
+                        .padding(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        modifier = Modifier.padding(4.dp),
+                        text = workTime.startTime.toTimeString(),
+                        fontSize = 20.sp,
+                        color = Color.Gray
+                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(1.dp)
+                            .background(Color.Gray)
+                    )
+                }
+
+                Text(
+                    text = "-",
+                    fontSize = 24.sp,
+                    color = Color.Black,
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                )
+
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable { showEndTimePicker = true }
+                        .padding(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        modifier = Modifier.padding(4.dp),
+                        text = workTime.endTime.toTimeString(),
+                        fontSize = 20.sp,
+                        color = Color.Gray
+                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(1.dp)
+                            .background(Color.Gray)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { showWorkDayDialog = true }
-                    .padding(vertical = 8.dp),
+                    .clickable { showWorkDayDialog = true },
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text("일하는 날짜 설정", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                Text(text = "일하는 날짜 설정", fontWeight = FontWeight.Bold, fontSize = 24.sp)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(text = workDaysSummary, color = Color.Gray, fontSize = 18.sp)
                     Icon(
@@ -151,7 +229,6 @@ fun WorkPlaceAdderScreen(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-
 
             Text(
                 text = "월급일 설정",
@@ -187,6 +264,28 @@ fun WorkPlaceAdderScreen(
                     onConfirm = { updatedPayDay ->
                         onPayDaySelected(updatedPayDay)
                         showPayDayDialog = false
+                    }
+                )
+            }
+
+            if (showStartTimePicker) {
+                SamsungStyleTimePickerDialog(
+                    initialTime = workTime.startTime.toTimeString(),
+                    onDismiss = { showStartTimePicker = false },
+                    onConfirm = { selectedTime ->
+                        onWorkTimeChange(workTime.copy(startTime = selectedTime.toLocalTime()))
+                        showStartTimePicker = false
+                    }
+                )
+            }
+
+            if (showEndTimePicker) {
+                SamsungStyleTimePickerDialog(
+                    initialTime = workTime.endTime.toTimeString(),
+                    onDismiss = { showEndTimePicker = false },
+                    onConfirm = { selectedTime ->
+                        onWorkTimeChange(workTime.copy(endTime = selectedTime.toLocalTime()))
+                        showEndTimePicker = false
                     }
                 )
             }

@@ -16,8 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.juco.common.formatWithComma
 import com.juco.domain.model.WorkPlace
+import com.juco.feature.calendar.util.workTimeCalculator
 
 // 근무 시급 카드
 @OptIn(ExperimentalLayoutApi::class) // FlowRow
@@ -32,7 +32,8 @@ fun WorkWageCard(workPlaces: List<WorkPlace>) {
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         displayWorkPlaces.forEach { workPlace ->
-            WorkWageChip(formatWithComma(workPlace.wage))
+            val wageWithHours = "${workPlace.workTimeCalculator()}시간"
+            WorkWageChip(wageWithHours)
         }
 
         if (remainingCount > 0) {
