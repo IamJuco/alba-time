@@ -1,13 +1,16 @@
 package com.juco.data.repository
 
+import android.util.Log
 import com.juco.data.datasource.WorkPlaceDataSource
 import com.juco.data.mapper.toDomain
 import com.juco.data.mapper.toEntity
 import com.juco.domain.model.PayDay
 import com.juco.domain.model.WorkPlace
+import com.juco.domain.model.WorkTime
 import com.juco.domain.repository.WorkPlaceRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -19,9 +22,16 @@ class WorkPlaceRepositoryImpl @Inject constructor(
         name: String,
         wage: Long,
         workDays: List<LocalDate>,
-        payDay: PayDay
+        payDay: PayDay,
+        workTime: WorkTime
     ): Long {
-        return workPlaceDataSource.saveWorkPlace(name, wage, workDays, payDay)
+        return workPlaceDataSource.saveWorkPlace(
+            name = name,
+            wage = wage,
+            workDays = workDays,
+            payDay = payDay,
+            workTime = workTime
+        )
     }
 
     override suspend fun getWorkPlaceById(id: Int): WorkPlace? {
@@ -33,8 +43,10 @@ class WorkPlaceRepositoryImpl @Inject constructor(
     }
 
     override fun observeWorkPlaces(): Flow<List<WorkPlace>> {
-        return workPlaceDataSource.getAllWorkPlaces().map { list ->
-            list.map { it.toDomain() }
-        }
+        return workPlaceDataSource.getAllWorkPlaces()
+            .map { list -> list.map { it.toDomain() } }
+            .onEach { workPlaces ->
+                Log.d("0526", "WorkPlaces: $workPlaces")
+            }
     }
 }

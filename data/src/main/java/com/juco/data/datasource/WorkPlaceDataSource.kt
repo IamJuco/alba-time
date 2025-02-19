@@ -5,6 +5,7 @@ import com.juco.data.local.entity.WorkPlaceEntity
 import com.juco.data.mapper.toDateString
 import com.juco.data.mapper.toJson
 import com.juco.domain.model.PayDay
+import com.juco.domain.model.WorkTime
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 import javax.inject.Inject
@@ -14,7 +15,8 @@ interface WorkPlaceDataSource {
         name: String,
         wage: Long,
         workDays: List<LocalDate>,
-        payDay: PayDay
+        payDay: PayDay,
+        workTime: WorkTime
     ): Long
 
     suspend fun getWorkPlaceById(id: Int): WorkPlaceEntity?
@@ -30,14 +32,16 @@ class WorkPlaceDataSourceImpl @Inject constructor(
         name: String,
         wage: Long,
         workDays: List<LocalDate>,
-        payDay: PayDay
+        payDay: PayDay,
+        workTime: WorkTime
     ): Long {
         return workPlaceDao.insertWorkPlace(
             WorkPlaceEntity(
                 name = name,
                 wage = wage,
                 workDays = workDays.toDateString(),
-                payDay = payDay.toJson()
+                payDay = payDay.toJson(),
+                workTime = workTime.toJson()
             )
         )
     }
