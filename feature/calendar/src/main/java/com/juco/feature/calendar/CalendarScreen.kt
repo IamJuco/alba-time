@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.domain.model.WorkPlace
-import com.juco.feature.calendar.component.WorkTimeCard
+import com.juco.feature.calendar.component.WorkChipCard
 import com.juco.feature.calendar.component.WorkPlaceCard
 import com.juco.feature.calendar.component.YearMonthPickerDialog
 import com.juco.feature.calendar.util.lunarHolidays
@@ -189,10 +189,16 @@ fun CalendarCell(
     // 셀 개수 계산 ( 날짜가 없는 줄의 요일은 셀을 안쓰기 위해 )
     val totalCells = ((firstDayOfWeek + daysInMonth + 6) / 7) * 7
 
-    // 📌 근무지 정보를 날짜별로 매핑
+    // 근무지 정보를 날짜별로 매핑
     val workPlacesByDate = remember(workPlaces) {
         workPlaces.flatMap { workPlace ->
             workPlace.workDays.map { date -> date to workPlace }
+        }.groupBy({ it.first }, { it.second })
+    }
+
+    val workPayDayByDate = remember(workPlaces) {
+        workPlaces.flatMap { workPlace ->
+            workPlace.payDay.dates.map { date -> date to workPlace }
         }.groupBy({ it.first }, { it.second })
     }
 
@@ -260,6 +266,7 @@ fun CalendarCell(
                     val date = LocalDate.of(year, month, day)
                     val isHoliday = holidays.contains(date)
                     val dayWorkPlaces = workPlacesByDate[date] ?: emptyList()
+                    val payDayWorkPlaces = workPayDayByDate[date] ?: emptyList()
 
                     Box(
                         modifier = Modifier
@@ -286,8 +293,8 @@ fun CalendarCell(
                                     else -> Color.Black
                                 }
                             )
-                            if (dayWorkPlaces.isNotEmpty()) {
-                                WorkTimeCard(dayWorkPlaces)
+                            if (dayWorkPlaces.isNotEmpty() || payDayWorkPlaces.isNotEmpty()) {
+                                WorkChipCard(dayWorkPlaces, payDayWorkPlaces)
                             }
                         }
                     }
