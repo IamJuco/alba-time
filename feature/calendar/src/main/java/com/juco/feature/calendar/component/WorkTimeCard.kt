@@ -22,40 +22,39 @@ import com.juco.feature.calendar.util.workTimeCalculator
 // 근무 시급 카드
 @OptIn(ExperimentalLayoutApi::class) // FlowRow
 @Composable
-fun WorkWageCard(workPlaces: List<WorkPlace>) {
+fun WorkTimeCard(workPlaces: List<WorkPlace>) {
     val maxWorkPlaceCount = 2
     val displayWorkPlaces = workPlaces.take(maxWorkPlaceCount)
     val remainingCount = workPlaces.size - maxWorkPlaceCount
 
     FlowRow(
-        modifier = Modifier.padding(4.dp),
+        modifier = Modifier.padding(start = 2.dp, end = 2.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         displayWorkPlaces.forEach { workPlace ->
-            val wageWithHours = "${workPlace.workTimeCalculator()}시간"
-            WorkWageChip(wageWithHours)
+            val wageWithHours = workPlace.workTimeCalculator()
+            WorkTimeChip(wageWithHours)
         }
 
         if (remainingCount > 0) {
-            WorkWageChip("외 ${remainingCount}개", isRemaining = true)
+            WorkTimeChip("외 ${remainingCount}개", isRemaining = true)
         }
     }
 }
 
 @Composable
-fun WorkWageChip(name: String, isRemaining: Boolean = false) {
+fun WorkTimeChip(workTime: String, isRemaining: Boolean = false) {
     Box(
         modifier = Modifier
             .background(
                 if (isRemaining) Color.LightGray else Color(0xFFE0F7FA),
                 RoundedCornerShape(4.dp)
             )
-            .fillMaxWidth()
-            .padding(horizontal = 4.dp),
+            .fillMaxWidth(),
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = name,
+            text = workTime,
             fontSize = 10.sp,
             fontWeight = if (isRemaining) FontWeight.Bold else FontWeight.SemiBold,
             color = if (isRemaining) Color.Gray else Color.DarkGray

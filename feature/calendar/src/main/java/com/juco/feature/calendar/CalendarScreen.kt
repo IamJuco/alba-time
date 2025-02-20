@@ -6,10 +6,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -37,7 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.domain.model.WorkPlace
-import com.juco.feature.calendar.component.WorkWageCard
+import com.juco.feature.calendar.component.WorkTimeCard
 import com.juco.feature.calendar.component.WorkPlaceCard
 import com.juco.feature.calendar.component.YearMonthPickerDialog
 import com.juco.feature.calendar.util.lunarHolidays
@@ -275,7 +273,6 @@ fun CalendarCell(
                         contentAlignment = Alignment.TopCenter
                     ) {
                         Column(
-                            modifier = Modifier.padding(top = 8.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Text(
@@ -288,9 +285,8 @@ fun CalendarCell(
                                     else -> Color.Black
                                 }
                             )
-                            Spacer(modifier = Modifier.height(4.dp))
                             if (dayWorkPlaces.isNotEmpty()) {
-                                WorkWageCard(dayWorkPlaces)
+                                WorkTimeCard(dayWorkPlaces)
                             }
                         }
                     }
