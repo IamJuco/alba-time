@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,22 +33,22 @@ fun WorkTimeCard(workPlaces: List<WorkPlace>) {
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         displayWorkPlaces.forEach { workPlace ->
-            val wageWithHours = workPlace.workTimeCalculator()
-            WorkTimeChip(wageWithHours)
+            val workTime = workPlace.workTimeCalculator()
+            WorkTimeChip(workTime, workPlace.workPlaceCardColor)
         }
 
         if (remainingCount > 0) {
-            WorkTimeChip("외 ${remainingCount}개", isRemaining = true)
+            WorkTimeChip("외 ${remainingCount}개", Color.LightGray.toArgb(), isRemaining = true)
         }
     }
 }
 
 @Composable
-fun WorkTimeChip(workTime: String, isRemaining: Boolean = false) {
+fun WorkTimeChip(workTime: String, workCardColor: Int, isRemaining: Boolean = false) {
     Box(
         modifier = Modifier
             .background(
-                if (isRemaining) Color.LightGray else Color(0xFFE0F7FA),
+                if (isRemaining) Color.LightGray else Color(workCardColor),
                 RoundedCornerShape(4.dp)
             )
             .fillMaxWidth(),

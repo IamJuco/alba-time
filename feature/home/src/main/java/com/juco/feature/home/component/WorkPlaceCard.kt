@@ -34,7 +34,7 @@ fun WorkPlaceCard(
             .height(100.dp)
             .clickable { onDeleteClick(workPlace) },
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF525252)),
+        colors = CardDefaults.cardColors(containerColor = Color(workPlace.workPlaceCardColor)),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 5.dp
         )

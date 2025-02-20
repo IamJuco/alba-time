@@ -15,12 +15,13 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun WorkPlaceCard(
-    workPlaceName: String
+    workPlaceName: String,
+    workPlaceCardColor: Int
 ) {
     Card(
         modifier = Modifier.fillMaxSize(),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFE0F7FA)
+            containerColor = Color(workPlaceCardColor)
         )
     ) {
         Text(

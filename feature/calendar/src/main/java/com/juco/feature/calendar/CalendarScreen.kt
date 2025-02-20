@@ -136,7 +136,8 @@ fun CalendarScreen(
                     modifier = Modifier.size(width = 60.dp, height = 32.dp)
                 ) {
                     WorkPlaceCard(
-                        workPlaceName = workPlace.name
+                        workPlaceName = workPlace.name,
+                        workPlaceCardColor = workPlace.workPlaceCardColor
                     )
                 }
             }
