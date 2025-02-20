@@ -1,7 +1,10 @@
 package com.juco.workplacesetting
 
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.juco.common.Red
 import com.juco.domain.model.WorkTime
 import com.juco.domain.repository.WorkPlaceRepository
 import com.juco.workplacesetting.mapper.toDomain
@@ -38,6 +41,7 @@ class WorkPlaceViewModel @Inject constructor(
             endTime = LocalTime.of(18, 0)
         )
     )
+    var selectedWorkPlaceCardColor = MutableStateFlow(Red)
 
     fun setWorkDays(dayOfWeeks: Set<DayOfWeek>) {
         val today = LocalDate.now()
@@ -62,12 +66,17 @@ class WorkPlaceViewModel @Inject constructor(
         workTime.value = time
     }
 
+    fun setWorkPlaceCardColor(color: Color) {
+        selectedWorkPlaceCardColor.value = color
+    }
+
     fun saveWorkPlace() {
         val name = workPlaceName.value.trim()
         val wageValue = wage.value.toLongOrNull() ?: return
         val workDays = selectedWorkDays.value
         val payDay = selectedPayDay.value.toDomain()
         val workTime = workTime.value.toDomain()
+        val workCardColor = selectedWorkPlaceCardColor.value.toArgb()
 
         viewModelScope.launch {
             repository.saveWorkPlace(
@@ -75,13 +84,15 @@ class WorkPlaceViewModel @Inject constructor(
                 wage = wageValue,
                 workDays = workDays,
                 payDay = payDay,
-                workTime = workTime
+                workTime = workTime,
+                workPlaceCardColor = workCardColor
             )
             workPlaceName.value = ""
             wage.value = ""
             selectedWorkDays.value = emptyList()
             selectedWorkDayType.value = null
             selectedPayDay.value = UiPayDay(UiPayDayType.MONTHLY, "1일")
+            selectedWorkPlaceCardColor.value = Red
         }
     }
 }

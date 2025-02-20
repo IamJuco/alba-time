@@ -1,6 +1,7 @@
 package com.juco.workplacesetting
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -39,6 +41,7 @@ import com.juco.workplacesetting.component.PayDaySelectionDialog
 import com.juco.workplacesetting.component.PayDaySelector
 import com.juco.workplacesetting.component.SamsungStyleTimePickerDialog
 import com.juco.workplacesetting.component.WorkDaySelectionDialog
+import com.juco.workplacesetting.component.WorkPlaceCardColorSelectionDialog
 import com.juco.workplacesetting.mapper.toLocalTime
 import com.juco.workplacesetting.mapper.toTimeString
 import com.juco.workplacesetting.model.UiPayDay
@@ -57,6 +60,7 @@ fun WorkPlaceAdderRoute(
     val selectedType by viewModel.selectedWorkDayType.collectAsStateWithLifecycle()
     val selectedPayDay by viewModel.selectedPayDay.collectAsStateWithLifecycle()
     val workTime by viewModel.workTime.collectAsStateWithLifecycle()
+    val selectedWorkPlaceCardColor by viewModel.selectedWorkPlaceCardColor.collectAsStateWithLifecycle()
 
     WorkPlaceAdderScreen(
         padding = padding,
@@ -77,6 +81,8 @@ fun WorkPlaceAdderRoute(
         },
         workTime = workTime,
         onWorkTimeChange = { viewModel.setWorkTime(it) },
+        selectedWorkPlaceCardColor = selectedWorkPlaceCardColor,
+        onWorkPlaceCardColorSelected = { viewModel.setWorkPlaceCardColor(it) },
         onSaveClick = { viewModel.saveWorkPlace() }
     )
 }
@@ -96,6 +102,8 @@ fun WorkPlaceAdderScreen(
     onCustomWorkDaysSelected: (List<LocalDate>) -> Unit,
     workTime: UiWorkTime,
     onWorkTimeChange: (UiWorkTime) -> Unit,
+    selectedWorkPlaceCardColor: Color,
+    onWorkPlaceCardColorSelected: (Color) -> Unit,
     onSaveClick: () -> Unit
 ) {
     var showWorkDayDialog by remember { mutableStateOf(false) }
@@ -103,6 +111,8 @@ fun WorkPlaceAdderScreen(
 
     var showStartTimePicker by remember { mutableStateOf(false) }
     var showEndTimePicker by remember { mutableStateOf(false) }
+
+    var showWorkPlaceCardColorDialog by remember { mutableStateOf(false) }
 
     val workDaysSummary = remember(selectedWorkDays, selectedWorkDayType) {
         if (selectedWorkDayType == WorkDayType.CUSTOM && selectedWorkDays.isNotEmpty()) {
@@ -241,6 +251,39 @@ fun WorkPlaceAdderScreen(
                     onPayDaySelected(payDay)
                 }
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { showWorkPlaceCardColorDialog = true }
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "근무지 카드 색상 설정",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Box(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .background(selectedWorkPlaceCardColor, shape = CircleShape)
+                )
+            }
+
+            if (showWorkPlaceCardColorDialog) {
+                WorkPlaceCardColorSelectionDialog(
+                    selectedColor = selectedWorkPlaceCardColor,
+                    onDismiss = { showWorkPlaceCardColorDialog = false },
+                    onColorSelected = {
+                        onWorkPlaceCardColorSelected(it)
+                        showWorkPlaceCardColorDialog = false
+                    }
+                )
+            }
 
             if (showWorkDayDialog) {
                 WorkDaySelectionDialog(
