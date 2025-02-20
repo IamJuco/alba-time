@@ -10,5 +10,6 @@ data class WorkPlaceEntity(
     val wage: Long,
     val workDays: String,
     val payDay: String,
-    val workTime: String
+    val workTime: String,
+    val workPlaceCardColor: Int
 )

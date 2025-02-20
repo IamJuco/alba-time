@@ -1,5 +1,6 @@
 package com.juco.data.datasource
 
+import android.graphics.Color
 import com.juco.data.local.dao.WorkPlaceDao
 import com.juco.data.local.entity.WorkPlaceEntity
 import com.juco.data.mapper.toDateString
@@ -16,7 +17,8 @@ interface WorkPlaceDataSource {
         wage: Long,
         workDays: List<LocalDate>,
         payDay: PayDay,
-        workTime: WorkTime
+        workTime: WorkTime,
+        workPlaceCardColor: Int
     ): Long
 
     suspend fun getWorkPlaceById(id: Int): WorkPlaceEntity?
@@ -33,7 +35,8 @@ class WorkPlaceDataSourceImpl @Inject constructor(
         wage: Long,
         workDays: List<LocalDate>,
         payDay: PayDay,
-        workTime: WorkTime
+        workTime: WorkTime,
+        workPlaceCardColor: Int
     ): Long {
         return workPlaceDao.insertWorkPlace(
             WorkPlaceEntity(
@@ -41,7 +44,8 @@ class WorkPlaceDataSourceImpl @Inject constructor(
                 wage = wage,
                 workDays = workDays.toDateString(),
                 payDay = payDay.toJson(),
-                workTime = workTime.toJson()
+                workTime = workTime.toJson(),
+                workPlaceCardColor = workPlaceCardColor
             )
         )
     }

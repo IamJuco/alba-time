@@ -9,7 +9,8 @@ data class WorkPlace(
     val wage: Long,
     val workDays: List<LocalDate>,
     val payDay: PayDay,
-    val workTime: WorkTime
+    val workTime: WorkTime,
+    val workPlaceCardColor: Int
 )
 
 data class WorkTime(

@@ -4,6 +4,7 @@ import com.juco.domain.model.PayDay
 import com.juco.domain.model.WorkPlace
 import com.juco.domain.model.WorkTime
 import kotlinx.coroutines.flow.Flow
+import java.awt.Color
 import java.time.LocalDate
 
 interface WorkPlaceRepository {
@@ -12,7 +13,8 @@ interface WorkPlaceRepository {
         wage: Long,
         workDays: List<LocalDate>,
         payDay: PayDay,
-        workTime: WorkTime
+        workTime: WorkTime,
+        workPlaceCardColor: Int
     ): Long
 
     suspend fun getWorkPlaceById(id: Int): WorkPlace?
