@@ -5,6 +5,9 @@ import kotlinx.serialization.Serializable
 sealed interface RouteModel {
     @Serializable
     data object WorkPlaceAdder : RouteModel
+
+    @Serializable
+    data class WorkPlaceDetail(val workPlaceId: Int) : RouteModel
 }
 
 sealed interface MainMenuRoute : RouteModel {

@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.juco.feature.calendar.navigation.navigateCalendar
 import com.juco.feature.home.navigation.navigateHome
+import com.juco.workplacedetail.navigation.navigateToWorkPlaceDetail
 import com.juco.workplacesetting.navigation.navigateWorkPlaceAdder
 
 class MainNavigator(
@@ -43,6 +44,7 @@ class MainNavigator(
     }
 
     fun navigateToWorkPlaceAdder() = navController.navigateWorkPlaceAdder(navOptions = singleTopOptions)
+    fun navigateToWorkPlaceDetail(workPlaceId: Int) = navController.navigateToWorkPlaceDetail(workPlaceId = workPlaceId, navOptions = singleTopOptions)
 
     fun popBackStack() {
         navController.popBackStack()

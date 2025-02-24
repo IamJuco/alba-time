@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import com.juco.feature.calendar.navigation.calendarNavGraph
 import com.juco.feature.home.navigation.homeNavGraph
 import com.juco.feature.main.navigation.MainNavigator
+import com.juco.workplacedetail.navigation.workPlaceDetailNavGraph
 import com.juco.workplacesetting.navigation.workPlaceAdderNavGraph
 
 @Composable
@@ -21,13 +22,17 @@ fun MainNavHost(
         homeNavGraph(
             padding = padding,
             onShowSnackBar = onShowSnackBar,
-            navigateToWorkPlaceAdder = navigator::navigateToWorkPlaceAdder
+            navigateToWorkPlaceAdder = navigator::navigateToWorkPlaceAdder,
+            navigateToWorkPlaceDetail = navigator::navigateToWorkPlaceDetail
         )
         calendarNavGraph(
             padding = padding,
             onShowSnackBar = onShowSnackBar
         )
         workPlaceAdderNavGraph(
+            padding = padding
+        )
+        workPlaceDetailNavGraph(
             padding = padding
         )
     }
