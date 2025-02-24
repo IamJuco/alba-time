@@ -25,14 +25,16 @@ import com.juco.domain.model.WorkPlace
 @Composable
 fun WorkPlaceCard(
     workPlace: WorkPlace,
-    onDeleteClick: (WorkPlace) -> Unit
+//    onDeleteClick: (WorkPlace) -> Unit,
+    onClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
             .height(100.dp)
-            .clickable { onDeleteClick(workPlace) },
+//            .clickable { onDeleteClick(workPlace) },
+            .clickable { onClick() },
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = Color(workPlace.workPlaceCardColor)),
         elevation = CardDefaults.cardElevation(

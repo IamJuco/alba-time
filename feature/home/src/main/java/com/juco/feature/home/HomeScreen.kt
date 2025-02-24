@@ -36,24 +36,27 @@ fun HomeRoute(
     padding: PaddingValues,
     onShowSnackBar: (String) -> Unit,
     navigateToWorkPlaceAdder: () -> Unit,
+    navigateToWorkPlaceDetail: (Int) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val workPlaces by viewModel.workPlaces.collectAsStateWithLifecycle()
 
     HomeScreen(
         padding = padding,
-        navigateToWorkPlaceAdder = navigateToWorkPlaceAdder,
         workPlaces = workPlaces,
-        onDeleteWorkPlace = { viewModel.deleteWorkPlace(it) }
+        navigateToWorkPlaceAdder = navigateToWorkPlaceAdder,
+        navigateToWorkPlaceDetail = navigateToWorkPlaceDetail
+//        onDeleteWorkPlace = { viewModel.deleteWorkPlace(it) }
     )
 }
 
 @Composable
 fun HomeScreen(
     padding: PaddingValues,
-    navigateToWorkPlaceAdder: () -> Unit,
     workPlaces: List<WorkPlace>,
-    onDeleteWorkPlace: (WorkPlace) -> Unit
+    navigateToWorkPlaceAdder: () -> Unit,
+//    onDeleteWorkPlace: (WorkPlace) -> Unit,
+    navigateToWorkPlaceDetail: (Int) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -65,7 +68,8 @@ fun HomeScreen(
         items(workPlaces) { workPlace ->
             WorkPlaceCard(
                 workPlace = workPlace,
-                onDeleteClick = onDeleteWorkPlace
+//                onDeleteClick = onDeleteWorkPlace
+                onClick = { navigateToWorkPlaceDetail(workPlace.id) }
             )
         }
 

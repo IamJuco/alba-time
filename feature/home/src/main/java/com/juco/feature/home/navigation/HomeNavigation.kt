@@ -15,13 +15,15 @@ fun NavController.navigateHome(navOptions: NavOptions) {
 fun NavGraphBuilder.homeNavGraph(
     padding: PaddingValues,
     onShowSnackBar: (String) -> Unit,
-    navigateToWorkPlaceAdder: () -> Unit
+    navigateToWorkPlaceAdder: () -> Unit,
+    navigateToWorkPlaceDetail: (Int) -> Unit
 ) {
     composable<MainMenuRoute.Home> {
         HomeRoute(
             padding = padding,
             onShowSnackBar = onShowSnackBar,
-            navigateToWorkPlaceAdder = navigateToWorkPlaceAdder
+            navigateToWorkPlaceAdder = navigateToWorkPlaceAdder,
+            navigateToWorkPlaceDetail = navigateToWorkPlaceDetail
         )
     }
 }
