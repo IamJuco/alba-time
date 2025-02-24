@@ -42,6 +42,7 @@ dependencies {
     implementation(project(":feature:home"))
     implementation(project(":feature:calendar"))
     implementation(project(":feature:workplacesetting"))
+    implementation(project(":feature:workplacedetail"))
     implementation(project(":domain"))
     implementation(project(":data"))
 
