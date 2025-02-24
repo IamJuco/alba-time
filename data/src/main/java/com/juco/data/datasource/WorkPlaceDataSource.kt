@@ -17,6 +17,7 @@ interface WorkPlaceDataSource {
         workDays: List<LocalDate>,
         payDay: PayDay,
         workTime: WorkTime,
+        breakTime: Int,
         workPlaceCardColor: Int
     ): Long
 
@@ -35,6 +36,7 @@ class WorkPlaceDataSourceImpl @Inject constructor(
         workDays: List<LocalDate>,
         payDay: PayDay,
         workTime: WorkTime,
+        breakTime: Int,
         workPlaceCardColor: Int
     ): Long {
         return workPlaceDao.insertWorkPlace(
@@ -44,6 +46,7 @@ class WorkPlaceDataSourceImpl @Inject constructor(
                 workDays = workDays.toDateString(),
                 payDay = payDay.toJson(),
                 workTime = workTime.toJson(),
+                breakTime = breakTime,
                 workPlaceCardColor = workPlaceCardColor
             )
         )

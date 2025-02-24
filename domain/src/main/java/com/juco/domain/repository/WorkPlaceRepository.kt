@@ -14,6 +14,7 @@ interface WorkPlaceRepository {
         workDays: List<LocalDate>,
         payDay: PayDay,
         workTime: WorkTime,
+        breakTime: Int,
         workPlaceCardColor: Int
     ): Long
 

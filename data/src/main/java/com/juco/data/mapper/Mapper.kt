@@ -15,6 +15,7 @@ fun WorkPlaceEntity.toDomain(): WorkPlace {
         workDays = workDays.toLocalDateList(),
         payDay = payDay.toPayDay(),
         workTime = workTime.toWorkTime(),
+        breakTime = breakTime,
         workPlaceCardColor = workPlaceCardColor
     )
 }
@@ -27,6 +28,7 @@ fun WorkPlace.toEntity(): WorkPlaceEntity {
         workDays = workDays.toDateString(),
         payDay = payDay.toJson(),
         workTime = workTime.toJson(),
+        breakTime = breakTime,
         workPlaceCardColor = workPlaceCardColor
     )
 }

@@ -85,6 +85,7 @@ class WorkPlaceViewModel @Inject constructor(
                 workDays = workDays,
                 payDay = payDay,
                 workTime = workTime,
+                breakTime = 0,
                 workPlaceCardColor = workCardColor
             )
             workPlaceName.value = ""

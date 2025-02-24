@@ -24,6 +24,7 @@ class WorkPlaceRepositoryImpl @Inject constructor(
         workDays: List<LocalDate>,
         payDay: PayDay,
         workTime: WorkTime,
+        breakTime: Int,
         workPlaceCardColor: Int
     ): Long {
         return workPlaceDataSource.saveWorkPlace(
@@ -32,6 +33,7 @@ class WorkPlaceRepositoryImpl @Inject constructor(
             workDays = workDays,
             payDay = payDay,
             workTime = workTime,
+            breakTime = breakTime,
             workPlaceCardColor = workPlaceCardColor
         )
     }

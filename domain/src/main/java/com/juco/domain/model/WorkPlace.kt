@@ -10,6 +10,7 @@ data class WorkPlace(
     val workDays: List<LocalDate>,
     val payDay: PayDay,
     val workTime: WorkTime,
+    val breakTime: Int,
     val workPlaceCardColor: Int
 )
 

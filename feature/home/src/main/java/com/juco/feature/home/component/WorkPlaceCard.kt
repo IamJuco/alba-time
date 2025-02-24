@@ -48,10 +48,10 @@ fun WorkPlaceCard(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "근무지: ${workPlace.name}",
+                text = workPlace.name,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
-                fontSize = 18.sp
+                fontSize = 24.sp
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
