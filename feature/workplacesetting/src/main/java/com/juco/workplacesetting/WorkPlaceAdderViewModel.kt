@@ -41,6 +41,7 @@ class WorkPlaceViewModel @Inject constructor(
             endTime = LocalTime.of(18, 0)
         )
     )
+    var breakTime = MutableStateFlow("60")
     var selectedWorkPlaceCardColor = MutableStateFlow(Red)
 
     fun setWorkDays(dayOfWeeks: Set<DayOfWeek>) {
@@ -66,6 +67,10 @@ class WorkPlaceViewModel @Inject constructor(
         workTime.value = time
     }
 
+    fun setBreakTime(time: String) {
+        breakTime.value = time
+    }
+
     fun setWorkPlaceCardColor(color: Color) {
         selectedWorkPlaceCardColor.value = color
     }
@@ -76,6 +81,7 @@ class WorkPlaceViewModel @Inject constructor(
         val workDays = selectedWorkDays.value
         val payDay = selectedPayDay.value.toDomain()
         val workTime = workTime.value.toDomain()
+        val breakTime = breakTime.value.toIntOrNull() ?: return
         val workCardColor = selectedWorkPlaceCardColor.value.toArgb()
 
         viewModelScope.launch {
@@ -85,7 +91,7 @@ class WorkPlaceViewModel @Inject constructor(
                 workDays = workDays,
                 payDay = payDay,
                 workTime = workTime,
-                breakTime = 0,
+                breakTime = breakTime,
                 workPlaceCardColor = workCardColor
             )
             workPlaceName.value = ""

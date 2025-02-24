@@ -1,7 +1,6 @@
 package com.juco.workplacesetting
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,13 +27,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.juco.common.formatWithComma
 import com.juco.feature.workplacesetting.R
+import com.juco.workplacesetting.component.BreakTimeSelectionDialog
 import com.juco.workplacesetting.component.InputNumberField
 import com.juco.workplacesetting.component.InputTextField
 import com.juco.workplacesetting.component.PayDaySelectionDialog
@@ -60,6 +58,7 @@ fun WorkPlaceAdderRoute(
     val selectedType by viewModel.selectedWorkDayType.collectAsStateWithLifecycle()
     val selectedPayDay by viewModel.selectedPayDay.collectAsStateWithLifecycle()
     val workTime by viewModel.workTime.collectAsStateWithLifecycle()
+    val breakTime by viewModel.breakTime.collectAsStateWithLifecycle()
     val selectedWorkPlaceCardColor by viewModel.selectedWorkPlaceCardColor.collectAsStateWithLifecycle()
 
     WorkPlaceAdderScreen(
@@ -83,6 +82,8 @@ fun WorkPlaceAdderRoute(
         onWorkTimeChange = { viewModel.setWorkTime(it) },
         selectedWorkPlaceCardColor = selectedWorkPlaceCardColor,
         onWorkPlaceCardColorSelected = { viewModel.setWorkPlaceCardColor(it) },
+        breakTime = breakTime,
+        onBreakTimeChange = { viewModel.setBreakTime(it) },
         onSaveClick = { viewModel.saveWorkPlace() }
     )
 }
@@ -102,6 +103,8 @@ fun WorkPlaceAdderScreen(
     onCustomWorkDaysSelected: (List<LocalDate>) -> Unit,
     workTime: UiWorkTime,
     onWorkTimeChange: (UiWorkTime) -> Unit,
+    breakTime: String,
+    onBreakTimeChange: (String) -> Unit,
     selectedWorkPlaceCardColor: Color,
     onWorkPlaceCardColorSelected: (Color) -> Unit,
     onSaveClick: () -> Unit
@@ -111,6 +114,8 @@ fun WorkPlaceAdderScreen(
 
     var showStartTimePicker by remember { mutableStateOf(false) }
     var showEndTimePicker by remember { mutableStateOf(false) }
+
+    var showBreakTimeDialog by remember { mutableStateOf(false) }
 
     var showWorkPlaceCardColorDialog by remember { mutableStateOf(false) }
 
@@ -151,10 +156,9 @@ fun WorkPlaceAdderScreen(
 
             Text("시급", fontWeight = FontWeight.Bold, fontSize = 24.sp)
             InputNumberField(
-                text = formatWithComma(wage),
+                text = wage,
                 onValueChange = onWageChange,
                 placeholder = "시급을 입력하세요",
-                keyboardType = KeyboardType.Number
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -215,6 +219,34 @@ fun WorkPlaceAdderScreen(
                             .fillMaxWidth()
                             .height(1.dp)
                             .background(Color.Gray)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { showBreakTimeDialog = true },
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "휴게 시간 설정",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp
+                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = if (breakTime.isEmpty() || breakTime == "0") "없음" else "$breakTime 분",
+                        color = Color.Gray,
+                        fontSize = 18.sp
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_dropdown_24dp),
+                        contentDescription = "휴게 시간 설정",
+                        modifier = Modifier.size(24.dp)
                     )
                 }
             }
@@ -329,6 +361,17 @@ fun WorkPlaceAdderScreen(
                     onConfirm = { selectedTime ->
                         onWorkTimeChange(workTime.copy(endTime = selectedTime.toLocalTime()))
                         showEndTimePicker = false
+                    }
+                )
+            }
+
+            if (showBreakTimeDialog) {
+                BreakTimeSelectionDialog(
+                    currentBreakTime = breakTime,
+                    onDismiss = { showBreakTimeDialog = false },
+                    onBreakTimeSelected = { selectedBreakTime ->
+                        onBreakTimeChange(selectedBreakTime)
+                        showBreakTimeDialog = false
                     }
                 )
             }

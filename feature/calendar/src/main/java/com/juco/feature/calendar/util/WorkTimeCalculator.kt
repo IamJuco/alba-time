@@ -5,7 +5,7 @@ import java.time.Duration
 
 fun WorkPlace.workTimeCalculator(): String {
     val duration = Duration.between(this.workTime.workStartTime, this.workTime.workEndTime)
-    val totalMinutes = duration.toMinutes()
+    val totalMinutes = duration.toMinutes() - this.breakTime
     val hours = totalMinutes / 60
     val minutes = totalMinutes % 60
 
