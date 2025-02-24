@@ -16,7 +16,8 @@ fun WorkPlaceEntity.toDomain(): WorkPlace {
         payDay = payDay.toPayDay(),
         workTime = workTime.toWorkTime(),
         breakTime = breakTime,
-        workPlaceCardColor = workPlaceCardColor
+        workPlaceCardColor = workPlaceCardColor,
+        isWeeklyHolidayAllowance = isWeeklyHolidayAllowance
     )
 }
 
@@ -29,7 +30,8 @@ fun WorkPlace.toEntity(): WorkPlaceEntity {
         payDay = payDay.toJson(),
         workTime = workTime.toJson(),
         breakTime = breakTime,
-        workPlaceCardColor = workPlaceCardColor
+        workPlaceCardColor = workPlaceCardColor,
+        isWeeklyHolidayAllowance = isWeeklyHolidayAllowance
     )
 }
 

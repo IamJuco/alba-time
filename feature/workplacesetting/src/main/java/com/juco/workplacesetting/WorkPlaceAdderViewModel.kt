@@ -5,7 +5,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juco.common.Red
-import com.juco.domain.model.WorkTime
 import com.juco.domain.repository.WorkPlaceRepository
 import com.juco.workplacesetting.mapper.toDomain
 import com.juco.workplacesetting.model.UiPayDay
@@ -43,6 +42,7 @@ class WorkPlaceViewModel @Inject constructor(
     )
     var breakTime = MutableStateFlow("60")
     var selectedWorkPlaceCardColor = MutableStateFlow(Red)
+    var isWeeklyHolidayAllowance = MutableStateFlow(false)
 
     fun setWorkDays(dayOfWeeks: Set<DayOfWeek>) {
         val today = LocalDate.now()
@@ -75,14 +75,19 @@ class WorkPlaceViewModel @Inject constructor(
         selectedWorkPlaceCardColor.value = color
     }
 
+    fun setWeeklyHolidayAllowanceEnabled(enabled: Boolean) {
+        isWeeklyHolidayAllowance.value = enabled
+    }
+
     fun saveWorkPlace() {
         val name = workPlaceName.value.trim()
         val wageValue = wage.value.toLongOrNull() ?: return
         val workDays = selectedWorkDays.value
         val payDay = selectedPayDay.value.toDomain()
         val workTime = workTime.value.toDomain()
-        val breakTime = breakTime.value.toIntOrNull() ?: return
+        val breakTimeValue = breakTime.value.toIntOrNull() ?: return
         val workCardColor = selectedWorkPlaceCardColor.value.toArgb()
+        val isWeeklyHolidayAllowance = isWeeklyHolidayAllowance.value
 
         viewModelScope.launch {
             repository.saveWorkPlace(
@@ -91,8 +96,9 @@ class WorkPlaceViewModel @Inject constructor(
                 workDays = workDays,
                 payDay = payDay,
                 workTime = workTime,
-                breakTime = breakTime,
-                workPlaceCardColor = workCardColor
+                breakTime = breakTimeValue,
+                workPlaceCardColor = workCardColor,
+                isWeeklyHolidayAllowance = isWeeklyHolidayAllowance
             )
             workPlaceName.value = ""
             wage.value = ""
@@ -100,6 +106,7 @@ class WorkPlaceViewModel @Inject constructor(
             selectedWorkDayType.value = null
             selectedPayDay.value = UiPayDay(UiPayDayType.MONTHLY, "1일")
             selectedWorkPlaceCardColor.value = Red
+            breakTime.value = "60"
         }
     }
 }

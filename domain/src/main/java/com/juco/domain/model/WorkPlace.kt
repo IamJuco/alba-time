@@ -11,7 +11,8 @@ data class WorkPlace(
     val payDay: PayDay,
     val workTime: WorkTime,
     val breakTime: Int,
-    val workPlaceCardColor: Int
+    val workPlaceCardColor: Int,
+    val isWeeklyHolidayAllowance: Boolean
 )
 
 data class WorkTime(

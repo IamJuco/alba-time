@@ -12,5 +12,6 @@ data class WorkPlaceEntity(
     val payDay: String, // 월급 받는 날 ( Json )
     val workTime: String, // 근무 하는 시간 ( Json )
     val breakTime: Int, // 휴게 시간
-    val workPlaceCardColor: Int // 근무 카드 색상
+    val workPlaceCardColor: Int, // 근무 카드 색상
+    val isWeeklyHolidayAllowance: Boolean // 주휴 수당 여부
 )

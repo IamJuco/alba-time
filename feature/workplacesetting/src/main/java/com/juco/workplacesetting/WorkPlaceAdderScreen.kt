@@ -11,11 +11,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -60,6 +64,7 @@ fun WorkPlaceAdderRoute(
     val workTime by viewModel.workTime.collectAsStateWithLifecycle()
     val breakTime by viewModel.breakTime.collectAsStateWithLifecycle()
     val selectedWorkPlaceCardColor by viewModel.selectedWorkPlaceCardColor.collectAsStateWithLifecycle()
+    val isWeeklyHolidayAllowance by viewModel.isWeeklyHolidayAllowance.collectAsStateWithLifecycle()
 
     WorkPlaceAdderScreen(
         padding = padding,
@@ -84,6 +89,8 @@ fun WorkPlaceAdderRoute(
         onWorkPlaceCardColorSelected = { viewModel.setWorkPlaceCardColor(it) },
         breakTime = breakTime,
         onBreakTimeChange = { viewModel.setBreakTime(it) },
+        isWeeklyHolidayAllowance = isWeeklyHolidayAllowance,
+        onWeeklyHolidayAllowanceChange = { viewModel.setWeeklyHolidayAllowanceEnabled(it) },
         onSaveClick = { viewModel.saveWorkPlace() }
     )
 }
@@ -106,6 +113,8 @@ fun WorkPlaceAdderScreen(
     breakTime: String,
     onBreakTimeChange: (String) -> Unit,
     selectedWorkPlaceCardColor: Color,
+    isWeeklyHolidayAllowance: Boolean,
+    onWeeklyHolidayAllowanceChange: (Boolean) -> Unit,
     onWorkPlaceCardColorSelected: (Color) -> Unit,
     onSaveClick: () -> Unit
 ) {
@@ -134,6 +143,8 @@ fun WorkPlaceAdderScreen(
         Modifier
             .padding(padding)
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .imePadding() // TODO 핸드폰으로 확인해보기
     ) {
         Text(
             text = "근무지 추가",
@@ -288,9 +299,27 @@ fun WorkPlaceAdderScreen(
 
             Row(
                 modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "주휴수당 설정",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp
+                )
+                Switch(
+                    checked = isWeeklyHolidayAllowance,
+                    onCheckedChange = onWeeklyHolidayAllowanceChange
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { showWorkPlaceCardColorDialog = true }
-                    .padding(vertical = 8.dp),
+                    .clickable { showWorkPlaceCardColorDialog = true },
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
