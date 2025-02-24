@@ -24,4 +24,10 @@ class WorkPlaceDetailViewModel @Inject constructor(
             _workPlace.value = repository.getWorkPlaceById(workPlaceId)
         }
     }
+
+    fun deleteWorkPlace(workPlace: WorkPlace) {
+        viewModelScope.launch {
+            repository.deleteWorkPlace(workPlace)
+        }
+    }
 }

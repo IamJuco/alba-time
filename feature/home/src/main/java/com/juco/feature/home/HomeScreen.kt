@@ -1,7 +1,6 @@
 package com.juco.feature.home
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -25,7 +24,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.domain.model.WorkPlace
@@ -46,7 +44,6 @@ fun HomeRoute(
         workPlaces = workPlaces,
         navigateToWorkPlaceAdder = navigateToWorkPlaceAdder,
         navigateToWorkPlaceDetail = navigateToWorkPlaceDetail
-//        onDeleteWorkPlace = { viewModel.deleteWorkPlace(it) }
     )
 }
 
@@ -55,7 +52,6 @@ fun HomeScreen(
     padding: PaddingValues,
     workPlaces: List<WorkPlace>,
     navigateToWorkPlaceAdder: () -> Unit,
-//    onDeleteWorkPlace: (WorkPlace) -> Unit,
     navigateToWorkPlaceDetail: (Int) -> Unit,
 ) {
     LazyColumn(
@@ -68,7 +64,6 @@ fun HomeScreen(
         items(workPlaces) { workPlace ->
             WorkPlaceCard(
                 workPlace = workPlace,
-//                onDeleteClick = onDeleteWorkPlace
                 onClick = { navigateToWorkPlaceDetail(workPlace.id) }
             )
         }

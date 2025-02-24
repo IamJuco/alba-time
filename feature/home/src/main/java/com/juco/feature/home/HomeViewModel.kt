@@ -25,10 +25,4 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-
-    fun deleteWorkPlace(workPlace: WorkPlace) {
-        viewModelScope.launch {
-            repository.deleteWorkPlace(workPlace)
-        }
-    }
 }
