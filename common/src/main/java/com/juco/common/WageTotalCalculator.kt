@@ -6,15 +6,41 @@ import java.time.LocalTime
 import java.time.YearMonth
 import java.time.temporal.TemporalAdjusters
 
-// 한 달 기준 총 월급 계산기 (주휴수당 포함)
+// 한 달 기준 총 월급 계산기 (주휴수당 미포함)
 fun monthlyWageTotalCalculator(
     wage: Long,
     startTime: LocalTime,
     endTime: LocalTime,
     breakTime: Int,
     workDays: List<LocalDate>,
+    yearMonth: YearMonth,
+): Long {
+    val firstDayOfMonth = yearMonth.atDay(1)
+    val lastDayOfMonth = yearMonth.atEndOfMonth()
+
+    val actualWorkDays = workDays.filter { it in firstDayOfMonth..lastDayOfMonth }
+    val totalWorkDays = actualWorkDays.size
+
+    val startMinutes = startTime.hour * 60 + startTime.minute
+    val endMinutes = endTime.hour * 60 + endTime.minute
+    val dailyWorkMinutes = (endMinutes - startMinutes) - breakTime
+    val totalWorkMinutes = totalWorkDays * dailyWorkMinutes
+    val totalWorkHours = totalWorkMinutes / 60
+    val totalSalary = totalWorkHours * wage
+
+    return totalSalary
+}
+
+// 한 달 기준 총 월급 계산기 (주휴수당 포함)
+fun monthlyWageTotalWithAllowanceCalculator(
+    wage: Long,
+    startTime: LocalTime,
+    endTime: LocalTime,
+    breakTime: Int,
+    workDays: List<LocalDate>,
     isWeeklyHolidayAllowance: Boolean,
-    yearMonth: YearMonth
+    yearMonth: YearMonth,
+    taxRate: Float
 ): Long {
     val firstDayOfMonth = yearMonth.atDay(1)
     val lastDayOfMonth = yearMonth.atEndOfMonth()
@@ -39,8 +65,9 @@ fun monthlyWageTotalCalculator(
         )
         totalSalary += weeklyAllowance
     }
+    val taxAmount = (totalSalary * (taxRate / 100)).toLong()
 
-    return totalSalary
+    return totalSalary - taxAmount
 }
 
 // 한달 총 월급및 주휴 수당 계산
