@@ -19,7 +19,7 @@ class WorkPlaceDetailViewModel @Inject constructor(
     private val _workPlace = MutableStateFlow<WorkPlace?>(null)
     val workPlace: StateFlow<WorkPlace?> = _workPlace.asStateFlow()
 
-    fun loadWorkPlace(workPlaceId: Int) {
+    fun loadWorkPlaceById(workPlaceId: Int) {
         viewModelScope.launch {
             _workPlace.value = repository.getWorkPlaceById(workPlaceId)
         }

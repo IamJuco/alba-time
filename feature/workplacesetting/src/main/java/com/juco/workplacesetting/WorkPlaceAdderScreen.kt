@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.juco.common.TitleText
 import com.juco.feature.workplacesetting.R
 import com.juco.workplacesetting.component.BreakTimeSelectionDialog
 import com.juco.workplacesetting.component.InputNumberField
@@ -146,10 +147,8 @@ fun WorkPlaceAdderScreen(
             .verticalScroll(rememberScrollState())
             .imePadding() // TODO 핸드폰으로 확인해보기
     ) {
-        Text(
+        TitleText(
             text = "근무지 추가",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(16.dp)
                 .align(Alignment.CenterHorizontally)
