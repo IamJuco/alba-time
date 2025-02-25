@@ -10,11 +10,17 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -61,35 +67,35 @@ fun InputNumberField(
     onValueChange: (String) -> Unit,
     placeholder: String
 ) {
+    var rawText by remember { mutableStateOf(text) }
+    var textFieldValueState by remember { mutableStateOf(TextFieldValue(text)) }
+
     Column {
         BasicTextField(
-            value = formatWithComma(text),
-            onValueChange = { input ->
-                val filteredInput = input.filter { it.isDigit() }
+            value = textFieldValueState,
+            onValueChange = { inputValue ->
+                val filteredInput = inputValue.text.filter { it.isDigit() }
+                val prevLength = rawText.length
+                rawText = filteredInput
+
+                val formattedText = formatWithComma(rawText)
+                val cursorOffset = (formattedText.length - formatWithComma(prevLength.toString()).length)
+                val newCursorPosition = (inputValue.selection.start + cursorOffset).coerceIn(0, formattedText.length)
+
+                textFieldValueState = TextFieldValue(formattedText, TextRange(newCursorPosition))
                 onValueChange(filteredInput)
             },
             textStyle = TextStyle(fontSize = 16.sp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
+            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
             decorationBox = { innerTextField ->
-                Box(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    if (text.isEmpty()) {
-                        Text(placeholder, color = Color.Gray)
-                    }
+                Box(Modifier.fillMaxWidth()) {
+                    if (rawText.isEmpty()) Text(placeholder, color = Color.Gray)
                     innerTextField()
                 }
             }
         )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(1.dp)
-                .background(Color.Gray)
-        )
+        Box(Modifier.fillMaxWidth().height(1.dp).background(Color.Gray))
     }
 }
 
