@@ -9,6 +9,7 @@ import com.juco.domain.repository.WorkPlaceRepository
 import com.juco.workplacesetting.mapper.toDomain
 import com.juco.workplacesetting.model.UiPayDay
 import com.juco.workplacesetting.model.UiPayDayType
+import com.juco.workplacesetting.model.UiTaxType
 import com.juco.workplacesetting.model.UiWorkTime
 import com.juco.workplacesetting.model.WorkDayType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -43,6 +44,7 @@ class WorkPlaceViewModel @Inject constructor(
     var breakTime = MutableStateFlow("60")
     var selectedWorkPlaceCardColor = MutableStateFlow(Red)
     var isWeeklyHolidayAllowance = MutableStateFlow(false)
+    var selectedTax = MutableStateFlow(UiTaxType.NONE)
 
     fun setWorkDays(dayOfWeeks: Set<DayOfWeek>) {
         val today = LocalDate.now()
@@ -79,6 +81,10 @@ class WorkPlaceViewModel @Inject constructor(
         isWeeklyHolidayAllowance.value = enabled
     }
 
+    fun setTax(taxType: UiTaxType) {
+        selectedTax.value = taxType
+    }
+
     fun saveWorkPlace() {
         val name = workPlaceName.value.trim()
         val wageValue = wage.value.toLongOrNull() ?: return
@@ -88,6 +94,7 @@ class WorkPlaceViewModel @Inject constructor(
         val breakTimeValue = breakTime.value.toIntOrNull() ?: return
         val workCardColor = selectedWorkPlaceCardColor.value.toArgb()
         val isWeeklyHolidayAllowance = isWeeklyHolidayAllowance.value
+        val tax = selectedTax.value.rate
 
         viewModelScope.launch {
             repository.saveWorkPlace(
@@ -98,7 +105,8 @@ class WorkPlaceViewModel @Inject constructor(
                 workTime = workTime,
                 breakTime = breakTimeValue,
                 workPlaceCardColor = workCardColor,
-                isWeeklyHolidayAllowance = isWeeklyHolidayAllowance
+                isWeeklyHolidayAllowance = isWeeklyHolidayAllowance,
+                tax = tax
             )
             workPlaceName.value = ""
             wage.value = ""
@@ -107,6 +115,7 @@ class WorkPlaceViewModel @Inject constructor(
             selectedPayDay.value = UiPayDay(UiPayDayType.MONTHLY, "1일")
             selectedWorkPlaceCardColor.value = Red
             breakTime.value = "60"
+            selectedTax.value = UiTaxType.NONE
         }
     }
 }

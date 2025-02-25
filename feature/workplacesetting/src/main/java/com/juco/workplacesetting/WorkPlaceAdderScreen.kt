@@ -43,11 +43,13 @@ import com.juco.workplacesetting.component.InputTextField
 import com.juco.workplacesetting.component.PayDaySelectionDialog
 import com.juco.workplacesetting.component.PayDaySelector
 import com.juco.workplacesetting.component.SamsungStyleTimePickerDialog
+import com.juco.workplacesetting.component.TaxSelectionDialog
 import com.juco.workplacesetting.component.WorkDaySelectionDialog
 import com.juco.workplacesetting.component.WorkPlaceCardColorSelectionDialog
 import com.juco.workplacesetting.mapper.toLocalTime
 import com.juco.workplacesetting.mapper.toTimeString
 import com.juco.workplacesetting.model.UiPayDay
+import com.juco.workplacesetting.model.UiTaxType
 import com.juco.workplacesetting.model.UiWorkTime
 import com.juco.workplacesetting.model.WorkDayType
 import java.time.LocalDate
@@ -66,6 +68,7 @@ fun WorkPlaceAdderRoute(
     val breakTime by viewModel.breakTime.collectAsStateWithLifecycle()
     val selectedWorkPlaceCardColor by viewModel.selectedWorkPlaceCardColor.collectAsStateWithLifecycle()
     val isWeeklyHolidayAllowance by viewModel.isWeeklyHolidayAllowance.collectAsStateWithLifecycle()
+    val tax by viewModel.selectedTax.collectAsStateWithLifecycle()
 
     WorkPlaceAdderScreen(
         padding = padding,
@@ -92,6 +95,8 @@ fun WorkPlaceAdderRoute(
         onBreakTimeChange = { viewModel.setBreakTime(it) },
         isWeeklyHolidayAllowance = isWeeklyHolidayAllowance,
         onWeeklyHolidayAllowanceChange = { viewModel.setWeeklyHolidayAllowanceEnabled(it) },
+        selectedTax = tax,
+        onTaxSelected = { viewModel.setTax(it) },
         onSaveClick = { viewModel.saveWorkPlace() }
     )
 }
@@ -117,17 +122,18 @@ fun WorkPlaceAdderScreen(
     isWeeklyHolidayAllowance: Boolean,
     onWeeklyHolidayAllowanceChange: (Boolean) -> Unit,
     onWorkPlaceCardColorSelected: (Color) -> Unit,
+    selectedTax: UiTaxType,
+    onTaxSelected: (UiTaxType) -> Unit,
     onSaveClick: () -> Unit
 ) {
     var showWorkDayDialog by remember { mutableStateOf(false) }
     var showPayDayDialog by remember { mutableStateOf(false) }
+    var showBreakTimeDialog by remember { mutableStateOf(false) }
+    var showWorkPlaceCardColorDialog by remember { mutableStateOf(false) }
+    var showTaxDialog by remember { mutableStateOf(false) }
 
     var showStartTimePicker by remember { mutableStateOf(false) }
     var showEndTimePicker by remember { mutableStateOf(false) }
-
-    var showBreakTimeDialog by remember { mutableStateOf(false) }
-
-    var showWorkPlaceCardColorDialog by remember { mutableStateOf(false) }
 
     val workDaysSummary = remember(selectedWorkDays, selectedWorkDayType) {
         if (selectedWorkDayType == WorkDayType.CUSTOM && selectedWorkDays.isNotEmpty()) {
@@ -318,6 +324,34 @@ fun WorkPlaceAdderScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .clickable { showTaxDialog = true },
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "세금 설정",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp
+                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = selectedTax.displayName,
+                        color = Color.Gray,
+                        fontSize = 18.sp
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_dropdown_24dp),
+                        contentDescription = "세금 설정",
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
                     .clickable { showWorkPlaceCardColorDialog = true },
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -400,6 +434,17 @@ fun WorkPlaceAdderScreen(
                     onBreakTimeSelected = { selectedBreakTime ->
                         onBreakTimeChange(selectedBreakTime)
                         showBreakTimeDialog = false
+                    }
+                )
+            }
+
+            if (showTaxDialog) {
+                TaxSelectionDialog(
+                    selectedTax = selectedTax,
+                    onDismiss = { showTaxDialog = false },
+                    onConfirm = {
+                        onTaxSelected(it)
+                        showTaxDialog = false
                     }
                 )
             }
