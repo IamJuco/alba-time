@@ -14,7 +14,8 @@ fun WorkPlaceEntity.toDomain(): WorkPlace {
         workTime = workTime ?: WorkTime(LocalTime.of(9, 0), LocalTime.of(18, 0)),
         breakTime = breakTime,
         workPlaceCardColor = workPlaceCardColor,
-        isWeeklyHolidayAllowance = isWeeklyHolidayAllowance
+        isWeeklyHolidayAllowance = isWeeklyHolidayAllowance,
+        tax = tax
     )
 }
 
@@ -28,6 +29,7 @@ fun WorkPlace.toEntity(): WorkPlaceEntity {
         workTime = workTime,
         breakTime = breakTime,
         workPlaceCardColor = workPlaceCardColor,
-        isWeeklyHolidayAllowance = isWeeklyHolidayAllowance
+        isWeeklyHolidayAllowance = isWeeklyHolidayAllowance,
+        tax = tax
     )
 }

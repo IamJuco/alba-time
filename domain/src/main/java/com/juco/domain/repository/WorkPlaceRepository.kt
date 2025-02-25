@@ -15,7 +15,8 @@ interface WorkPlaceRepository {
         workTime: WorkTime,
         breakTime: Int,
         workPlaceCardColor: Int,
-        isWeeklyHolidayAllowance: Boolean
+        isWeeklyHolidayAllowance: Boolean,
+        tax: Float
     ): Long
 
     suspend fun getWorkPlaceById(id: Int): WorkPlace?

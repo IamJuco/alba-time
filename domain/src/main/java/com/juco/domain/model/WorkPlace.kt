@@ -12,7 +12,8 @@ data class WorkPlace(
     val workTime: WorkTime = WorkTime(LocalTime.of(9, 0), LocalTime.of(18, 0)),
     val breakTime: Int,
     val workPlaceCardColor: Int,
-    val isWeeklyHolidayAllowance: Boolean
+    val isWeeklyHolidayAllowance: Boolean,
+    val tax: Float
 )
 
 

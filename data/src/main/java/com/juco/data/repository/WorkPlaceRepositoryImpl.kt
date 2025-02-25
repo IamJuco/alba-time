@@ -26,7 +26,8 @@ class WorkPlaceRepositoryImpl @Inject constructor(
         workTime: WorkTime,
         breakTime: Int,
         workPlaceCardColor: Int,
-        isWeeklyHolidayAllowance: Boolean
+        isWeeklyHolidayAllowance: Boolean,
+        tax: Float
     ): Long {
         return workPlaceDataSource.saveWorkPlace(
             name = name,
@@ -36,7 +37,8 @@ class WorkPlaceRepositoryImpl @Inject constructor(
             workTime = workTime,
             breakTime = breakTime,
             workPlaceCardColor = workPlaceCardColor,
-            isWeeklyHolidayAllowance = isWeeklyHolidayAllowance
+            isWeeklyHolidayAllowance = isWeeklyHolidayAllowance,
+            tax = tax
         )
     }
 

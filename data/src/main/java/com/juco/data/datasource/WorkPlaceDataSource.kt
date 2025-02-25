@@ -17,7 +17,8 @@ interface WorkPlaceDataSource {
         workTime: WorkTime,
         breakTime: Int,
         workPlaceCardColor: Int,
-        isWeeklyHolidayAllowance: Boolean
+        isWeeklyHolidayAllowance: Boolean,
+        tax: Float
     ): Long
 
     suspend fun getWorkPlaceById(id: Int): WorkPlaceEntity?
@@ -37,7 +38,8 @@ class WorkPlaceDataSourceImpl @Inject constructor(
         workTime: WorkTime,
         breakTime: Int,
         workPlaceCardColor: Int,
-        isWeeklyHolidayAllowance: Boolean
+        isWeeklyHolidayAllowance: Boolean,
+        tax: Float
     ): Long {
         return workPlaceDao.insertWorkPlace(
             WorkPlaceEntity(
@@ -48,7 +50,8 @@ class WorkPlaceDataSourceImpl @Inject constructor(
                 workTime = workTime,
                 breakTime = breakTime,
                 workPlaceCardColor = workPlaceCardColor,
-                isWeeklyHolidayAllowance = isWeeklyHolidayAllowance
+                isWeeklyHolidayAllowance = isWeeklyHolidayAllowance,
+                tax = tax
             )
         )
     }

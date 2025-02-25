@@ -16,5 +16,6 @@ data class WorkPlaceEntity(
     val workTime: WorkTime?, // 근무 시간
     val breakTime: Int, // 휴게 시간
     val workPlaceCardColor: Int, // 근무 카드 색상
-    val isWeeklyHolidayAllowance: Boolean // 주휴 수당 여부
+    val isWeeklyHolidayAllowance: Boolean, // 주휴 수당 여부
+    val tax: Float // 세금 설정 여부
 )
