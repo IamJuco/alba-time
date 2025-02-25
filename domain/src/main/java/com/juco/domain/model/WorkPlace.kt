@@ -8,12 +8,13 @@ data class WorkPlace(
     val name: String,
     val wage: Long,
     val workDays: List<LocalDate>,
-    val payDay: PayDay,
-    val workTime: WorkTime,
+    val payDay: PayDay = PayDay(PayDayType.MONTHLY, emptyList()),
+    val workTime: WorkTime = WorkTime(LocalTime.of(9, 0), LocalTime.of(18, 0)),
     val breakTime: Int,
     val workPlaceCardColor: Int,
     val isWeeklyHolidayAllowance: Boolean
 )
+
 
 data class WorkTime(
     val workStartTime: LocalTime,

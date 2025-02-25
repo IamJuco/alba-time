@@ -2,8 +2,6 @@ package com.juco.data.datasource
 
 import com.juco.data.local.dao.WorkPlaceDao
 import com.juco.data.local.entity.WorkPlaceEntity
-import com.juco.data.mapper.toDateString
-import com.juco.data.mapper.toJson
 import com.juco.domain.model.PayDay
 import com.juco.domain.model.WorkTime
 import kotlinx.coroutines.flow.Flow
@@ -45,9 +43,9 @@ class WorkPlaceDataSourceImpl @Inject constructor(
             WorkPlaceEntity(
                 name = name,
                 wage = wage,
-                workDays = workDays.toDateString(),
-                payDay = payDay.toJson(),
-                workTime = workTime.toJson(),
+                workDays = workDays,
+                payDay = payDay,
+                workTime = workTime,
                 breakTime = breakTime,
                 workPlaceCardColor = workPlaceCardColor,
                 isWeeklyHolidayAllowance = isWeeklyHolidayAllowance
