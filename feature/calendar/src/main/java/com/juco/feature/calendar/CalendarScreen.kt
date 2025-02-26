@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.common.formatWithComma
-import com.juco.common.monthlyWageTotalCalculator
+import com.juco.common.monthlyWageTotalWithAllowanceCalculator
 import com.juco.domain.model.WorkPlace
 import com.juco.feature.calendar.component.WorkChipCard
 import com.juco.feature.calendar.component.WorkPlaceCard
@@ -115,14 +115,15 @@ fun CalendarScreen(
 ) {
     val monthlyTotalWage = remember(currentYearMonth, monthlyWorkPlaces) {
         monthlyWorkPlaces.sumOf { workPlace ->
-            monthlyWageTotalCalculator(
+            monthlyWageTotalWithAllowanceCalculator(
                 wage = workPlace.wage,
                 startTime = workPlace.workTime.workStartTime,
                 endTime = workPlace.workTime.workEndTime,
                 breakTime = workPlace.breakTime,
                 workDays = workPlace.workDays,
                 isWeeklyHolidayAllowance = workPlace.isWeeklyHolidayAllowance,
-                yearMonth = currentYearMonth
+                yearMonth = currentYearMonth,
+                taxRate = workPlace.tax
             )
         }
     }
