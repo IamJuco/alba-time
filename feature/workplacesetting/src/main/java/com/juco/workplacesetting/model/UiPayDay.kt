@@ -8,5 +8,5 @@ data class UiPayDay(
 enum class UiPayDayType {
     MONTHLY,  // 월급
     WEEKLY,   // 주급
-    CUSTOM    // 직접설정
+//    CUSTOM    // 직접설정
 }

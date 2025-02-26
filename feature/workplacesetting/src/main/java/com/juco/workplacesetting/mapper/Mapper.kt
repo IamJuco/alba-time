@@ -15,7 +15,7 @@ fun UiPayDay.toDomain(): PayDay {
         type = when (this.type) {
             UiPayDayType.MONTHLY -> PayDayType.MONTHLY
             UiPayDayType.WEEKLY -> PayDayType.WEEKLY
-            UiPayDayType.CUSTOM -> PayDayType.CUSTOM
+//            UiPayDayType.CUSTOM -> PayDayType.CUSTOM
         },
         dates = convertToPayDays(this.value)
     )
@@ -25,7 +25,7 @@ fun UiPayDayType.displayName(): String {
     return when (this) {
         UiPayDayType.MONTHLY -> "월급"
         UiPayDayType.WEEKLY -> "주급"
-        UiPayDayType.CUSTOM -> "직접설정"
+//        UiPayDayType.CUSTOM -> "직접설정"
     }
 }
 

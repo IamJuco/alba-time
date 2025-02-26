@@ -44,13 +44,13 @@ fun PayDaySelector(
 
     val payDayText = when (selectedPayDay.type) {
         UiPayDayType.MONTHLY, UiPayDayType.WEEKLY -> "${selectedPayDay.value} 마다"
-        UiPayDayType.CUSTOM -> "직접 설정"
+//        UiPayDayType.CUSTOM -> "직접 설정"
     }
 
     val payDayOptions = listOf(
         UiPayDay(UiPayDayType.MONTHLY, "1일"),
         UiPayDay(UiPayDayType.WEEKLY, "월요일"),
-        UiPayDay(UiPayDayType.CUSTOM)
+//        UiPayDay(UiPayDayType.CUSTOM)
     )
 
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -77,7 +77,7 @@ fun PayDaySelector(
             }
         }
 
-        if (selectedPayDay.type != UiPayDayType.CUSTOM) {
+//        if (selectedPayDay.type != UiPayDayType.CUSTOM)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -105,7 +105,7 @@ fun PayDaySelector(
                     color = Color.Gray
                 )
             }
-        }
+
 
         if (showDialog) {
             PayDaySelectionDialog(

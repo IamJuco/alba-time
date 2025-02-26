@@ -10,5 +10,5 @@ data class PayDay(
 enum class PayDayType {
     MONTHLY,
     WEEKLY,
-    CUSTOM
+//    CUSTOM
 }
