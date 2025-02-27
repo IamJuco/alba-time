@@ -17,9 +17,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -82,6 +85,7 @@ fun WorkPlaceAdderRoute(
 
     WorkPlaceAdderScreen(
         padding = padding,
+        popBackStack = popBackStack,
         workPlaceName = workPlaceName,
         onWorkPlaceNameChange = { viewModel.workPlaceName.value = it },
         wage = wage,
@@ -114,6 +118,7 @@ fun WorkPlaceAdderRoute(
 @Composable
 fun WorkPlaceAdderScreen(
     padding: PaddingValues,
+    popBackStack: () -> Unit,
     workPlaceName: String,
     onWorkPlaceNameChange: (String) -> Unit,
     wage: String,
@@ -158,19 +163,34 @@ fun WorkPlaceAdderScreen(
 
     Column(
         Modifier
-            .padding(padding)
+            .padding(padding).padding(start = 16.dp, end = 16.dp)
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .imePadding() // TODO 핸드폰으로 확인해보기
+            .imePadding()
     ) {
-        TitleText(
-            text = "근무지 추가",
+        Box(
             modifier = Modifier
-                .padding(16.dp)
-                .align(Alignment.CenterHorizontally)
-        )
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
+        ) {
+            IconButton(
+                onClick = { popBackStack() },
+                modifier = Modifier.align(Alignment.CenterStart)
+            ) {
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    imageVector = Icons.Default.KeyboardArrowLeft,
+                    contentDescription = "뒤로가기",
+                    tint = Color.Black,
+                )
+            }
+            TitleText(
+                text = "근무지 추가",
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
 
-        Column(Modifier.padding(16.dp)) {
+        Column {
             Text("근무지 명", fontWeight = FontWeight.Bold, fontSize = 24.sp)
             InputTextField(
                 text = workPlaceName,

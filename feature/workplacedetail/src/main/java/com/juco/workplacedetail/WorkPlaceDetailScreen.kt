@@ -2,6 +2,7 @@ package com.juco.workplacedetail
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -10,10 +11,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -65,13 +69,15 @@ fun WorkPlaceDetailRoute(
     WorkPlaceDetailScreen(
         padding = padding,
         workPlace = workPlace,
-        onDeleteWorkPlace = { viewModel.deleteWorkPlace(it) }
+        onDeleteWorkPlace = { viewModel.deleteWorkPlace(it) },
+        popBackStack = popBackStack
     )
 }
 
 @Composable
 fun WorkPlaceDetailScreen(
     padding: PaddingValues,
+    popBackStack: () -> Unit,
     workPlace: WorkPlace?,
     onDeleteWorkPlace: (WorkPlace) -> Unit
 ) {
@@ -112,15 +118,30 @@ fun WorkPlaceDetailScreen(
     Column(
         modifier = Modifier
             .padding(padding)
-            .padding(16.dp)
+            .padding(start = 16.dp, end = 16.dp)
             .fillMaxSize()
     ) {
-        TitleText(
-            text = "근무지 상세 정보",
+        Box(
             modifier = Modifier
-                .padding(16.dp)
-                .align(Alignment.CenterHorizontally)
-        )
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
+        ) {
+            IconButton(
+                onClick = { popBackStack() },
+                modifier = Modifier.align(Alignment.CenterStart)
+            ) {
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    imageVector = Icons.Default.KeyboardArrowLeft,
+                    contentDescription = "뒤로가기",
+                    tint = Color.Black,
+                )
+            }
+            TitleText(
+                text = "근무지 상세 정보",
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
 
         Card(
             modifier = Modifier
