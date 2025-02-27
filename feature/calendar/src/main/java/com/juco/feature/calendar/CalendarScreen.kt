@@ -125,7 +125,7 @@ fun CalendarScreen(
                 yearMonth = currentYearMonth,
                 taxRate = workPlace.tax
             )
-            wageResult.totalTaxAmount
+            wageResult.totalSalary
         }
     }
 

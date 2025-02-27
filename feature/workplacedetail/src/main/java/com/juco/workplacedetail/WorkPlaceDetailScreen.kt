@@ -142,7 +142,9 @@ fun WorkPlaceDetailScreen(
         }
 
         Row(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -211,8 +213,17 @@ fun WorkPlaceDetailScreen(
         ) {
             Column(modifier = Modifier.padding(12.dp)) {
                 InfoText(title = "기본 급여", value = "${formatWithComma(monthlyTotalBaseSalary)}원")
-                InfoText(title = "주휴수당", value = "+${formatWithComma(monthlyWeeklyAllowance)}원")
-                InfoText(title = "세금 (${workPlace?.tax ?: 0.0f}%)", value = "-${formatWithComma(taxAmount)}원")
+                InfoText(
+                    title = "주휴수당", value = if (workPlace?.isWeeklyHolidayAllowance == false) {
+                        "설정 안됨"
+                    } else {
+                        "+${formatWithComma(monthlyWeeklyAllowance)}원"
+                    }
+                )
+                InfoText(
+                    title = "세금 (${workPlace?.tax ?: 0.0f}%)",
+                    value = "-${formatWithComma(taxAmount)}원"
+                )
             }
         }
 

@@ -86,5 +86,4 @@ object WageCalculator {
             totalSalary = totalSalaryAfterTax
         )
     }
-
 }
