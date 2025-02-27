@@ -13,11 +13,13 @@ fun NavController.navigateWorkPlaceAdder(navOptions: NavOptions) {
 }
 
 fun NavGraphBuilder.workPlaceAdderNavGraph(
-    padding: PaddingValues
+    padding: PaddingValues,
+    popBackStack: () -> Unit
 ) {
     composable<RouteModel.WorkPlaceAdder> {
         WorkPlaceAdderRoute(
-            padding = padding
+            padding = padding,
+            popBackStack = popBackStack
         )
     }
 }

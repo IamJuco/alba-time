@@ -14,12 +14,14 @@ fun NavController.navigateToWorkPlaceDetail(workPlaceId: Int, navOptions: NavOpt
 }
 
 fun NavGraphBuilder.workPlaceDetailNavGraph(
-    padding: PaddingValues
+    padding: PaddingValues,
+    popBackStack: () -> Unit,
 ) {
     composable<RouteModel.WorkPlaceDetail> { navBackStackEntry ->
         val workPlaceWorkId = navBackStackEntry.toRoute<RouteModel.WorkPlaceDetail>().workPlaceId
         WorkPlaceDetailRoute(
             padding = padding,
+            popBackStack = popBackStack,
             workPlaceDetailId = workPlaceWorkId
         )
     }

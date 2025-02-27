@@ -59,6 +59,7 @@ import java.time.LocalDate
 @Composable
 fun WorkPlaceAdderRoute(
     padding: PaddingValues = PaddingValues(),
+    popBackStack: () -> Unit,
     viewModel: WorkPlaceViewModel = hiltViewModel()
 ) {
     val workPlaceName by viewModel.workPlaceName.collectAsStateWithLifecycle()

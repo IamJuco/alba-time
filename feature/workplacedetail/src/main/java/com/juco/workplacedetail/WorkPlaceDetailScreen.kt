@@ -47,6 +47,7 @@ import java.time.YearMonth
 @Composable
 fun WorkPlaceDetailRoute(
     padding: PaddingValues = PaddingValues(),
+    popBackStack: () -> Unit,
     viewModel: WorkPlaceDetailViewModel = hiltViewModel(),
     workPlaceDetailId: Int
 ) {

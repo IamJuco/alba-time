@@ -51,7 +51,6 @@ import java.time.YearMonth
 @Composable
 fun CalendarRoute(
     padding: PaddingValues,
-    onShowSnackBar: (String) -> Unit,
     viewModel: CalendarViewModel = hiltViewModel()
 ) {
     val monthlyWorkPlaces by viewModel.monthlyWorkPlaces.collectAsStateWithLifecycle()

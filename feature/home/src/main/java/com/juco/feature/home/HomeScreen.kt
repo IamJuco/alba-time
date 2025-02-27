@@ -33,7 +33,6 @@ import com.juco.feature.home.component.WorkPlaceCard
 @Composable
 fun HomeRoute(
     padding: PaddingValues,
-    onShowSnackBar: (String) -> Unit,
     navigateToWorkPlaceAdder: () -> Unit,
     navigateToWorkPlaceDetail: (Int) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()

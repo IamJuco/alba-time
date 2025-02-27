@@ -21,19 +21,19 @@ fun MainNavHost(
     ) {
         homeNavGraph(
             padding = padding,
-            onShowSnackBar = onShowSnackBar,
             navigateToWorkPlaceAdder = navigator::navigateToWorkPlaceAdder,
             navigateToWorkPlaceDetail = navigator::navigateToWorkPlaceDetail
         )
         calendarNavGraph(
-            padding = padding,
-            onShowSnackBar = onShowSnackBar
+            padding = padding
         )
         workPlaceAdderNavGraph(
-            padding = padding
+            padding = padding,
+            popBackStack = navigator::popBackStack,
         )
         workPlaceDetailNavGraph(
-            padding = padding
+            padding = padding,
+            popBackStack = navigator::popBackStack,
         )
     }
 }
