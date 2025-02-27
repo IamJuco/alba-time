@@ -34,8 +34,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.juco.common.WageCalculator
 import com.juco.common.formatWithComma
-import com.juco.common.monthlyWageTotalWithAllowanceCalculator
 import com.juco.domain.model.WorkPlace
 import com.juco.feature.calendar.component.WorkChipCard
 import com.juco.feature.calendar.component.WorkPlaceCard
@@ -113,9 +113,9 @@ fun CalendarScreen(
     onShowDialogChange: (Boolean) -> Unit,
     onScrollToMonth: (Int, Int) -> Unit
 ) {
-    val monthlyTotalWage = remember(currentYearMonth, monthlyWorkPlaces) {
+    val monthlyTotalSalary = remember(currentYearMonth, monthlyWorkPlaces) {
         monthlyWorkPlaces.sumOf { workPlace ->
-            monthlyWageTotalWithAllowanceCalculator(
+            val wageResult = WageCalculator.calculateMonthlyWageWithAllowance(
                 wage = workPlace.wage,
                 startTime = workPlace.workTime.workStartTime,
                 endTime = workPlace.workTime.workEndTime,
@@ -125,6 +125,7 @@ fun CalendarScreen(
                 yearMonth = currentYearMonth,
                 taxRate = workPlace.tax
             )
+            wageResult.totalTaxAmount
         }
     }
 
@@ -143,7 +144,7 @@ fun CalendarScreen(
         )
 
         Text(
-            text = "이번 달 총 급여: ${formatWithComma(monthlyTotalWage)}원",
+            text = "이번 달 총 급여: ${formatWithComma(monthlyTotalSalary)}원",
             fontSize = 18.sp,
             color = Color.Blue
         )

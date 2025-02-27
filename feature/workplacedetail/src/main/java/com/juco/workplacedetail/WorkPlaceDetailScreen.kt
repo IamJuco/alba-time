@@ -11,15 +11,22 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,12 +37,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.common.TitleText
+import com.juco.common.WageCalculator
 import com.juco.common.formatWithComma
-import com.juco.common.monthlyWageTotalCalculator
-import com.juco.common.monthlyWageTotalWithAllowanceCalculator
-import com.juco.common.weeklyAllowanceTotalCalculator
 import com.juco.domain.model.WorkPlace
-import java.time.LocalDate
 import java.time.YearMonth
 
 @Composable
@@ -63,52 +67,39 @@ fun WorkPlaceDetailScreen(
     workPlace: WorkPlace?,
     onDeleteWorkPlace: (WorkPlace) -> Unit
 ) {
-    val yearMonth = YearMonth.now()
-    val currentDate = LocalDate.now()
+    var selectedYearMonth by remember { mutableStateOf(YearMonth.now()) }
 
-    val monthlyWage = remember(workPlace, yearMonth) {
+    val monthlySalaryResult = remember(workPlace, selectedYearMonth) {
         workPlace?.let {
-            monthlyWageTotalCalculator(
-                wage = it.wage,
-                startTime = it.workTime.workStartTime,
-                endTime = it.workTime.workEndTime,
-                breakTime = it.breakTime,
-                workDays = it.workDays,
-                yearMonth = yearMonth,
-            )
-        } ?: 0L
-    }
-
-    val monthlyWageWithAllowance = remember(workPlace, yearMonth) {
-        workPlace?.let {
-            monthlyWageTotalWithAllowanceCalculator(
+            WageCalculator.calculateMonthlyWageWithAllowance(
                 wage = it.wage,
                 startTime = it.workTime.workStartTime,
                 endTime = it.workTime.workEndTime,
                 breakTime = it.breakTime,
                 workDays = it.workDays,
                 isWeeklyHolidayAllowance = it.isWeeklyHolidayAllowance,
-                yearMonth = yearMonth,
+                yearMonth = selectedYearMonth,
                 taxRate = it.tax
             )
-        } ?: 0L
+        } ?: WageCalculator.MonthlyWageResult(0L, 0L, 0L)
     }
 
-    val weeklyAllowance = remember(workPlace) {
+    val monthlyTotalBaseSalary = monthlySalaryResult.totalBaseSalary
+    val monthlyWeeklyAllowance = remember(workPlace, selectedYearMonth) {
         workPlace?.let {
-            weeklyAllowanceTotalCalculator(
+            WageCalculator.calculateMonthlyWeeklyAllowance(
                 wage = it.wage,
                 startTime = it.workTime.workStartTime,
                 endTime = it.workTime.workEndTime,
                 breakTime = it.breakTime,
                 workDays = it.workDays,
-                currentDate = currentDate
+                yearMonth = selectedYearMonth
             )
         } ?: 0L
     }
 
-    val taxAmount = ((monthlyWageWithAllowance * (workPlace?.tax ?: 0.0f)) / 100).toLong()
-    val totalSalaryCalculation = monthlyWageWithAllowance - taxAmount
+    val taxAmount = monthlySalaryResult.totalTaxAmount
+    val monthlyWageWithAllowance = monthlySalaryResult.totalSalary
 
     Column(
         modifier = Modifier
@@ -150,14 +141,33 @@ fun WorkPlaceDetailScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = { selectedYearMonth = selectedYearMonth.minusMonths(1) }) {
+                Icon(Icons.Default.ArrowBack, contentDescription = "이전 달")
+            }
+            Text(
+                text = "${selectedYearMonth.year}년 ${selectedYearMonth.monthValue}월",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+            IconButton(onClick = { selectedYearMonth = selectedYearMonth.plusMonths(1) }) {
+                Icon(Icons.Default.ArrowForward, contentDescription = "다음 달")
+            }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
 
         InfoText(title = "시급", value = "${formatWithComma(workPlace?.wage ?: 0)}원")
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "이번 달 총 급여",
+            text = "${selectedYearMonth.year}년 ${selectedYearMonth.monthValue}월 총 급여",
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
             color = Color.Black
@@ -175,7 +185,7 @@ fun WorkPlaceDetailScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "${formatWithComma(totalSalaryCalculation)}원",
+                    text = "${formatWithComma(monthlyWageWithAllowance)}원",
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
@@ -200,8 +210,8 @@ fun WorkPlaceDetailScreen(
             colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
         ) {
             Column(modifier = Modifier.padding(12.dp)) {
-                InfoText(title = "이번 달 기본 급여", value = "${formatWithComma(monthlyWage)}원")
-                InfoText(title = "주휴수당", value = "+${formatWithComma(weeklyAllowance)}원")
+                InfoText(title = "기본 급여", value = "${formatWithComma(monthlyTotalBaseSalary)}원")
+                InfoText(title = "주휴수당", value = "+${formatWithComma(monthlyWeeklyAllowance)}원")
                 InfoText(title = "세금 (${workPlace?.tax ?: 0.0f}%)", value = "-${formatWithComma(taxAmount)}원")
             }
         }
@@ -209,7 +219,7 @@ fun WorkPlaceDetailScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { /* TODO: 근무지 수정 기능 추가 */ },
+            onClick = { /* TODO: 근무지 수정 기능 (나중에추가할것) */ },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6A89CC))
         ) {
