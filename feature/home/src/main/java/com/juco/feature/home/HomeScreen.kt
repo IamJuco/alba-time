@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.juco.common.LightBlue
 import com.juco.domain.model.WorkPlace
 import com.juco.feature.home.component.WorkPlaceCard
 
@@ -76,7 +77,7 @@ fun HomeScreen(
                     .height(180.dp)
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF343538)),
+                colors = CardDefaults.cardColors(containerColor = LightBlue),
                 elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
                 onClick = navigateToWorkPlaceAdder
             ) {

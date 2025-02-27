@@ -36,7 +36,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.juco.common.LightBlue
 import com.juco.common.TitleText
+import com.juco.common.Vanilla
 import com.juco.common.WageCalculator
 import com.juco.common.formatWithComma
 import com.juco.domain.model.WorkPlace
@@ -179,7 +181,7 @@ fun WorkPlaceDetailScreen(
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
             shape = RoundedCornerShape(12.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFFFAF3E0)),
+            colors = CardDefaults.cardColors(containerColor = Vanilla),
             elevation = CardDefaults.cardElevation(3.dp)
         ) {
             Column(
@@ -232,7 +234,7 @@ fun WorkPlaceDetailScreen(
         Button(
             onClick = { /* TODO: 근무지 수정 기능 (나중에추가할것) */ },
             modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6A89CC))
+            colors = ButtonDefaults.buttonColors(containerColor = LightBlue)
         ) {
             Text("근무지 수정", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
         }

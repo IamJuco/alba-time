@@ -2,6 +2,7 @@ package com.juco.common
 
 import androidx.compose.ui.graphics.Color
 
+// 근무지 카드 컬러
 val Red = Color(0XFFE57373)
 val Pink = Color(0XFFF06292)
 val Purple = Color(0XFFBA68C8)
@@ -24,4 +25,10 @@ val colorList = listOf(
     Color(0XFFA1887F)  // Brown
 )
 
-val randomColor = colorList.random()
+// 앱 기본 색상 ( 버튼, 월급일 설정 색상 )
+val LightBlue = Color(0xFF6A89CC)
+
+// WorkPlaceDetail의 2월 총 급여 카드
+val Vanilla = Color(0xFFFAF3E0)
+
+//

@@ -126,13 +126,14 @@ fun PayDaySelectionDialog(
     onDismiss: () -> Unit,
     onConfirm: (UiPayDay) -> Unit
 ) {
-    val monthlyOptions = listOf("1일", "5일", "10일", "15일", "20일", "25일", "말일")
+    // "말일" 임시 제거
+    val monthlyOptions = listOf("1일", "5일", "10일", "15일", "20일", "25일")
     val weeklyOptions = listOf("월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일")
 
     val options = when (payDay.type) {
         UiPayDayType.MONTHLY -> monthlyOptions
         UiPayDayType.WEEKLY -> weeklyOptions
-        else -> emptyList()
+//        else -> emptyList()
     }
 
     var selectedOption by remember { mutableStateOf(payDay.value) }
