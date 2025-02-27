@@ -1,6 +1,6 @@
 package com.juco.workplacedetail
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,12 +14,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -134,7 +134,6 @@ fun WorkPlaceDetailScreen(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    modifier = Modifier.clickable { workPlace?.let { onDeleteWorkPlace(it) } },
                     text = workPlace?.name ?: "ERROR",
                     fontSize = 24.sp,
                     color = Color.White,
@@ -231,12 +230,13 @@ fun WorkPlaceDetailScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-            onClick = { /* TODO: 근무지 수정 기능 (나중에추가할것) */ },
+        OutlinedButton(
+            onClick = { workPlace?.let { onDeleteWorkPlace(it) } },
             modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = LightBlue)
+            colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent),
+            border = BorderStroke(1.dp, LightBlue)
         ) {
-            Text("근무지 수정", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
+            Text("근무지 삭제", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.Red)
         }
     }
 }
