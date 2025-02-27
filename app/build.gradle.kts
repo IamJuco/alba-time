@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.juco.simplewagecalculator"
+    namespace = "com.juco.albatime"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.juco.simplewagecalculator"
+        applicationId = "com.juco.albatime"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.compileSdk.get().toInt()
         versionCode = 1

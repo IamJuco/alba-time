@@ -1,4 +1,4 @@
-package com.juco.simplewagecalculator
+package com.juco.albatime
 
 import org.junit.Test
 

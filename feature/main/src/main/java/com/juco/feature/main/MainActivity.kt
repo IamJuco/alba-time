@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.juco.feature.main.ui.theme.SimplewagecalculatorTheme
+import com.juco.feature.main.ui.theme.AlbaTimeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -13,7 +13,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            SimplewagecalculatorTheme {
+            AlbaTimeTheme {
                 MainScreen()
             }
         }

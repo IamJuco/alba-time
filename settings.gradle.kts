@@ -20,7 +20,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "simple-wage-calculator"
+rootProject.name = "alba-time"
 include(":app")
 include(":data")
 include(":domain")
