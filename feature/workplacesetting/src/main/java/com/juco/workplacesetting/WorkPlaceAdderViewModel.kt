@@ -13,7 +13,10 @@ import com.juco.workplacesetting.model.UiTaxType
 import com.juco.workplacesetting.model.UiWorkTime
 import com.juco.workplacesetting.model.WorkDayType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -24,6 +27,9 @@ import javax.inject.Inject
 class WorkPlaceViewModel @Inject constructor(
     private val repository: WorkPlaceRepository
 ) : ViewModel() {
+
+    private val _uiEvent = MutableSharedFlow<Unit>()
+    val uiEvent: SharedFlow<Unit> = _uiEvent.asSharedFlow()
 
     var workPlaceName = MutableStateFlow("")
     var wage = MutableStateFlow("")
@@ -116,6 +122,7 @@ class WorkPlaceViewModel @Inject constructor(
             selectedWorkPlaceCardColor.value = Red
             breakTime.value = "60"
             selectedTax.value = UiTaxType.NONE
+            _uiEvent.emit(Unit)
         }
     }
 }

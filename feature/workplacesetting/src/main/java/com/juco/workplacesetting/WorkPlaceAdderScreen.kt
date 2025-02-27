@@ -23,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,6 +63,8 @@ fun WorkPlaceAdderRoute(
     popBackStack: () -> Unit,
     viewModel: WorkPlaceViewModel = hiltViewModel()
 ) {
+    val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(null)
+
     val workPlaceName by viewModel.workPlaceName.collectAsStateWithLifecycle()
     val wage by viewModel.wage.collectAsStateWithLifecycle()
     val workDays by viewModel.selectedWorkDays.collectAsStateWithLifecycle()
@@ -72,6 +75,10 @@ fun WorkPlaceAdderRoute(
     val selectedWorkPlaceCardColor by viewModel.selectedWorkPlaceCardColor.collectAsStateWithLifecycle()
     val isWeeklyHolidayAllowance by viewModel.isWeeklyHolidayAllowance.collectAsStateWithLifecycle()
     val tax by viewModel.selectedTax.collectAsStateWithLifecycle()
+
+    LaunchedEffect(uiEvent) {
+        uiEvent?.let { popBackStack() }
+    }
 
     WorkPlaceAdderScreen(
         padding = padding,

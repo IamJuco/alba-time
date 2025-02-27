@@ -52,9 +52,14 @@ fun WorkPlaceDetailRoute(
     workPlaceDetailId: Int
 ) {
     val workPlace by viewModel.workPlace.collectAsStateWithLifecycle()
+    val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(null)
 
     LaunchedEffect(workPlaceDetailId) {
         viewModel.loadWorkPlaceById(workPlaceDetailId)
+    }
+
+    LaunchedEffect(uiEvent) {
+        uiEvent?.let { popBackStack() }
     }
 
     WorkPlaceDetailScreen(
