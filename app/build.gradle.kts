@@ -44,6 +44,8 @@ android {
 dependencies {
     implementation(project(":feature:main"))
 
+    implementation(libs.play.services.ads)
+
     implementation(libs.navigation.compose)
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)

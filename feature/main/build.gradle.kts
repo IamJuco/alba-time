@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -5,6 +7,17 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
 }
+
+val baseBannerId = "ca-app-pub-3940256099942544~3347511713"
+
+val properties = Properties()
+val localFile = rootProject.file("local.properties")
+if (localFile.exists()) {
+    localFile.inputStream().use { properties.load(it) }
+} else {
+    properties["ADMOB_BANNER_ID"] = baseBannerId
+}
+
 
 android {
     namespace = "com.juco.feature.main"
@@ -15,6 +28,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+        manifestPlaceholders["ADMOB_BANNER_ID"] = properties["ADMOB_BANNER_ID"]?.toString() ?: baseBannerId
+        resValue("string", "ADMOB_BANNER_ID", properties["ADMOB_BANNER_ID"]?.toString() ?: baseBannerId)
     }
 
     buildTypes {
@@ -34,6 +49,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
@@ -43,8 +59,11 @@ dependencies {
     implementation(project(":feature:calendar"))
     implementation(project(":feature:workplacesetting"))
     implementation(project(":feature:workplacedetail"))
+    implementation(project(":common"))
     implementation(project(":domain"))
     implementation(project(":data"))
+
+    implementation(libs.play.services.ads)
 
     implementation(libs.navigation.compose)
     implementation(libs.hilt.navigation.compose)
