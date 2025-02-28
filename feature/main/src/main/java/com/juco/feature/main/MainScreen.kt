@@ -1,16 +1,15 @@
 package com.juco.feature.main
 
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import com.juco.feature.main.component.AdmobBanner
 import com.juco.feature.main.component.BottomNavigationBar
 import com.juco.feature.main.component.MainNavHost
 import com.juco.feature.main.navigation.MainNavigator
@@ -19,7 +18,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
-    navigator: MainNavigator = rememberMainNavigator()
+    navigator: MainNavigator = rememberMainNavigator(),
+
 ) {
     val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
     val snackBarHostState = remember { SnackbarHostState() }
@@ -34,7 +34,8 @@ fun MainScreen(
             MainNavHost(
                 navigator = navigator,
                 padding = paddingValues,
-                onShowSnackBar = onShowSnackBar
+                onShowSnackBar = onShowSnackBar,
+                admobBanner = { AdmobBanner() }
             )
         },
         bottomBar = {

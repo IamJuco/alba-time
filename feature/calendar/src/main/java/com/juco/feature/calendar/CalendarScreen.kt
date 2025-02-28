@@ -51,6 +51,7 @@ import java.time.YearMonth
 @Composable
 fun CalendarRoute(
     padding: PaddingValues,
+    admobBanner: @Composable () -> Unit,
     viewModel: CalendarViewModel = hiltViewModel()
 ) {
     val monthlyWorkPlaces by viewModel.monthlyWorkPlaces.collectAsStateWithLifecycle()
@@ -84,6 +85,7 @@ fun CalendarRoute(
 
     CalendarScreen(
         padding = padding,
+        admobBanner = admobBanner,
         monthlyWorkPlaces = monthlyWorkPlaces,
         currentYearMonth = currentYearMonth,
         pagerState = pagerState,
@@ -105,6 +107,7 @@ fun CalendarRoute(
 @Composable
 fun CalendarScreen(
     padding: PaddingValues,
+    admobBanner: @Composable () -> Unit,
     monthlyWorkPlaces: List<WorkPlace>,
     currentYearMonth: YearMonth,
     pagerState: PagerState,
@@ -142,7 +145,14 @@ fun CalendarScreen(
                 .clickable { onShowDialogChange(true) }
         )
 
+        Box(
+            modifier = Modifier.fillMaxWidth().padding(4.dp)
+        ) {
+            admobBanner()
+        }
+
         Text(
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
             text = "이번 달 총 급여: ${formatWithComma(monthlyTotalSalary)}원",
             fontSize = 18.sp,
             color = Color.Blue
@@ -174,7 +184,8 @@ fun CalendarScreen(
             CalendarCell(
                 year = yearMonth.year,
                 month = yearMonth.monthValue,
-                workPlaces = monthlyWorkPlaces
+                workPlaces = monthlyWorkPlaces,
+                admobBanner = admobBanner
             )
         }
 
@@ -196,7 +207,8 @@ fun CalendarScreen(
 fun CalendarCell(
     year: Int,
     month: Int,
-    workPlaces: List<WorkPlace>
+    workPlaces: List<WorkPlace>,
+    admobBanner: @Composable () -> Unit
 ) {
     // 캘린더를 화면크기에 맞게 하기위해 화면크기를 가져옴
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
@@ -319,6 +331,7 @@ fun CalendarCell(
                             if (dayWorkPlaces.isNotEmpty() || payDayWorkPlaces.isNotEmpty()) {
                                 WorkChipCard(dayWorkPlaces, payDayWorkPlaces)
                             }
+
                         }
                     }
                 }

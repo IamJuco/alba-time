@@ -1,6 +1,7 @@
 package com.juco.feature.calendar.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -14,10 +15,12 @@ fun NavController.navigateCalendar(navOptions: NavOptions) {
 
 fun NavGraphBuilder.calendarNavGraph(
     padding: PaddingValues,
+    admobBanner: @Composable () -> Unit
 ) {
     composable<MainMenuRoute.Calendar> {
         CalendarRoute(
             padding = padding,
+            admobBanner = admobBanner
         )
     }
 }

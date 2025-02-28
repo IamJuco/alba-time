@@ -13,7 +13,8 @@ import com.juco.workplacesetting.navigation.workPlaceAdderNavGraph
 fun MainNavHost(
     navigator: MainNavigator,
     padding: PaddingValues,
-    onShowSnackBar: (String) -> Unit
+    onShowSnackBar: (String) -> Unit,
+    admobBanner: @Composable () -> Unit
 ) {
     NavHost(
         navController = navigator.navController,
@@ -25,7 +26,8 @@ fun MainNavHost(
             navigateToWorkPlaceDetail = navigator::navigateToWorkPlaceDetail
         )
         calendarNavGraph(
-            padding = padding
+            padding = padding,
+            admobBanner = admobBanner
         )
         workPlaceAdderNavGraph(
             padding = padding,
