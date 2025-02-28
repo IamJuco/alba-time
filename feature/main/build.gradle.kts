@@ -8,14 +8,15 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
-val baseBannerId = "ca-app-pub-3940256099942544~3347511713"
+val admobTestId = "ca-app-pub-3940256099942544~3347511713"
+val admobTestBannerId = "ca-app-pub-3940256099942544/9214589741"
 
 val properties = Properties()
 val localFile = rootProject.file("local.properties")
 if (localFile.exists()) {
     localFile.inputStream().use { properties.load(it) }
 } else {
-    properties["ADMOB_BANNER_ID"] = baseBannerId
+    properties["ADMOB_ID"] = admobTestId
 }
 
 
@@ -28,8 +29,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-        manifestPlaceholders["ADMOB_BANNER_ID"] = properties["ADMOB_BANNER_ID"]?.toString() ?: baseBannerId
-        resValue("string", "ADMOB_BANNER_ID", properties["ADMOB_BANNER_ID"]?.toString() ?: baseBannerId)
+
+        manifestPlaceholders["ADMOB_ID"] = properties["ADMOB_ID"]?.toString() ?: admobTestId
+        resValue("string", "ADMOB_ID", properties["ADMOB_ID"]?.toString() ?: admobTestId)
+        
+        buildConfigField("String", "ADMOB_BANNER_ID", "\"${properties["ADMOB_BANNER_ID"]?.toString() ?: admobTestBannerId}\"")
     }
 
     buildTypes {
