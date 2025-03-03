@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,6 +31,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -136,17 +138,31 @@ fun CalendarScreen(
             .padding(padding)
             .fillMaxSize()
     ) {
-        Text(
-            text = "${currentYearMonth.year}년 ${currentYearMonth.monthValue}월",
-            fontSize = 24.sp,
+        Row(
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(start = 16.dp, top = 16.dp, end = 16.dp)
-                .clickable { onShowDialogChange(true) }
-        )
+                .fillMaxWidth()
+                .clickable {
+                    onShowDialogChange(true)
+                },
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "${currentYearMonth.year}년 ${currentYearMonth.monthValue}월",
+                fontSize = 24.sp,
+                modifier = Modifier.padding(8.dp)
+            )
+            Icon(
+                painter = painterResource(id = R.drawable.ic_dropdown_24dp),
+                contentDescription = "세금 설정",
+                modifier = Modifier.size(24.dp)
+            )
+        }
 
         Box(
-            modifier = Modifier.fillMaxWidth().padding(4.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp)
         ) {
             admobBanner()
         }
