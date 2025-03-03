@@ -162,6 +162,13 @@ fun WorkPlaceAdderScreen(
         }
     }
 
+    val isWorkPlaceNameValid = workPlaceName.isNotBlank()
+    val isWageValid = wage.isNotBlank()
+    val isWorkDaysValid = selectedWorkDayType != null &&
+            (selectedWorkDayType != WorkDayType.CUSTOM || selectedWorkDays.isNotEmpty())
+
+    val isSaveEnabled = isWorkPlaceNameValid && isWageValid && isWorkDaysValid
+
     Column(
         Modifier
             .padding(padding)
@@ -193,7 +200,13 @@ fun WorkPlaceAdderScreen(
         }
 
         Column {
-            SubtitleText(text = "근무지 명")
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                SubtitleText(text = "근무지 명")
+                if (!isWorkPlaceNameValid) {
+                    Text("*", color = Color.Red, modifier = Modifier.padding(start = 4.dp))
+                }
+            }
+
             InputTextField(
                 text = workPlaceName,
                 onValueChange = onWorkPlaceNameChange,
@@ -202,7 +215,13 @@ fun WorkPlaceAdderScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            SubtitleText(text = "시급")
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                SubtitleText(text = "시급")
+                if (!isWageValid) {
+                    Text("*", color = Color.Red, modifier = Modifier.padding(start = 4.dp))
+                }
+            }
+
             InputNumberField(
                 text = wage,
                 onValueChange = onWageChange,
@@ -303,7 +322,12 @@ fun WorkPlaceAdderScreen(
                     .clickable { showWorkDayDialog = true },
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                SubtitleText(text = "일하는 날짜 설정")
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    SubtitleText(text = "일하는 날짜 설정")
+                    if (!isWorkDaysValid) {
+                        Text("*", color = Color.Red, modifier = Modifier.padding(start = 4.dp))
+                    }
+                }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(text = workDaysSummary, color = Color.Gray, fontSize = 18.sp)
                     Icon(
@@ -466,6 +490,7 @@ fun WorkPlaceAdderScreen(
             Button(
                 onClick = onSaveClick,
                 modifier = Modifier.fillMaxWidth(),
+                enabled = isSaveEnabled,
                 colors = ButtonDefaults.buttonColors(containerColor = LightBlue)
             ) {
                 Text("저장")
