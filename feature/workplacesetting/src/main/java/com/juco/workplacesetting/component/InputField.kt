@@ -35,7 +35,11 @@ fun InputTextField(
     Column {
         BasicTextField(
             value = text,
-            onValueChange = onValueChange,
+            onValueChange = { newText ->
+                if (newText.length <= 15) {
+                    onValueChange(newText)
+                }
+            },
             textStyle = TextStyle(fontSize = 16.sp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             modifier = Modifier
@@ -75,15 +79,19 @@ fun InputNumberField(
             value = textFieldValueState,
             onValueChange = { inputValue ->
                 val filteredInput = inputValue.text.filter { it.isDigit() }
-                val prevLength = rawText.length
-                rawText = filteredInput
+                val numericValue = filteredInput.toLongOrNull() ?: 0L
 
-                val formattedText = formatWithComma(rawText)
-                val cursorOffset = (formattedText.length - formatWithComma(prevLength.toString()).length)
-                val newCursorPosition = (inputValue.selection.start + cursorOffset).coerceIn(0, formattedText.length)
+                if (numericValue <= 100_000_000) {
+                    val prevLength = rawText.length
+                    rawText = filteredInput
 
-                textFieldValueState = TextFieldValue(formattedText, TextRange(newCursorPosition))
-                onValueChange(filteredInput)
+                    val formattedText = formatWithComma(rawText)
+                    val cursorOffset = (formattedText.length - formatWithComma(prevLength.toString()).length)
+                    val newCursorPosition = (inputValue.selection.start + cursorOffset).coerceIn(0, formattedText.length)
+
+                    textFieldValueState = TextFieldValue(formattedText, TextRange(newCursorPosition))
+                    onValueChange(filteredInput)
+                }
             },
             textStyle = TextStyle(fontSize = 16.sp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

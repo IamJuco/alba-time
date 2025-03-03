@@ -49,6 +49,7 @@ import com.juco.workplacesetting.component.InputTextField
 import com.juco.workplacesetting.component.PayDaySelectionDialog
 import com.juco.workplacesetting.component.PayDaySelector
 import com.juco.workplacesetting.component.SamsungStyleTimePickerDialog
+import com.juco.workplacesetting.component.SubtitleText
 import com.juco.workplacesetting.component.TaxSelectionDialog
 import com.juco.workplacesetting.component.WorkDaySelectionDialog
 import com.juco.workplacesetting.component.WorkPlaceCardColorSelectionDialog
@@ -163,7 +164,8 @@ fun WorkPlaceAdderScreen(
 
     Column(
         Modifier
-            .padding(padding).padding(start = 16.dp, end = 16.dp)
+            .padding(padding)
+            .padding(start = 16.dp, end = 16.dp)
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .imePadding()
@@ -191,25 +193,25 @@ fun WorkPlaceAdderScreen(
         }
 
         Column {
-            Text("근무지 명", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+            SubtitleText(text = "근무지 명")
             InputTextField(
                 text = workPlaceName,
                 onValueChange = onWorkPlaceNameChange,
-                placeholder = "근무지명을 입력하세요"
+                placeholder = "근무지명을 입력하세요. (15자 이하)"
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text("시급", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+            SubtitleText(text = "시급")
             InputNumberField(
                 text = wage,
                 onValueChange = onWageChange,
-                placeholder = "시급을 입력하세요",
+                placeholder = "시급을 입력하세요.",
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text("일하는 시간 설정", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+            SubtitleText(text = "일하는 시간 설정")
 
             Spacer(modifier = Modifier.height(4.dp))
 
@@ -278,11 +280,7 @@ fun WorkPlaceAdderScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "휴게 시간 설정",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp
-                )
+                SubtitleText(text = "휴게 시간 설정")
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = if (breakTime.isEmpty() || breakTime == "0") "없음" else "$breakTime 분",
@@ -305,7 +303,7 @@ fun WorkPlaceAdderScreen(
                     .clickable { showWorkDayDialog = true },
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "일하는 날짜 설정", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                SubtitleText(text = "일하는 날짜 설정")
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(text = workDaysSummary, color = Color.Gray, fontSize = 18.sp)
                     Icon(
@@ -318,11 +316,7 @@ fun WorkPlaceAdderScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                text = "월급일 설정",
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp
-            )
+            SubtitleText(text = "월급일 설정")
             PayDaySelector(
                 selectedPayDay = selectedPayDay,
                 onPayDayChange = { payDay ->
@@ -338,11 +332,7 @@ fun WorkPlaceAdderScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "주휴수당 설정",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp
-                )
+                SubtitleText(text = "주휴수당 설정")
                 Switch(
                     checked = isWeeklyHolidayAllowance,
                     onCheckedChange = onWeeklyHolidayAllowanceChange
@@ -358,11 +348,7 @@ fun WorkPlaceAdderScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "세금 설정",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp
-                )
+                SubtitleText(text = "세금 설정")
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = selectedTax.displayName,
@@ -385,11 +371,7 @@ fun WorkPlaceAdderScreen(
                     .clickable { showWorkPlaceCardColorDialog = true },
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "근무지 카드 색상 설정",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp
-                )
+                SubtitleText(text = "근무지 카드 색상 설정")
                 Spacer(modifier = Modifier.weight(1f))
                 Box(
                     modifier = Modifier
