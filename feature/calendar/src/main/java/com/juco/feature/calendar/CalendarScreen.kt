@@ -141,7 +141,7 @@ fun CalendarScreen(
             fontSize = 24.sp,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(16.dp)
+                .padding(start = 16.dp, top = 16.dp, end = 16.dp)
                 .clickable { onShowDialogChange(true) }
         )
 
