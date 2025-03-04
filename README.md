@@ -3,8 +3,17 @@
 
 <br>
 
-# 📸 UI
+# 📑 Service Introduce
+### 알바를 할때 근무시간과 시급을 관리하고 기록해주며 월급을 자동으로 계산해주는 앱입니다.
+- 사용자가 설정한 근무지를 캘린더를 통해 월급및 근무일등을 한눈에 확인 할 수 있습니다.
+- 근무지명, 시급, 일하는 날짜, 시간, 주휴수당및 세금등을 설정할 수 있습니다.
+- 여러 근무지를 설정할 수 있고 한번에 관리할 수 있습니다.
 
+# ⚙️ TechStack & AndroidSkill
+`Kotlin` `JetPackCompose` `CleanArchitecture` `Multi-Module` `Google Admob` `MVI` `Hilt` `Ksp` `Room` `Navigation` `JitPack` `KoreanLunarCalendar` 
+`Coroutine & Flow`
+
+# 📸 UI
 <div align="center" >
   <img src="https://github.com/user-attachments/assets/775ceba7-01be-4449-baf4-50306df3dcb7" alt="Cover" width="80%">
 </div>
@@ -16,10 +25,4 @@
   <br>
   <img src="https://github.com/user-attachments/assets/625617e4-3443-4a9a-b224-16c12bd7fbea" alt="albatime_adder" width="24%">
   <img src="https://github.com/user-attachments/assets/dbabd7e7-a92d-421c-b580-040cfc8b14e4" alt="albatime_calendar" width="24%">
-</div>
-
-# 📑 Service Introduce
-
-<div align="center" >
-  
 </div>
