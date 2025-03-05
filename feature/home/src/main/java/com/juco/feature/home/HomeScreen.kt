@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,6 +38,7 @@ fun HomeRoute(
     padding: PaddingValues,
     navigateToWorkPlaceAdder: () -> Unit,
     navigateToWorkPlaceDetail: (Int) -> Unit,
+    versionName: String,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val workPlaces by viewModel.workPlaces.collectAsStateWithLifecycle()
@@ -45,7 +47,8 @@ fun HomeRoute(
         padding = padding,
         workPlaces = workPlaces,
         navigateToWorkPlaceAdder = navigateToWorkPlaceAdder,
-        navigateToWorkPlaceDetail = navigateToWorkPlaceDetail
+        navigateToWorkPlaceDetail = navigateToWorkPlaceDetail,
+        versionName = versionName
     )
 }
 
@@ -55,23 +58,39 @@ fun HomeScreen(
     workPlaces: List<WorkPlace>,
     navigateToWorkPlaceAdder: () -> Unit,
     navigateToWorkPlaceDetail: (Int) -> Unit,
+    versionName: String
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(padding)
     ) {
-        Text(
-            text = "알바타임",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black,
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
-                .align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center
-        )
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Text(
+                text = "알바타임",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.weight(2f)
+            )
+
+            Text(
+                text = "앱 버전: $versionName",
+                fontSize = 12.sp,
+                color = Color.Gray,
+                textAlign = TextAlign.End,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+        }
 
         LazyColumn(
             modifier = Modifier

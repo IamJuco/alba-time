@@ -14,7 +14,8 @@ fun MainNavHost(
     navigator: MainNavigator,
     padding: PaddingValues,
     onShowSnackBar: (String) -> Unit,
-    admobBanner: @Composable () -> Unit
+    admobBanner: @Composable () -> Unit,
+    versionName: String
 ) {
     NavHost(
         navController = navigator.navController,
@@ -23,7 +24,8 @@ fun MainNavHost(
         homeNavGraph(
             padding = padding,
             navigateToWorkPlaceAdder = navigator::navigateToWorkPlaceAdder,
-            navigateToWorkPlaceDetail = navigator::navigateToWorkPlaceDetail
+            navigateToWorkPlaceDetail = navigator::navigateToWorkPlaceDetail,
+            versionName = versionName
         )
         calendarNavGraph(
             padding = padding,
