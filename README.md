@@ -8,6 +8,8 @@
 - 사용자가 설정한 근무지를 캘린더를 통해 월급및 근무일등을 한눈에 확인 할 수 있습니다.
 - 근무지명, 시급, 일하는 날짜, 시간, 주휴수당및 세금등을 설정할 수 있습니다.
 - 여러 근무지를 설정할 수 있고 한번에 관리할 수 있습니다.
+- 윤달, 윤년, 법정 공휴일(양력,음력)을 계산하여 캘린더에 반영을 하였습니다.
+- 국가에서 지정한 대체공휴일을 제외한 주말에 겹친 법정 공휴일을 주말 이후의 다음날로 대체공휴일을 계산하여 캘린더에 반영하였습니다.
 
 # ⚙️ TechStack & AndroidSkill
 `Kotlin` `JetPackCompose` `CleanArchitecture` `Multi-Module` `Google Admob` `MVI` `Hilt` `Ksp` `Room` `Navigation` `JitPack` `KoreanLunarCalendar` 
