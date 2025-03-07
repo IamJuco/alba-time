@@ -63,6 +63,7 @@ dependencies {
     implementation(project(":feature:calendar"))
     implementation(project(":feature:workplacesetting"))
     implementation(project(":feature:workplacedetail"))
+    implementation(project(":feature:workplaceedit"))
     implementation(project(":common"))
     implementation(project(":domain"))
     implementation(project(":data"))
