@@ -56,21 +56,15 @@ fun WorkPlaceDetailRoute(
     navigateToWorkPlaceEdit: (Int) -> Unit
 ) {
     val workPlace by viewModel.workPlace.collectAsStateWithLifecycle()
-    val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(null)
 
     LaunchedEffect(workPlaceDetailId) {
         viewModel.loadWorkPlaceById(workPlaceDetailId)
     }
 
-    LaunchedEffect(uiEvent) {
-        uiEvent?.let { popBackStack() }
-    }
-
     WorkPlaceDetailScreen(
         padding = padding,
         workPlace = workPlace,
-//        onDeleteWorkPlace = { viewModel.deleteWorkPlace(it) },
-        onDeleteWorkPlace = { navigateToWorkPlaceEdit(workPlaceDetailId) },
+        onEditWorkPlace = { navigateToWorkPlaceEdit(workPlaceDetailId) },
         popBackStack = popBackStack
     )
 }
@@ -80,7 +74,7 @@ fun WorkPlaceDetailScreen(
     padding: PaddingValues,
     popBackStack: () -> Unit,
     workPlace: WorkPlace?,
-    onDeleteWorkPlace: (WorkPlace) -> Unit
+    onEditWorkPlace: (WorkPlace) -> Unit
 ) {
     var selectedYearMonth by remember { mutableStateOf(YearMonth.now()) }
 
@@ -259,12 +253,12 @@ fun WorkPlaceDetailScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedButton(
-            onClick = { workPlace?.let { onDeleteWorkPlace(it) } },
+            onClick = { workPlace?.let { onEditWorkPlace(it) } },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent),
             border = BorderStroke(1.dp, LightBlue)
         ) {
-            Text("근무지 삭제", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.Red)
+            Text("근무지 수정", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = LightBlue)
         }
     }
 }

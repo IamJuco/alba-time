@@ -15,13 +15,15 @@ fun NavController.navigateToWorkPlaceEdit(workPlaceId: Int, navOptions: NavOptio
 
 fun NavGraphBuilder.workPlaceEditNavGraph(
     padding: PaddingValues,
-    popBackStack: () -> Unit
+    popBackStack: () -> Unit,
+    popAllBackStack: (RouteModel) -> Unit
 ) {
     composable<RouteModel.WorkPlaceEdit> { navBackStackEntry ->
         val workPlaceWorkId = navBackStackEntry.toRoute<RouteModel.WorkPlaceEdit>().workPlaceId
         WorkPlaceEditRoute(
             padding = padding,
             popBackStack = popBackStack,
+            popAllBackStack = popAllBackStack,
             workPlaceEditId = workPlaceWorkId
         )
     }

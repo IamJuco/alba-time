@@ -43,7 +43,8 @@ fun MainNavHost(
         )
         workPlaceEditNavGraph(
             padding = padding,
-            popBackStack = navigator::popBackStack
+            popBackStack = navigator::popBackStack,
+            popAllBackStack = navigator::popAllBackStack
         )
     }
 }
