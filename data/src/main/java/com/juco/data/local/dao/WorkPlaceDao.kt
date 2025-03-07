@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.juco.data.local.entity.WorkPlaceEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -18,6 +19,9 @@ interface WorkPlaceDao {
 
     @Query("SELECT * FROM work_place")
     fun getAllWorkPlaces(): Flow<List<WorkPlaceEntity>>
+
+    @Update
+    suspend fun updateWorkPlace(workPlace: WorkPlaceEntity)
 
     @Delete
     suspend fun deleteWorkPlace(workPlace: WorkPlaceEntity)
