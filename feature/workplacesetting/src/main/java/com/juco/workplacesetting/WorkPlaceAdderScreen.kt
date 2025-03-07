@@ -35,12 +35,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.common.LightBlue
+import com.juco.common.SubtitleText
 import com.juco.common.TitleText
 import com.juco.feature.workplacesetting.R
 import com.juco.workplacesetting.component.BreakTimeSelectionDialog
@@ -49,7 +49,6 @@ import com.juco.workplacesetting.component.InputTextField
 import com.juco.workplacesetting.component.PayDaySelectionDialog
 import com.juco.workplacesetting.component.PayDaySelector
 import com.juco.workplacesetting.component.SamsungStyleTimePickerDialog
-import com.juco.workplacesetting.component.SubtitleText
 import com.juco.workplacesetting.component.TaxSelectionDialog
 import com.juco.workplacesetting.component.WorkDaySelectionDialog
 import com.juco.workplacesetting.component.WorkPlaceCardColorSelectionDialog
