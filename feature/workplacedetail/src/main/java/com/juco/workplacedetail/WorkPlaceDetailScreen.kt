@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -53,7 +52,8 @@ fun WorkPlaceDetailRoute(
     padding: PaddingValues = PaddingValues(),
     popBackStack: () -> Unit,
     viewModel: WorkPlaceDetailViewModel = hiltViewModel(),
-    workPlaceDetailId: Int
+    workPlaceDetailId: Int,
+    navigateToWorkPlaceEdit: (Int) -> Unit
 ) {
     val workPlace by viewModel.workPlace.collectAsStateWithLifecycle()
     val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(null)
@@ -69,7 +69,8 @@ fun WorkPlaceDetailRoute(
     WorkPlaceDetailScreen(
         padding = padding,
         workPlace = workPlace,
-        onDeleteWorkPlace = { viewModel.deleteWorkPlace(it) },
+//        onDeleteWorkPlace = { viewModel.deleteWorkPlace(it) },
+        onDeleteWorkPlace = { navigateToWorkPlaceEdit(workPlaceDetailId) },
         popBackStack = popBackStack
     )
 }
