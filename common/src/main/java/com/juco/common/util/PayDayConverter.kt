@@ -1,4 +1,4 @@
-package com.juco.workplacesetting.util
+package com.juco.common.util
 
 import java.time.DayOfWeek
 import java.time.LocalDate

@@ -1,4 +1,4 @@
-package com.juco.workplacesetting.component
+package com.juco.common.dialog
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,10 +30,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.juco.feature.workplacesetting.R
-import com.juco.workplacesetting.mapper.displayName
-import com.juco.workplacesetting.model.UiPayDay
-import com.juco.workplacesetting.model.UiPayDayType
+import com.juco.common.R
+import com.juco.common.mapper.displayName
+import com.juco.common.model.UiPayDay
+import com.juco.common.model.UiPayDayType
 
 @Composable
 fun PayDaySelector(

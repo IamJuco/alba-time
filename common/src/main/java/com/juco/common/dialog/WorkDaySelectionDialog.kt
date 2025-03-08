@@ -1,4 +1,4 @@
-package com.juco.workplacesetting.component
+package com.juco.common.dialog
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.juco.workplacesetting.model.WorkDayType
+import com.juco.common.model.WorkDayType
 import java.time.LocalDate
 
 @Composable

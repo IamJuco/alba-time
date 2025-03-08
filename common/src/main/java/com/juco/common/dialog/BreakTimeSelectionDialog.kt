@@ -1,4 +1,4 @@
-package com.juco.workplacesetting.component
+package com.juco.common.dialog
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.juco.common.BreakTimeInputTextField
 
 @Composable
 fun BreakTimeSelectionDialog(

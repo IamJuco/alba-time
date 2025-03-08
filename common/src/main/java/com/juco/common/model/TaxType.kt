@@ -1,4 +1,4 @@
-package com.juco.workplacesetting.model
+package com.juco.common.model
 
 enum class UiTaxType(val rate: Float, val displayName: String) {
     NONE(0.0f, "없음"),

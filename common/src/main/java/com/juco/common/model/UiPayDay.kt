@@ -1,4 +1,4 @@
-package com.juco.workplacesetting.model
+package com.juco.common.model
 
 data class UiPayDay(
     val type: UiPayDayType,

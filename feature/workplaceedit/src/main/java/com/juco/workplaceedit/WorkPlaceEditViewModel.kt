@@ -18,6 +18,9 @@ import javax.inject.Inject
 class WorkPlaceEditViewModel @Inject constructor(
     private val repository: WorkPlaceRepository
 ) : ViewModel() {
+    private val _updateEvent = MutableSharedFlow<Unit>()
+    val updateEvent: SharedFlow<Unit> = _updateEvent.asSharedFlow()
+
     private val _deleteEvent = MutableSharedFlow<Unit>()
     val deleteEvent: SharedFlow<Unit> = _deleteEvent.asSharedFlow()
 
@@ -27,6 +30,13 @@ class WorkPlaceEditViewModel @Inject constructor(
     fun loadWorkPlaceById(workPlaceId: Int) {
         viewModelScope.launch {
             _workPlace.value = repository.getWorkPlaceById(workPlaceId)
+        }
+    }
+
+    fun updateWorkPlace(updatedWorkPlace: WorkPlace) {
+        viewModelScope.launch {
+            repository.updateWorkPlace(updatedWorkPlace)
+            _updateEvent.emit(Unit)
         }
     }
 

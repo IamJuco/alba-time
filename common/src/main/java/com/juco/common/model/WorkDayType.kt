@@ -1,4 +1,4 @@
-package com.juco.workplacesetting.model
+package com.juco.common.model
 
 import java.time.DayOfWeek
 
