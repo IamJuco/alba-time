@@ -1,4 +1,4 @@
-package com.juco.workplacesetting.component
+package com.juco.common.dialog
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -34,8 +35,8 @@ fun SamsungStyleTimePickerDialog(
     onConfirm: (String) -> Unit
 ) {
     var isAm by remember { mutableStateOf(initialTime.split(":")[0].toInt() < 12) }
-    var hour by remember { mutableStateOf(initialTime.split(":")[0].toInt().let { if (it == 0) 12 else it % 12 }) }
-    var minute by remember { mutableStateOf(initialTime.split(":")[1].toInt()) }
+    var hour by remember { mutableIntStateOf(initialTime.split(":")[0].toInt().let { if (it == 0) 12 else it % 12 }) }
+    var minute by remember { mutableIntStateOf(initialTime.split(":")[1].toInt()) }
 
     val hours = (1..12).map { String.format("%02d", it) }
     val minutes = (0..59).map { String.format("%02d", it) }

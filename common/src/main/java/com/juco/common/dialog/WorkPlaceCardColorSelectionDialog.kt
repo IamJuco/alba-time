@@ -1,4 +1,4 @@
-package com.juco.workplacesetting.component
+package com.juco.common.dialog
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
