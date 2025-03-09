@@ -6,12 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juco.common.Red
 import com.juco.domain.repository.WorkPlaceRepository
+import com.juco.common.model.UiPayDay
+import com.juco.common.model.UiPayDayType
+import com.juco.common.model.UiTaxType
+import com.juco.common.model.UiWorkTime
+import com.juco.common.model.WorkDayType
 import com.juco.workplacesetting.mapper.toDomain
-import com.juco.workplacesetting.model.UiPayDay
-import com.juco.workplacesetting.model.UiPayDayType
-import com.juco.workplacesetting.model.UiTaxType
-import com.juco.workplacesetting.model.UiWorkTime
-import com.juco.workplacesetting.model.WorkDayType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
