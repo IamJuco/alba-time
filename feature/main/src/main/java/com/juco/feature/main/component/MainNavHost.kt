@@ -7,6 +7,7 @@ import com.juco.feature.calendar.navigation.calendarNavGraph
 import com.juco.feature.home.navigation.homeNavGraph
 import com.juco.feature.main.navigation.MainNavigator
 import com.juco.workplacedetail.navigation.workPlaceDetailNavGraph
+import com.juco.workplaceedit.navigation.workPlaceEditNavGraph
 import com.juco.workplacesetting.navigation.workPlaceAdderNavGraph
 
 @Composable
@@ -33,11 +34,17 @@ fun MainNavHost(
         )
         workPlaceAdderNavGraph(
             padding = padding,
-            popBackStack = navigator::popBackStack,
+            popBackStack = navigator::popBackStack
         )
         workPlaceDetailNavGraph(
             padding = padding,
             popBackStack = navigator::popBackStack,
+            navigateToWorkPlaceEdit = navigator::navigateToWorkPlaceEdit
+        )
+        workPlaceEditNavGraph(
+            padding = padding,
+            popBackStack = navigator::popBackStack,
+            popAllBackStack = navigator::popAllBackStack
         )
     }
 }

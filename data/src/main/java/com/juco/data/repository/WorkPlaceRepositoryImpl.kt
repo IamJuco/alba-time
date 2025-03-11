@@ -50,6 +50,10 @@ class WorkPlaceRepositoryImpl @Inject constructor(
         workPlaceDataSource.deleteWorkPlace(workPlace.toEntity())
     }
 
+    override suspend fun updateWorkPlace(workPlace: WorkPlace) {
+        workPlaceDataSource.updateWorkPlace(workPlace.toEntity())
+    }
+
     override fun observeWorkPlaces(): Flow<List<WorkPlace>> {
         return workPlaceDataSource.getAllWorkPlaces()
             .map { list -> list.map { it.toDomain() } }

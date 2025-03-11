@@ -21,5 +21,6 @@ interface WorkPlaceRepository {
 
     suspend fun getWorkPlaceById(id: Int): WorkPlace?
     suspend fun deleteWorkPlace(workPlace: WorkPlace)
+    suspend fun updateWorkPlace(workPlace: WorkPlace)
     fun observeWorkPlaces(): Flow<List<WorkPlace>>
 }
