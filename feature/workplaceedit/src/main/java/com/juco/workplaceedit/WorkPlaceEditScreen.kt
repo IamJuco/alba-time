@@ -64,6 +64,7 @@ import com.juco.domain.model.WorkPlace
 import com.juco.domain.navigation.MainMenuRoute
 import com.juco.domain.navigation.RouteModel
 import com.juco.feature.workplaceedit.R
+import com.juco.workplaceedit.component.DeleteWorkPlaceDialog
 import com.juco.workplaceedit.mapper.toDomain
 import com.juco.workplaceedit.mapper.toUiModel
 import com.juco.workplaceedit.util.workDayTypeSetter
@@ -182,6 +183,7 @@ fun WorkPlaceEditScreen(
     onWorkPlaceUpdated: () -> Unit,
     onDeleteWorkPlace: () -> Unit
 ) {
+    var showDeleteDialog by remember { mutableStateOf(false) }
     var showWorkDayDialog by remember { mutableStateOf(false) }
     var showPayDayDialog by remember { mutableStateOf(false) }
     var showBreakTimeDialog by remember { mutableStateOf(false) }
@@ -225,14 +227,13 @@ fun WorkPlaceEditScreen(
                 modifier = Modifier.align(Alignment.Center)
             )
             OutlinedButton(
-                onClick = onDeleteWorkPlace,
+                onClick = { showDeleteDialog = true },
                 modifier = Modifier.align(Alignment.CenterEnd),
                 colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent),
                 border = BorderStroke(1.dp, LightBlue)
             ) {
                 Text(text = "근무지 삭제", color = Red)
             }
-
         }
 
         Column {
@@ -437,6 +438,16 @@ fun WorkPlaceEditScreen(
                     modifier = Modifier
                         .size(32.dp)
                         .background(selectedWorkPlaceCardColor, shape = CircleShape)
+                )
+            }
+
+            if (showDeleteDialog) {
+                DeleteWorkPlaceDialog(
+                    onConfirm = {
+                        showDeleteDialog = false
+                        onDeleteWorkPlace()
+                    },
+                    onDismiss = { showDeleteDialog = false }
                 )
             }
 
