@@ -53,31 +53,32 @@ fun Float.toUiModel(): UiTaxType {
 }
 
 fun convertPayDayToString(dates: List<LocalDate>): String {
-    if (dates.isEmpty()) return ""
+    if (dates.isEmpty()) return "설정되지 않음"
 
     val firstDate = dates.first()
 
     return when {
-        // 모든 날짜가 같은 '일'인 경우 (1일, 5일, 말일 등)
         dates.all { it.dayOfMonth == firstDate.dayOfMonth } -> {
-            if (YearMonth.from(firstDate).lengthOfMonth() == firstDate.dayOfMonth) "말일"
-            else "${firstDate.dayOfMonth}일"
+            "${firstDate.dayOfMonth}일"
         }
 
-        // 모든 날짜가 같은 '요일'인 경우 (월요일, 금요일 등)
         dates.all { it.dayOfWeek == firstDate.dayOfWeek } -> {
-            when (firstDate.dayOfWeek) {
-                DayOfWeek.MONDAY -> "월요일"
-                DayOfWeek.TUESDAY -> "화요일"
-                DayOfWeek.WEDNESDAY -> "수요일"
-                DayOfWeek.THURSDAY -> "목요일"
-                DayOfWeek.FRIDAY -> "금요일"
-                DayOfWeek.SATURDAY -> "토요일"
-                DayOfWeek.SUNDAY -> "일요일"
-            }
+            firstDate.dayOfWeek.toKorean()
         }
 
-        // 커스텀 설정 (여러 날짜가 포함된 경우)
         else -> "직접설정"
+    }
+}
+
+// 요일을 한국어로 변환하는 확장 함수
+fun DayOfWeek.toKorean(): String {
+    return when (this) {
+        DayOfWeek.MONDAY -> "월요일"
+        DayOfWeek.TUESDAY -> "화요일"
+        DayOfWeek.WEDNESDAY -> "수요일"
+        DayOfWeek.THURSDAY -> "목요일"
+        DayOfWeek.FRIDAY -> "금요일"
+        DayOfWeek.SATURDAY -> "토요일"
+        DayOfWeek.SUNDAY -> "일요일"
     }
 }
