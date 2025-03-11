@@ -23,6 +23,7 @@ interface WorkPlaceDataSource {
 
     suspend fun getWorkPlaceById(id: Int): WorkPlaceEntity?
     suspend fun deleteWorkPlace(workPlace: WorkPlaceEntity)
+    suspend fun updateWorkPlace(workPlace: WorkPlaceEntity)
     fun getAllWorkPlaces(): Flow<List<WorkPlaceEntity>>
 }
 
@@ -62,6 +63,10 @@ class WorkPlaceDataSourceImpl @Inject constructor(
 
     override suspend fun deleteWorkPlace(workPlace: WorkPlaceEntity) {
         workPlaceDao.deleteWorkPlace(workPlace)
+    }
+
+    override suspend fun updateWorkPlace(workPlace: WorkPlaceEntity) {
+        workPlaceDao.updateWorkPlace(workPlace)
     }
 
     override fun getAllWorkPlaces(): Flow<List<WorkPlaceEntity>> {
