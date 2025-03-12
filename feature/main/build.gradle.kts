@@ -64,6 +64,7 @@ dependencies {
     implementation(project(":feature:workplacesetting"))
     implementation(project(":feature:workplacedetail"))
     implementation(project(":feature:workplaceedit"))
+    implementation(project(":designsystem"))
     implementation(project(":common"))
     implementation(project(":domain"))
     implementation(project(":data"))
