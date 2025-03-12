@@ -39,11 +39,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.juco.common.LightBlue
 import com.juco.common.TitleText
-import com.juco.common.Vanilla
 import com.juco.common.WageCalculator
 import com.juco.common.formatWithComma
+import com.juco.designsystem.theme.LightBlue
+import com.juco.designsystem.theme.Vanilla
 import com.juco.domain.model.WorkPlace
 import java.time.YearMonth
 
