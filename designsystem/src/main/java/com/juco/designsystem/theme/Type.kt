@@ -1,4 +1,4 @@
-package com.juco.feature.main.ui.theme
+package com.juco.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

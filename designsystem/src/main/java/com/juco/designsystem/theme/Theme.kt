@@ -1,4 +1,4 @@
-package com.juco.feature.main.ui.theme
+package com.juco.designsystem.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
