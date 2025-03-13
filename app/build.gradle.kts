@@ -14,8 +14,8 @@ android {
         applicationId = "com.juco.albatime"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.compileSdk.get().toInt()
-        versionCode = 90
-        versionName = "0.9.0"
+        versionCode = 901
+        versionName = "0.9.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
