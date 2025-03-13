@@ -22,6 +22,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,6 +45,7 @@ import com.juco.common.WageCalculator
 import com.juco.common.formatWithComma
 import com.juco.designsystem.theme.LightBlue
 import com.juco.designsystem.theme.Vanilla
+import com.juco.designsystem.theme.White
 import com.juco.domain.model.WorkPlace
 import java.time.YearMonth
 
@@ -187,7 +189,18 @@ fun WorkPlaceDetailScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        InfoText(title = "시급", value = "${formatWithComma(workPlace?.wage ?: 0)}원")
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(text = "시급", fontSize = 18.sp, fontWeight = FontWeight.Medium, color = Color.Gray)
+            Text(
+                text = "${formatWithComma(workPlace?.wage ?: 0)}원",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -195,7 +208,7 @@ fun WorkPlaceDetailScreen(
             text = "${selectedYearMonth.year}년 ${selectedYearMonth.monthValue}월 총 급여",
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.Black
+            color = MaterialTheme.colorScheme.primary
         )
         Card(
             modifier = Modifier
@@ -224,7 +237,7 @@ fun WorkPlaceDetailScreen(
             text = "총 급여 계산 과정",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.Black
+            color = MaterialTheme.colorScheme.primary
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -264,7 +277,7 @@ fun WorkPlaceDetailScreen(
 }
 
 @Composable
-fun InfoText(title: String, value: String) {
+fun InfoText(title: String, value: String, color: Color = White) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween

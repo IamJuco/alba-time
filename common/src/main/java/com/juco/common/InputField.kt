@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,7 +40,7 @@ fun InputTextField(
                     onValueChange(newText)
                 }
             },
-            textStyle = TextStyle(fontSize = 16.sp),
+            textStyle = TextStyle(fontSize = 16.sp, color = MaterialTheme.colorScheme.primary),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             modifier = Modifier
                 .fillMaxWidth()
@@ -85,16 +86,23 @@ fun InputNumberField(
                     rawText = filteredInput
 
                     val formattedText = formatWithComma(rawText)
-                    val cursorOffset = (formattedText.length - formatWithComma(prevLength.toString()).length)
-                    val newCursorPosition = (inputValue.selection.start + cursorOffset).coerceIn(0, formattedText.length)
+                    val cursorOffset =
+                        (formattedText.length - formatWithComma(prevLength.toString()).length)
+                    val newCursorPosition = (inputValue.selection.start + cursorOffset).coerceIn(
+                        0,
+                        formattedText.length
+                    )
 
-                    textFieldValueState = TextFieldValue(formattedText, TextRange(newCursorPosition))
+                    textFieldValueState =
+                        TextFieldValue(formattedText, TextRange(newCursorPosition))
                     onValueChange(filteredInput)
                 }
             },
-            textStyle = TextStyle(fontSize = 16.sp),
+            textStyle = TextStyle(fontSize = 16.sp, color = MaterialTheme.colorScheme.primary),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
             decorationBox = { innerTextField ->
                 Box(Modifier.fillMaxWidth()) {
                     if (rawText.isEmpty()) Text(placeholder, color = Color.Gray)
@@ -102,7 +110,11 @@ fun InputNumberField(
                 }
             }
         )
-        Box(Modifier.fillMaxWidth().height(1.dp).background(Color.Gray))
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .height(1.dp)
+                .background(Color.Gray))
     }
 }
 
@@ -120,7 +132,11 @@ fun BreakTimeInputTextField(
                 val filteredInput = input.filter { it.isDigit() }
                 onBreakTimeChange(filteredInput)
             },
-            textStyle = TextStyle(fontSize = 24.sp, textAlign = TextAlign.Center),
+            textStyle = TextStyle(
+                fontSize = 24.sp,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.primary
+            ),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth(),
             decorationBox = { innerTextField ->
