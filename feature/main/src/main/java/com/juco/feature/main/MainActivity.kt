@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.juco.feature.main.ui.theme.AlbaTimeTheme
+import com.juco.designsystem.theme.AlbaTimeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

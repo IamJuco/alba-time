@@ -41,7 +41,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.common.InputNumberField
 import com.juco.common.InputTextField
-import com.juco.common.LightBlue
 import com.juco.common.SubtitleText
 import com.juco.common.TitleText
 import com.juco.common.dialog.BreakTimeSelectionDialog
@@ -58,6 +57,7 @@ import com.juco.common.model.UiPayDay
 import com.juco.common.model.UiTaxType
 import com.juco.common.model.UiWorkTime
 import com.juco.common.model.WorkDayType
+import com.juco.designsystem.theme.LightBlue
 import java.time.LocalDate
 
 @Composable
