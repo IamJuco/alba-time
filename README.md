@@ -8,6 +8,15 @@
 
 <br>
 
+<h1 align="center"><b>Update History</b></h1>
+<p align="center">
+  <b>0.8.0 - 앱 베타 버전 출시</b>
+  <br>
+  <b>0.9.0 - 근무지 수정 기능 추가</b>
+</p>
+
+<br>
+
 # 📑 Service Introduce
 ### 알바를 할때 근무시간과 시급을 관리하고 기록해주며 월급을 자동으로 계산해주는 앱입니다.
 - 사용자가 설정한 근무지를 캘린더를 통해 월급및 근무일등을 한눈에 확인 할 수 있습니다.
@@ -17,7 +26,7 @@
 - 국가에서 지정한 대체공휴일을 제외한 주말에 겹친 법정 공휴일을 주말 이후의 다음날로 대체공휴일을 계산하여 캘린더에 반영하였습니다.
 
 # ⚙️ TechStack & AndroidSkill
-`Kotlin` `JetPackCompose` `CleanArchitecture` `Multi-Module` `Google Admob` `MVI` `Hilt` `Ksp` `Room` `Navigation` `JitPack` `KoreanLunarCalendar` 
+`Kotlin` `JetPackCompose` `CleanArchitecture` `Multi-Module` `MVI` `Google Admob` `Hilt` `Room` `Navigation` `JitPack` `KoreanLunarCalendar` 
 `Coroutine & Flow`
 
 # 📸 UI

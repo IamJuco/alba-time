@@ -16,6 +16,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,6 +39,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.common.WageCalculator
 import com.juco.common.formatWithComma
+import com.juco.designsystem.theme.LightBlue
 import com.juco.domain.model.WorkPlace
 import com.juco.feature.calendar.component.WorkChipCard
 import com.juco.feature.calendar.component.WorkPlaceCard
@@ -150,6 +152,7 @@ fun CalendarScreen(
             Text(
                 text = "${currentYearMonth.year}년 ${currentYearMonth.monthValue}월",
                 fontSize = 24.sp,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(8.dp)
             )
             Icon(
@@ -171,7 +174,7 @@ fun CalendarScreen(
             modifier = Modifier.padding(start = 16.dp, end = 16.dp),
             text = "이번 달 총 급여: ${formatWithComma(monthlyTotalSalary)}원",
             fontSize = 18.sp,
-            color = Color.Blue
+            color = LightBlue
         )
 
         Row(
@@ -285,7 +288,7 @@ fun CalendarCell(
                         color = when (index) {
                             0 -> Color.Red // 일요일
                             6 -> Color.Blue // 토요일
-                            else -> Color.Black
+                            else -> MaterialTheme.colorScheme.primary
                         }
                     )
                 }
@@ -341,7 +344,7 @@ fun CalendarCell(
                                     isHoliday -> Color.Red
                                     date.dayOfWeek.value == 7 -> Color.Red // 일요일
                                     date.dayOfWeek.value == 6 -> Color.Blue // 토요일
-                                    else -> Color.Black
+                                    else -> MaterialTheme.colorScheme.primary
                                 }
                             )
                             if (dayWorkPlaces.isNotEmpty() || payDayWorkPlaces.isNotEmpty()) {

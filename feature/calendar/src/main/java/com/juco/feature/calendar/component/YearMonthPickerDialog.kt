@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
@@ -22,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.juco.designsystem.theme.LightBlue
 
 // 연도와 월 선택 다이얼로그
 @Composable
@@ -105,6 +107,6 @@ fun YearOrMonthItem(
             .clickable { onClick() }
             .padding(8.dp),
         textAlign = TextAlign.Center,
-        color = if (isSelected) Color.Blue else Color.Black
+        color = if (isSelected) LightBlue else MaterialTheme.colorScheme.primary
     )
 }
