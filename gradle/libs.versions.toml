@@ -21,6 +21,8 @@ coroutines = "1.8.1"
 room = "2.6.1"
 gson = "2.12.1"
 admob = "24.0.0"
+ktlint = "12.2.0"
+detekt = "1.23.8"
 
 minSdk = "26"
 compileSdk = "35"
@@ -80,10 +82,16 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 android-library = { id = "com.android.library", version.ref = "agp" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 
-# https://developer.android.com/jetpack/androidx/releases/hilt?hl=ko
+# hilt https://developer.android.com/jetpack/androidx/releases/hilt?hl=ko
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
 # Ksp
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+# ktlint https://github.com/JLLeitschuh/ktlint-gradle
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+
+# detekt https://github.com/detekt/detekt
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
