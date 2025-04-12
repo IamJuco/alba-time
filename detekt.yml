@@ -5,12 +5,13 @@ build:
     LongParameterList: 1
     style: 1
 
+naming:
+  FunctionNaming:
+    active: false
+
 style:
   MagicNumber:
     active: false  # 숫자 0, 1, 2 등을 하드코딩했다고 막 경고주는 룰. 불편해서 끄는 경우 많음
-
-  FunctionNaming:
-    active: false  # ✅ ktlint에서 처리하므로 충돌 방지용으로 OFF
 
   MaxLineLength:
     active: false  # ✅ 줄 길이 제한 (보통 120자) → ktlint와 중복됨
@@ -55,7 +56,7 @@ comments:
     active: false  # public 클래스에 KDoc 주석 없으면 에러 → Android에선 잘 안 써서 끔
 
 complexity:
-  ComplexMethod:
+  CyclomaticComplexMethod
     active: false
     threshold: 15  # 함수가 너무 복잡한 경우 경고 (조건문, 반복문 등 계산해서 판단)
 
@@ -85,7 +86,3 @@ exceptions:
 performance:
   SpreadOperator:
     active: true  # *args 같은 spread 연산자 사용 시 경고. 성능 이슈
-
-potential-bugs:
-  DuplicateCaseInWhenExpression:
-    active: true  # when 문에서 중복된 case 가 있을 때 감지
