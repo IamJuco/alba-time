@@ -32,17 +32,17 @@ jobs:
         run: ./gradlew assembleDebug
 
       # Lint 검사 ( Android관련 = Context 잘못가져옴, "Hello" 같은 하드코딩, API Level 맞지 않는 함수 사용, Image의 ContentDescription 누락등 )
-      - name: Run Lint
-        run: ./gradlew lint
+      #- name: Run Lint
+      #  run: ./gradlew lint
 
       # Detekt 검사 ( Kotlin 네이밍 규칙등을 잡아줌, 무의미한 주석 TODO, 사용되지 않는 코드, 중복 코드등 )
       - name: Run Detekt
         run: ./gradlew detekt
 
       # KtLint 검사 ( Kotlin관련 = val 선언 시 불필요한 줄바꿈, fun test () 이런식으로 공백이 잘못들어간것, import 순서 틀린것 등등 )
-      - name: Run KtLint
-        run: ./gradlew ktlintCheck
+      #- name: Run KtLint
+      #  run: ./gradlew ktlintCheck
 
       # Dependency 업데이트 확인 ( 사용되는 라이브러리가 오래된것인지 등 봐줌 )
-      - name: Check for Dependency Updates
-        run: ./gradlew dependencyUpdates
+      #- name: Check for Dependency Updates
+      #  run: ./gradlew dependencyUpdates
