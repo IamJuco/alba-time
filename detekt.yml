@@ -1,0 +1,91 @@
+build:
+  maxIssues: 10  # ❗ 이 숫자 초과하면 detekt는 빌드 실패함 (초기엔 넉넉하게 10~100도 OK)
+  weights:
+    complexity: 2
+    LongParameterList: 1
+    style: 1
+
+style:
+  MagicNumber:
+    active: false  # 숫자 0, 1, 2 등을 하드코딩했다고 막 경고주는 룰. 불편해서 끄는 경우 많음
+
+  FunctionNaming:
+    active: false  # ✅ ktlint에서 처리하므로 충돌 방지용으로 OFF
+
+  MaxLineLength:
+    active: false  # ✅ 줄 길이 제한 (보통 120자) → ktlint와 중복됨
+
+  NewLineAtEndOfFile:
+    active: false  # ✅ 파일 끝에 빈 줄 없으면 에러 → ktlint와 중복됨
+
+  WildcardImport:
+    active: false  # ✅ import org.junit.* 처럼 * 쓰는 거 금지 → ktlint와 겹치면 꺼줌
+
+  ReturnCount:
+    active: true
+    max: 2  # 함수당 return이 너무 많으면 경고 (기본은 2개까지 허용)
+
+  UnusedImports:
+    active: true  # 사용하지 않는 import 문은 제거하라고 경고
+
+  UnusedParameter:
+    active: false  # Compose 함수의 onEvent 등 자주 안 쓰는 param 때문에 불편 → OFF 추천
+
+  OptionalUnit:
+    active: true  # fun foo(): Unit → Unit 생략 가능하니 생략하라고 알려줌
+
+  ThrowsCount:
+    active: false  # 한 함수에서 throws 너무 많을 때 경고 → Android에선 비추천이라 끔
+
+naming:
+  VariableNaming:
+    active: true
+    variablePattern: '^(_)?[a-z][A-Za-z0-9]*$'  # 변수는 카멜케이스로 시작
+
+  ClassNaming:
+    active: true
+    classPattern: '^[A-Z][a-zA-Z0-9]*$'  # 클래스는 파스칼 케이스
+
+  ObjectPropertyNaming:
+    active: true
+    constantPattern: '^[A-Z][_A-Z0-9]*$'  # const val 등은 대문자+언더바 형식
+
+comments:
+  UndocumentedPublicClass:
+    active: false  # public 클래스에 KDoc 주석 없으면 에러 → Android에선 잘 안 써서 끔
+
+complexity:
+  ComplexMethod:
+    active: false
+    threshold: 15  # 함수가 너무 복잡한 경우 경고 (조건문, 반복문 등 계산해서 판단)
+
+  LargeClass:
+    active: false
+    threshold: 600  # 클래스가 너무 크면 경고. 기준은 줄 수
+
+  LongParameterList:
+    active: false
+    functionThreshold: 5  # 파라미터 너무 많으면 경고
+
+  NestedBlockDepth:
+    active: true
+    threshold: 4  # if → for → when → if 처럼 너무 깊은 중첩이 있으면 경고
+
+empty-blocks:
+  EmptyFunctionBlock:
+    active: false  # 빈 함수가 있어도 경고하지 않음
+
+exceptions:
+  TooGenericExceptionCaught:
+    active: false  # Exception, Throwable 등 너무 포괄적인 예외 사용 시 경고 → 실무에서 종종 쓰여서 끔
+
+  SwallowedException:
+    active: true  # catch(e) { } 이렇게 예외 삼키면 안 된다고 경고
+
+performance:
+  SpreadOperator:
+    active: true  # *args 같은 spread 연산자 사용 시 경고. 성능 이슈
+
+potential-bugs:
+  DuplicateCaseInWhenExpression:
+    active: true  # when 문에서 중복된 case 가 있을 때 감지
