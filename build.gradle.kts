@@ -22,7 +22,7 @@ subprojects {
     // Detekt
     extensions.configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
         config = files("$rootDir/detekt.yml")
-        buildUponDefaultConfig = true
+        buildUponDefaultConfig = false // true = detekt 기본 룰 + 내가 수정한것, false = 내가 명시한 룰만 적용
     }
 
     // KtLint

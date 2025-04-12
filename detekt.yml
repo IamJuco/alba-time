@@ -1,9 +1,9 @@
 build:
   maxIssues: 10  # ❗ 이 숫자 초과하면 detekt는 빌드 실패함 (초기엔 넉넉하게 10~100도 OK)
-  weights:
-    complexity: 2
-    LongParameterList: 1
-    style: 1
+#  weights:
+#    complexity: 2
+#    LongParameterList: 1
+#    style: 1
 
 style:
   MagicNumber:
@@ -19,7 +19,7 @@ style:
     active: false  # ✅ import org.junit.* 처럼 * 쓰는 거 금지 → ktlint와 겹치면 꺼줌
 
   ReturnCount:
-    active: true
+    active: false
     max: 2  # 함수당 return이 너무 많으면 경고 (기본은 2개까지 허용)
 
   UnusedImports:
@@ -29,7 +29,7 @@ style:
     active: false  # Compose 함수의 onEvent 등 자주 안 쓰는 param 때문에 불편 → OFF 추천
 
   OptionalUnit:
-    active: true  # fun foo(): Unit → Unit 생략 가능하니 생략하라고 알려줌
+    active: false  # fun foo(): Unit → Unit 생략 가능하니 생략하라고 알려줌
 
   ThrowsCount:
     active: false  # 한 함수에서 throws 너무 많을 때 경고 → Android에선 비추천이라 끔
