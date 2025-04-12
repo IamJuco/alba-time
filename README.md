@@ -10,12 +10,16 @@
 
 <h1 align="center"><b>Update History</b></h1>
 <p align="center">
+  2025 03.09</span><br>
   <b>0.8.0 - 앱 베타 버전 출시</b>
-  <br>
+  <br><br>
+  2025 03.14</span><br>
   <b>0.9.0 - 근무지 수정 기능 추가</b>
+  <br><br>
+  2025 03.20</span><br>
+  <b>0.9.1 - 다크 모드 대응</b>
 </p>
 
-<br>
 
 # 📑 Service Introduce
 ### 알바를 할때 근무시간과 시급을 관리하고 기록해주며 월급을 자동으로 계산해주는 앱입니다.
