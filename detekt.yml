@@ -56,7 +56,7 @@ comments:
     active: false  # public 클래스에 KDoc 주석 없으면 에러 → Android에선 잘 안 써서 끔
 
 complexity:
-  CyclomaticComplexMethod
+  CyclomaticComplexMethod:
     active: false
     threshold: 15  # 함수가 너무 복잡한 경우 경고 (조건문, 반복문 등 계산해서 판단)
 
