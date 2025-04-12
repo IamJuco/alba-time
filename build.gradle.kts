@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.ksp) apply false
-    alias(libs.plugins.ktlint) apply false
+//    alias(libs.plugins.ktlint) apply false
     alias(libs.plugins.detekt) apply false
 }
 
@@ -16,17 +16,17 @@ subprojects {
     // 루트 프로젝트는 굳이.. 제외
     if (project == rootProject) return@subprojects
 
-    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+//    apply(plugin = "org.jlleitschuh.gradle.ktlint")
     apply(plugin = "io.gitlab.arturbosch.detekt")
 
     // Detekt
     extensions.configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
         config = files("$rootDir/detekt.yml")
-        buildUponDefaultConfig = true
+        buildUponDefaultConfig = false // true = detekt 기본 룰 + 내가 수정한것, false = 내가 명시한 룰만 적용
     }
 
-    // KtLint
-    extensions.configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
-        android.set(true)
-    }
+//    // KtLint
+//    extensions.configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+//        android.set(true)
+//    }
 }

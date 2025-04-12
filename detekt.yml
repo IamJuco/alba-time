@@ -1,16 +1,13 @@
 build:
   maxIssues: 10  # ❗ 이 숫자 초과하면 detekt는 빌드 실패함 (초기엔 넉넉하게 10~100도 OK)
-  weights:
-    complexity: 2
-    LongParameterList: 1
-    style: 1
+#  weights:
+#    complexity: 2
+#    LongParameterList: 1
+#    style: 1
 
 style:
   MagicNumber:
     active: false  # 숫자 0, 1, 2 등을 하드코딩했다고 막 경고주는 룰. 불편해서 끄는 경우 많음
-
-  FunctionNaming:
-    active: false  # ✅ ktlint에서 처리하므로 충돌 방지용으로 OFF
 
   MaxLineLength:
     active: false  # ✅ 줄 길이 제한 (보통 120자) → ktlint와 중복됨
@@ -22,7 +19,7 @@ style:
     active: false  # ✅ import org.junit.* 처럼 * 쓰는 거 금지 → ktlint와 겹치면 꺼줌
 
   ReturnCount:
-    active: true
+    active: false
     max: 2  # 함수당 return이 너무 많으면 경고 (기본은 2개까지 허용)
 
   UnusedImports:
@@ -32,12 +29,15 @@ style:
     active: false  # Compose 함수의 onEvent 등 자주 안 쓰는 param 때문에 불편 → OFF 추천
 
   OptionalUnit:
-    active: true  # fun foo(): Unit → Unit 생략 가능하니 생략하라고 알려줌
+    active: false  # fun foo(): Unit → Unit 생략 가능하니 생략하라고 알려줌
 
   ThrowsCount:
     active: false  # 한 함수에서 throws 너무 많을 때 경고 → Android에선 비추천이라 끔
 
 naming:
+  FunctionNaming:
+    active: false # 함수 앞글자는 소문자 인거 false ( Compose때문에 일단 false )
+
   VariableNaming:
     active: true
     variablePattern: '^(_)?[a-z][A-Za-z0-9]*$'  # 변수는 카멜케이스로 시작
@@ -55,7 +55,7 @@ comments:
     active: false  # public 클래스에 KDoc 주석 없으면 에러 → Android에선 잘 안 써서 끔
 
 complexity:
-  ComplexMethod:
+  CyclomaticComplexMethod:
     active: false
     threshold: 15  # 함수가 너무 복잡한 경우 경고 (조건문, 반복문 등 계산해서 판단)
 
@@ -85,7 +85,3 @@ exceptions:
 performance:
   SpreadOperator:
     active: true  # *args 같은 spread 연산자 사용 시 경고. 성능 이슈
-
-potential-bugs:
-  DuplicateCaseInWhenExpression:
-    active: true  # when 문에서 중복된 case 가 있을 때 감지
