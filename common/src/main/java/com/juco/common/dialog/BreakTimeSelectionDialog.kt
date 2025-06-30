@@ -1,5 +1,6 @@
 package com.juco.common.dialog
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,7 +40,7 @@ fun BreakTimeSelectionDialog(
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = RoundedCornerShape(12.dp),
-            color = Color.White,
+            color = MaterialTheme.colorScheme.background,
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
@@ -48,7 +50,8 @@ fun BreakTimeSelectionDialog(
                     text = "휴게 시간 설정",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.primary
                 )
 
                 options.forEach { option ->
@@ -60,7 +63,8 @@ fun BreakTimeSelectionDialog(
                                     isCustomInput = true
                                     customBreakTime = ""
                                 } else {
-                                    val selectedValue = if (option == "없음") "0" else option.replace("분", "")
+                                    val selectedValue =
+                                        if (option == "없음") "0" else option.replace("분", "")
                                     onBreakTimeSelected(selectedValue)
                                     onDismiss()
                                 }
@@ -71,7 +75,8 @@ fun BreakTimeSelectionDialog(
                         Text(
                             text = option,
                             fontSize = 18.sp,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
@@ -82,7 +87,7 @@ fun BreakTimeSelectionDialog(
                     BreakTimeInputTextField(
                         breakTime = customBreakTime,
                         onBreakTimeChange = { customBreakTime = it },
-                        placeholder = "분 단위 입력"
+                        placeholder = "분 단위 입력",
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -92,9 +97,10 @@ fun BreakTimeSelectionDialog(
                             onBreakTimeSelected(customBreakTime.ifEmpty { "0" })
                             onDismiss()
                         },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                     ) {
-                        Text("확인")
+                        Text(text = "확인", color = MaterialTheme.colorScheme.onPrimary)
                     }
                 }
             }

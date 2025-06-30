@@ -3,6 +3,7 @@ package com.juco.feature.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -66,6 +67,7 @@ fun HomeScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(padding)
+            .background(color = MaterialTheme.colorScheme.background)
     ) {
         Row(
             modifier = Modifier
@@ -73,25 +75,26 @@ fun HomeScreen(
                 .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = "알바타임",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.align(Alignment.Center)
+                )
 
-            Spacer(modifier = Modifier.weight(1f))
-
-            Text(
-                text = "알바타임",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.weight(2f)
-            )
-
-            Text(
-                text = "앱 버전: $versionName",
-                fontSize = 12.sp,
-                color = Color.Gray,
-                textAlign = TextAlign.End,
-                modifier = Modifier.align(Alignment.CenterVertically)
-            )
+                Text(
+                    text = "앱 버전: $versionName",
+                    fontSize = 12.sp,
+                    color = Color.Gray,
+                    modifier = Modifier.align(Alignment.CenterEnd)
+                )
+            }
         }
 
         LazyColumn(

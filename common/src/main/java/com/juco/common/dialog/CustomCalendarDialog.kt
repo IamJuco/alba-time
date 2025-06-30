@@ -38,6 +38,7 @@ fun CustomCalendarDialog(
     )
 
     AlertDialog(
+        containerColor = MaterialTheme.colorScheme.background,
         onDismissRequest = onDismiss,
         title = { Text("날짜 선택", fontSize = 20.sp, fontWeight = FontWeight.Bold) },
         text = {
@@ -55,6 +56,7 @@ fun CustomCalendarDialog(
                 ) {
                     Text(
                         text = "${currentYearMonth.year}년 ${currentYearMonth.monthValue}월",
+                        color = MaterialTheme.colorScheme.primary,
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold
                     )

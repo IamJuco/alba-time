@@ -40,6 +40,7 @@ fun YearMonthPickerDialog(
     val monthListState = rememberLazyListState(initialFirstVisibleItemIndex = initialMonth - 1)
 
     AlertDialog(
+        containerColor = MaterialTheme.colorScheme.background,
         onDismissRequest = { onCancel() },
         title = { Text(text = "날짜 선택", fontSize = 20.sp) },
         text = {

@@ -1,6 +1,7 @@
 package com.juco.workplacedetail
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -117,6 +118,7 @@ fun WorkPlaceDetailScreen(
             .padding(padding)
             .padding(start = 16.dp, end = 16.dp)
             .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.background)
     ) {
         Box(
             modifier = Modifier
