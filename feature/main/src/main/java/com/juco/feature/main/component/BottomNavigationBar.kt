@@ -9,7 +9,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,6 +31,7 @@ fun BottomNavigationBar(
     Column(
         modifier = modifier
 //        modifier = Modifier.padding(WindowInsets.navigationBars.asPaddingValues())
+            .background(color = MaterialTheme.colorScheme.background)
     ) {
         Box(
             modifier = modifier
@@ -59,7 +63,10 @@ fun BottomNavigationBar(
                     selected = menu == currentMenu,
                     onClick = {
                         onMenuSelected(menu)
-                    }
+                    },
+                    colors = NavigationBarItemDefaults.colors(
+                        indicatorColor = Color.Transparent
+                    )
                 )
             }
         }
