@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +31,7 @@ fun WorkDaySelectionDialog(
     var showCalendarDialog by remember { mutableStateOf(false) }
 
     AlertDialog(
+        containerColor = MaterialTheme.colorScheme.background,
         onDismissRequest = onDismiss,
         title = { Text("일하는 날짜 선택") },
         text = {
@@ -89,6 +91,6 @@ fun WorkDayOption(
             .padding(16.dp),
         horizontalArrangement = Arrangement.Start
     ) {
-        Text(text = text, fontSize = 18.sp)
+        Text(text = text, fontSize = 18.sp, color = MaterialTheme.colorScheme.primary)
     }
 }

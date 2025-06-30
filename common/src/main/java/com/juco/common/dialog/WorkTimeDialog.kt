@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -43,6 +44,7 @@ fun SamsungStyleTimePickerDialog(
     val amPm = listOf("오전", "오후")
 
     AlertDialog(
+        containerColor = MaterialTheme.colorScheme.background,
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(onClick = {
@@ -87,7 +89,7 @@ fun SamsungStyleTimePickerDialog(
                                     text = period,
                                     fontSize = 24.sp,
                                     fontWeight = if ((period == "오전" && isAm) || (period == "오후" && !isAm)) FontWeight.Bold else FontWeight.Normal,
-                                    color = if ((period == "오전" && isAm) || (period == "오후" && !isAm)) Color.Black else Color.Gray,
+                                    color = if ((period == "오전" && isAm) || (period == "오후" && !isAm)) Color.DarkGray else Color.Gray,
                                     modifier = Modifier
                                         .padding(vertical = 4.dp)
                                         .clickable {
@@ -116,7 +118,7 @@ fun SamsungStyleTimePickerDialog(
                                     text = h,
                                     fontSize = 24.sp,
                                     fontWeight = if (h.toInt() == hour) FontWeight.Bold else FontWeight.Normal,
-                                    color = if (h.toInt() == hour) Color.Black else Color.Gray,
+                                    color = if (h.toInt() == hour) Color.DarkGray else Color.Gray,
                                     modifier = Modifier
                                         .padding(vertical = 4.dp)
                                         .clickable { hour = h.toInt() }
@@ -143,7 +145,7 @@ fun SamsungStyleTimePickerDialog(
                                     text = m,
                                     fontSize = 24.sp,
                                     fontWeight = if (m.toInt() == minute) FontWeight.Bold else FontWeight.Normal,
-                                    color = if (m.toInt() == minute) Color.Black else Color.Gray,
+                                    color = if (m.toInt() == minute) Color.DarkGray else Color.Gray,
                                     modifier = Modifier
                                         .padding(vertical = 4.dp)
                                         .clickable { minute = m.toInt() }

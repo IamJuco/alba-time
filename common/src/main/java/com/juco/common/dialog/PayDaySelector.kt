@@ -15,6 +15,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -78,33 +79,33 @@ fun PayDaySelector(
         }
 
 //        if (selectedPayDay.type != UiPayDayType.CUSTOM)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .clickable { showDialog = true }
+                    .padding(end = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    modifier = Modifier
-                        .clickable { showDialog = true }
-                        .padding(end = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(payDayText, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                    Spacer(Modifier.width(4.dp))
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_dropdown_24dp),
-                        contentDescription = "급여일 설정"
-                    )
-                }
-                Text(
-                    text = if (selectedPayDay.type == UiPayDayType.MONTHLY) "월급을 받습니다." else "주급을 받습니다.",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Gray
+                Text(payDayText, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Spacer(Modifier.width(4.dp))
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_dropdown_24dp),
+                    contentDescription = "급여일 설정"
                 )
             }
+            Text(
+                text = if (selectedPayDay.type == UiPayDayType.MONTHLY) "월급을 받습니다." else "주급을 받습니다.",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Gray
+            )
+        }
 
 
         if (showDialog) {
@@ -140,6 +141,7 @@ fun PayDaySelectionDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
+        containerColor = MaterialTheme.colorScheme.background,
         title = { Text("급여일 선택", fontSize = 20.sp) },
         text = {
             Column {
