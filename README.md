@@ -49,3 +49,6 @@
   <img src="https://github.com/user-attachments/assets/625617e4-3443-4a9a-b224-16c12bd7fbea" alt="albatime_adder" width="24%">
   <img src="https://github.com/user-attachments/assets/dbabd7e7-a92d-421c-b580-040cfc8b14e4" alt="albatime_calendar" width="24%">
 </div>
+
+# Convention
+[Github Wiki](https://github.com/IamJuco/alba-time/wiki/Git-Convention)
