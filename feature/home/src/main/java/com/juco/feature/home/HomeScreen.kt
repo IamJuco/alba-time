@@ -35,6 +35,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.designsystem.theme.LightBlue
 import com.juco.domain.model.WorkPlace
 import com.juco.feature.home.component.WorkPlaceCard
+import com.juco.designsystem.R
 
 @Composable
 fun HomeRoute(

@@ -1,4 +1,4 @@
-package com.juco.domain.navigation
+package com.juco.common.navigation
 
 import kotlinx.serialization.Serializable
 

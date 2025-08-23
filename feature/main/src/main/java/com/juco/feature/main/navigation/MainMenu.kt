@@ -2,9 +2,9 @@ package com.juco.feature.main.navigation
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
-import com.juco.domain.navigation.MainMenuRoute
-import com.juco.domain.navigation.RouteModel
-import com.juco.feature.main.R
+import com.juco.common.navigation.MainMenuRoute
+import com.juco.common.navigation.RouteModel
+import com.juco.designsystem.R
 
 enum class MainMenu(
     @DrawableRes

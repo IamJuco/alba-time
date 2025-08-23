@@ -13,7 +13,7 @@ reviews:
   high_level_summary: true
   review_status: true
   collapse_walkthrough: false
-  Poem: false
+  poem: false
 
   # PR 제목 자동 생성은 끔 (이미 .github에 템플릿 있음)
   auto_title_placeholder: ""

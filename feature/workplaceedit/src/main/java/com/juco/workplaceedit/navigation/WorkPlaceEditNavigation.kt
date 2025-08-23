@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.juco.domain.navigation.RouteModel
+import com.juco.common.navigation.RouteModel
 import com.juco.workplaceedit.WorkPlaceEditRoute
 
 fun NavController.navigateToWorkPlaceEdit(workPlaceId: Int, navOptions: NavOptions? = null) {

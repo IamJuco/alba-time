@@ -1,26 +1,23 @@
-package com.juco.common
+package com.juco.designsystem.textfield
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TitleText(
+fun SubtitleText(
     text: String,
-    fontSize: TextUnit = 20.sp,
+    modifier: Modifier = Modifier,
     fontWeight: FontWeight = FontWeight.Bold,
-    textAlign: TextAlign = TextAlign.Center,
-    modifier: Modifier = Modifier
+    fontSize: TextUnit = 24.sp
 ) {
     Text(
         text = text,
-        fontSize = fontSize,
+        modifier = modifier,
         fontWeight = fontWeight,
-        textAlign = textAlign,
-        modifier = modifier
+        fontSize = fontSize
     )
 }

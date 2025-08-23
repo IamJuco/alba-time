@@ -1,4 +1,4 @@
-package com.juco.common
+package com.juco.common.util
 
 import java.time.DayOfWeek
 import java.time.LocalDate

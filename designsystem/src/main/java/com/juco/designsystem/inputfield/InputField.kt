@@ -1,4 +1,4 @@
-package com.juco.common
+package com.juco.designsystem.inputfield
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.juco.common.util.formatWithComma
 
 @Composable
 fun InputTextField(

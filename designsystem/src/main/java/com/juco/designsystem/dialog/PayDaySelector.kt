@@ -1,4 +1,4 @@
-package com.juco.common.dialog
+package com.juco.designsystem.dialog
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,7 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.juco.common.R
+import com.juco.designsystem.R
 import com.juco.common.mapper.displayName
 import com.juco.common.model.UiPayDay
 import com.juco.common.model.UiPayDayType
