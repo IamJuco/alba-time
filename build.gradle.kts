@@ -8,9 +8,11 @@ plugins {
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.ksp) apply false
 //    alias(libs.plugins.ktlint) apply false
-    alias(libs.plugins.detekt) apply false
+//    alias(libs.plugins.detekt) apply false
 }
 
+/**
+// GitActions CI -> CodeRabbit 으로 대체
 // 모든 프로젝트에 적용할 플러그인
 subprojects {
     // 루트 프로젝트는 굳이.. 제외
@@ -30,3 +32,4 @@ subprojects {
 //        android.set(true)
 //    }
 }
+*/
