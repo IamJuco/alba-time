@@ -51,7 +51,7 @@ import com.juco.designsystem.dialog.SamsungStyleTimePickerDialog
 import com.juco.designsystem.dialog.TaxSelectionDialog
 import com.juco.designsystem.dialog.WorkDaySelectionDialog
 import com.juco.designsystem.dialog.WorkPlaceCardColorSelectionDialog
-import com.juco.feature.workplacesetting.R
+import com.juco.designsystem.R
 import com.juco.common.mapper.toLocalTime
 import com.juco.common.mapper.toTimeString
 import com.juco.common.model.UiPayDay

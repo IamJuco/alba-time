@@ -64,7 +64,7 @@ import com.juco.designsystem.theme.Red
 import com.juco.domain.model.WorkPlace
 import com.juco.common.navigation.MainMenuRoute
 import com.juco.common.navigation.RouteModel
-import com.juco.feature.workplaceedit.R
+import com.juco.designsystem.R
 import com.juco.workplaceedit.component.DeleteWorkPlaceDialog
 import com.juco.workplaceedit.mapper.toDomain
 import com.juco.workplaceedit.mapper.toUiModel
