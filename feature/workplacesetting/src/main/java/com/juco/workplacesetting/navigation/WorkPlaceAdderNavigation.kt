@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.juco.domain.navigation.RouteModel
+import com.juco.common.navigation.RouteModel
 import com.juco.workplacesetting.WorkPlaceAdderRoute
 
 fun NavController.navigateWorkPlaceAdder(navOptions: NavOptions) {

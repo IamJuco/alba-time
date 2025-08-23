@@ -9,7 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.juco.domain.navigation.RouteModel
+import com.juco.common.navigation.RouteModel
 import com.juco.feature.calendar.navigation.navigateCalendar
 import com.juco.feature.home.navigation.navigateHome
 import com.juco.workplacedetail.navigation.navigateToWorkPlaceDetail
