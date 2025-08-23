@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.juco.common.TitleText
+import com.juco.designsystem.textfield.TitleText
 import com.juco.common.WageCalculator
 import com.juco.common.formatWithComma
 import com.juco.designsystem.theme.LightBlue

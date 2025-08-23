@@ -1,4 +1,4 @@
-package com.juco.common.dialog
+package com.juco.designsystem.dialog
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

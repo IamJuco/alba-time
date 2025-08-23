@@ -43,17 +43,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.juco.common.InputNumberField
-import com.juco.common.InputTextField
-import com.juco.common.SubtitleText
-import com.juco.common.TitleText
-import com.juco.common.dialog.BreakTimeSelectionDialog
-import com.juco.common.dialog.PayDaySelectionDialog
-import com.juco.common.dialog.PayDaySelector
-import com.juco.common.dialog.SamsungStyleTimePickerDialog
-import com.juco.common.dialog.TaxSelectionDialog
-import com.juco.common.dialog.WorkDaySelectionDialog
-import com.juco.common.dialog.WorkPlaceCardColorSelectionDialog
+import com.juco.designsystem.inputfield.InputNumberField
+import com.juco.designsystem.inputfield.InputTextField
+import com.juco.designsystem.textfield.SubtitleText
+import com.juco.designsystem.textfield.TitleText
+import com.juco.designsystem.dialog.BreakTimeSelectionDialog
+import com.juco.designsystem.dialog.PayDaySelectionDialog
+import com.juco.designsystem.dialog.PayDaySelector
+import com.juco.designsystem.dialog.SamsungStyleTimePickerDialog
+import com.juco.designsystem.dialog.TaxSelectionDialog
+import com.juco.designsystem.dialog.WorkDaySelectionDialog
+import com.juco.designsystem.dialog.WorkPlaceCardColorSelectionDialog
 import com.juco.common.mapper.toLocalTime
 import com.juco.common.mapper.toTimeString
 import com.juco.common.model.UiPayDay
@@ -71,6 +71,7 @@ import com.juco.workplaceedit.mapper.toUiModel
 import com.juco.workplaceedit.util.workDayTypeSetter
 import com.juco.workplaceedit.util.getWorkDaysSummary
 import java.time.LocalDate
+import java.time.temporal.TemporalAdjusters
 
 @Composable
 fun WorkPlaceEditRoute(
@@ -470,7 +471,7 @@ fun WorkPlaceEditScreen(
                     onDismiss = { showWorkDayDialog = false },
                     onSelect = { workDayType ->
                         onWorkDaysChange(
-                            workDayType.dayOfWeeks.map { LocalDate.now().with(java.time.temporal.TemporalAdjusters.nextOrSame(it)) }
+                            workDayType.dayOfWeeks.map { LocalDate.now().with(TemporalAdjusters.nextOrSame(it)) }
                         )
                         showWorkDayDialog = false
                     },

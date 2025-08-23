@@ -1,4 +1,4 @@
-package com.juco.common.dialog
+package com.juco.designsystem.dialog
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
