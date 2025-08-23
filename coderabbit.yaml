@@ -1,0 +1,74 @@
+# ===== Global =====
+language: "ko-KR"
+early_access: false
+enable_free_tier: true
+tone_instructions: "설명은 간결하지만, 모든 잠재적 문제와 개선점을 빠짐없이 지적해주세요."
+
+# ===== Reviews =====
+reviews:
+  # 리뷰 성향: chill(덜 잔소리) / assertive(빡세게)
+  profile: "assertive"
+
+  # PR 요약 자동 작성
+  high_level_summary: true
+  review_status: true
+  collapse_walkthrough: false
+  Poem: false
+
+  # PR 제목 자동 생성은 끔 (이미 .github에 템플릿 있음)
+  auto_title_placeholder: ""
+  auto_title_instructions: ""
+
+  request_changes_workflow: true
+
+  auto_review:
+    enabled: true
+    drafts: false
+    auto_incremental_review: true
+    # base_branches: ["main", "develop"]  # 필요하면 제한
+
+  path_instructions:
+    - path: "**/*.kt"
+      instructions: |
+        Kotlin/Android 코드 리뷰를 엄격하게 해주세요:
+        - 코루틴: Dispatcher 적절성, 취소 안전성, Structured Concurrency 준수 여부
+        - Flow/StateFlow: 수명 범위 및 collect 타이밍 문제, 누수 가능성
+        - Compose: recomposition 최적화, remember/derivedStateOf 사용 검증
+        - DI(Hilt): 의존성 스코프 정확도, Qualifier 적합성
+        - Domain/Data 계층: suspend 함수 IO 디스패처 사용 및 예외 처리 일관성
+        - 코드 스타일: Ktlint/Detekt 표준 위반, 불필요한 MutableState, 중복 코드
+    - path: "**/*.kts"
+      instructions: |
+        Gradle 빌드 스크립트 리뷰를 엄격하게 해주세요:
+        - 플러그인 버전 카탈로그 일관성 확인
+        - 멀티모듈 간 의존 순환 여부 검토
+        - 구성 캐시 호환성 체크
+        - 불필요한 빌드 타임 작업 제거
+    - path: "docs/**.md"
+      instructions: |
+        문서의 정확성, 가독성, 링크 무결성을 철저히 점검하세요.
+
+  tools:
+    detekt:
+      enabled: false
+      config_file: "config/detekt/detekt.yml"
+    yamllint:
+      enabled: true
+    markdownlint:
+      enabled: true
+    gitleaks:
+      enabled: true
+    languagetool:
+      enabled: false
+      enabled_only: false
+
+# ===== Knowledge Base =====
+knowledge_base:
+  web_search:
+    enabled: true
+  learnings:
+    scope: local
+  issues:
+    scope: auto
+  jira:
+    project_keys: []

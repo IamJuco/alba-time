@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
 //    alias(libs.plugins.ktlint)
-    alias(libs.plugins.detekt)
+//    alias(libs.plugins.detekt)
 }
 
 val admobTestId = "ca-app-pub-3940256099942544~3347511713"
