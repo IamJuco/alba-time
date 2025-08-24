@@ -24,7 +24,7 @@ admob = "24.0.0"
 ktlint = "12.2.0"
 detekt = "1.23.8"
 
-minSdk = "26"
+minSdk = "24"
 compileSdk = "35"
 
 [libraries]
