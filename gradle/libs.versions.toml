@@ -23,6 +23,7 @@ gson = "2.12.1"
 admob = "24.0.0"
 ktlint = "12.2.0"
 detekt = "1.23.8"
+desugar = "2.1.5"
 
 minSdk = "24"
 compileSdk = "35"
@@ -74,6 +75,9 @@ gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 
 # googld Admob
 play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "admob" }
+
+# desugar https://developer.android.com/studio/write/java8-support?hl=ko#library-desugaring
+desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
