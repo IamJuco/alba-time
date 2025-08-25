@@ -46,7 +46,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:main"))
+    implementation(projects.feature.main)
 
     implementation(libs.play.services.ads)
 

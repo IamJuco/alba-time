@@ -64,15 +64,15 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:home"))
-    implementation(project(":feature:calendar"))
-    implementation(project(":feature:workplacesetting"))
-    implementation(project(":feature:workplacedetail"))
-    implementation(project(":feature:workplaceedit"))
-    implementation(project(":designsystem"))
-    implementation(project(":common"))
-    implementation(project(":domain"))
-    implementation(project(":data"))
+    implementation(projects.feature.home)
+    implementation(projects.feature.calendar)
+    implementation(projects.feature.workplacedetail)
+    implementation(projects.feature.workplacesetting)
+    implementation(projects.feature.workplaceedit)
+    implementation(projects.designsystem)
+    implementation(projects.common)
+    implementation(projects.domain)
+    implementation(projects.data)
 
     implementation(libs.play.services.ads)
 

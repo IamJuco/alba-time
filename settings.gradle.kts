@@ -20,6 +20,9 @@ dependencyResolutionManagement {
     }
 }
 
+/** 해당 메서드 추가시 implementation(projects.feature.home) 와 같은 형식으로 안전하게 project 의존성 추가 가능 */
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 rootProject.name = "alba-time"
 include(":app")
 include(":data")
