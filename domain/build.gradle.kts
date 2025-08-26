@@ -2,7 +2,6 @@
 plugins {
     kotlin("jvm")
     id("java-library")
-    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -10,9 +9,6 @@ kotlin {
 }
 
 dependencies {
-    implementation(libs.hilt.core)
-    ksp(libs.hilt.compiler)
-
     implementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.junit)
 }
