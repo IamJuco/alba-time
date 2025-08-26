@@ -73,7 +73,7 @@ korean-lunar-calendar = { module = "com.github.FrancescoJo:korean-lunar-calendar
 # Gson https://github.com/google/gson
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 
-# googld Admob
+# google Admob
 play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "admob" }
 
 # desugar https://developer.android.com/studio/write/java8-support?hl=ko#library-desugaring
