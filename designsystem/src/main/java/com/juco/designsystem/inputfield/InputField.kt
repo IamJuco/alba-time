@@ -25,7 +25,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.juco.designsystem.util.formatWithComma
+import com.juco.common.util.formatWithComma
 
 @Composable
 fun InputTextField(
