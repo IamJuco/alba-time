@@ -44,6 +44,8 @@ kotlin {
 }
 
 dependencies {
+    implementation(projects.common)
+
     coreLibraryDesugaring(libs.desugar)
 
     implementation(libs.androidx.core.ktx)
