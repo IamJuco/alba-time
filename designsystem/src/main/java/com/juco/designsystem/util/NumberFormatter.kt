@@ -1,4 +1,4 @@
-package com.juco.common.util
+package com.juco.designsystem.util
 
 import java.text.NumberFormat
 import java.util.Locale

@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.common.util.WageCalculator
-import com.juco.common.util.formatWithComma
+import com.juco.designsystem.util.formatWithComma
 import com.juco.designsystem.theme.LightBlue
 import com.juco.domain.model.WorkPlace
 import com.juco.feature.calendar.component.WorkChipCard

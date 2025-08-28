@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.juco.common.util.formatWithComma
+import com.juco.designsystem.util.formatWithComma
 import com.juco.domain.model.WorkPlace
 
 // Home에서 보일 근무지 카드
