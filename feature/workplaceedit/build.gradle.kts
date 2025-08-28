@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -27,23 +29,32 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+        isCoreLibraryDesugaringEnabled = true // desugar
     }
-    kotlinOptions {
-        jvmTarget = "11"
+    buildFeatures {
+        compose = true
+    }
+}
+
+kotlin {
+    jvmToolchain(17)
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
 dependencies {
-    implementation(project(":domain"))
-    implementation(project(":common"))
-    implementation(project(":designsystem"))
+    implementation(projects.domain)
+    implementation(projects.common)
+    implementation(projects.designsystem)
 
     implementation(libs.navigation.compose)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
+    coreLibraryDesugaring(libs.desugar)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

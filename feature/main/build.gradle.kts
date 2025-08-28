@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 
 plugins {
@@ -24,10 +25,10 @@ if (localFile.exists()) {
 
 android {
     namespace = "com.juco.feature.main"
-    compileSdk = 35
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 26
+        minSdk = libs.versions.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -48,11 +49,9 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+        isCoreLibraryDesugaringEnabled = true // desugar
     }
     buildFeatures {
         buildConfig = true
@@ -60,16 +59,23 @@ android {
     }
 }
 
+kotlin {
+    jvmToolchain(17)
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
+}
+
 dependencies {
-    implementation(project(":feature:home"))
-    implementation(project(":feature:calendar"))
-    implementation(project(":feature:workplacesetting"))
-    implementation(project(":feature:workplacedetail"))
-    implementation(project(":feature:workplaceedit"))
-    implementation(project(":designsystem"))
-    implementation(project(":common"))
-    implementation(project(":domain"))
-    implementation(project(":data"))
+    implementation(projects.feature.home)
+    implementation(projects.feature.calendar)
+    implementation(projects.feature.workplacedetail)
+    implementation(projects.feature.workplacesetting)
+    implementation(projects.feature.workplaceedit)
+    implementation(projects.designsystem)
+    implementation(projects.common)
+    implementation(projects.domain)
+    implementation(projects.data)
 
     implementation(libs.play.services.ads)
 
@@ -77,6 +83,7 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
+    coreLibraryDesugaring(libs.desugar)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
