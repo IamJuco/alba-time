@@ -32,7 +32,6 @@ fun MainTopBar(
             textAlign = TextAlign.Center,
             modifier = Modifier.align(Alignment.Center)
         )
-        //
         if (subTitle != null) {
             Text(
                 text = subTitle,
