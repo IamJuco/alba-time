@@ -65,6 +65,7 @@ import com.juco.domain.model.WorkPlace
 import com.juco.common.navigation.MainMenuRoute
 import com.juco.common.navigation.RouteModel
 import com.juco.designsystem.R
+import com.juco.designsystem.topbar.PreviousTopBar
 import com.juco.workplaceedit.component.DeleteWorkPlaceDialog
 import com.juco.workplaceedit.mapper.toDomain
 import com.juco.workplaceedit.mapper.toUiModel
@@ -209,35 +210,19 @@ fun WorkPlaceEditScreen(
             .imePadding()
             .background(color = MaterialTheme.colorScheme.background)
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
-        ) {
-            IconButton(
-                onClick = { popBackStack() },
-                modifier = Modifier.align(Alignment.CenterStart)
-            ) {
-                Icon(
-                    modifier = Modifier.size(24.dp),
-                    imageVector = Icons.Default.KeyboardArrowLeft,
-                    contentDescription = "뒤로가기",
-                    tint = Color.Black,
-                )
+        PreviousTopBar(
+            title = "근무지 수정",
+            onPopBackStack = popBackStack,
+            centerEndAction = {
+                OutlinedButton(
+                    onClick = { showDeleteDialog = true },
+                    colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent),
+                    border = BorderStroke(1.dp, LightBlue)
+                ) {
+                    Text(text = "근무지 삭제", color = Red)
+                }
             }
-            TitleText(
-                text = "근무지 수정",
-                modifier = Modifier.align(Alignment.Center)
-            )
-            OutlinedButton(
-                onClick = { showDeleteDialog = true },
-                modifier = Modifier.align(Alignment.CenterEnd),
-                colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent),
-                border = BorderStroke(1.dp, LightBlue)
-            ) {
-                Text(text = "근무지 삭제", color = Red)
-            }
-        }
+        )
 
         Column {
             Row(verticalAlignment = Alignment.CenterVertically) {
