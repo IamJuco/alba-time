@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.juco.common.navigation.RouteModel
 import com.juco.feature.calendar.navigation.navigateCalendar
+import com.juco.feature.community.navigation.navigateCommunity
 import com.juco.feature.home.navigation.navigateHome
 import com.juco.workplacedetail.navigation.navigateToWorkPlaceDetail
 import com.juco.workplaceedit.navigation.navigateToWorkPlaceEdit
@@ -42,6 +43,7 @@ class MainNavigator(
         when (menu) {
             MainMenu.HOME -> navController.navigateHome(navOptions)
             MainMenu.CALENDAR -> navController.navigateCalendar(navOptions)
+            MainMenu.COMMUNITY -> navController.navigateCommunity(navOptions)
         }
     }
 

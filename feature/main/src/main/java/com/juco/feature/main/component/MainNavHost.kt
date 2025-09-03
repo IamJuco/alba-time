@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import com.juco.feature.calendar.navigation.calendarNavGraph
+import com.juco.feature.community.navigation.communityNavGraph
 import com.juco.feature.home.navigation.homeNavGraph
 import com.juco.feature.main.navigation.MainNavigator
 import com.juco.workplacedetail.navigation.workPlaceDetailNavGraph
@@ -31,6 +32,9 @@ fun MainNavHost(
         calendarNavGraph(
             padding = padding,
             admobBanner = admobBanner
+        )
+        communityNavGraph(
+            padding = padding
         )
         workPlaceAdderNavGraph(
             padding = padding,
