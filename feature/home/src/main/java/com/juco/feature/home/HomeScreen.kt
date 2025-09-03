@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -36,6 +37,8 @@ import com.juco.designsystem.theme.LightBlue
 import com.juco.domain.model.WorkPlace
 import com.juco.feature.home.component.WorkPlaceCard
 import com.juco.designsystem.R
+import com.juco.designsystem.theme.AlbaTimeTheme
+import com.juco.designsystem.topbar.MainTopBar
 
 @Composable
 fun HomeRoute(
@@ -70,33 +73,11 @@ fun HomeScreen(
             .padding(padding)
             .background(color = MaterialTheme.colorScheme.background)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    text = "알바타임",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.align(Alignment.Center)
-                )
 
-                Text(
-                    text = "앱 버전: $versionName",
-                    fontSize = 12.sp,
-                    color = Color.Gray,
-                    modifier = Modifier.align(Alignment.CenterEnd)
-                )
-            }
-        }
+        MainTopBar(
+            title = "알바타임",
+            subTitle = "앱 버전: $versionName"
+        )
 
         LazyColumn(
             modifier = Modifier
@@ -148,5 +129,19 @@ fun HomeScreen(
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HomeScreenPreview() {
+    AlbaTimeTheme {
+        HomeScreen(
+            padding = PaddingValues(),
+            workPlaces = emptyList(),
+            navigateToWorkPlaceAdder = {},
+            navigateToWorkPlaceDetail = {},
+            versionName = ""
+        )
     }
 }
