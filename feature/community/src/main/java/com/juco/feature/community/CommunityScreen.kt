@@ -22,6 +22,7 @@ import com.juco.designsystem.theme.AlbaTimeTheme
 import com.juco.designsystem.topbar.MainTopBar
 import com.juco.feature.community.freeboard.FreeBoardTabRoute
 import com.juco.feature.community.home.HomeTabRoute
+import com.juco.feature.community.hotboard.HotBoardTabRoute
 import com.juco.feature.community.qnaboard.QnABoardTabRoute
 import kotlinx.coroutines.launch
 
@@ -39,7 +40,7 @@ fun CommunityRoute(
 fun CommunityScreen(
     padding: PaddingValues
 ) {
-    val tabs = listOf("홈", "자유게시판", "질문게시판")
+    val tabs = listOf("홈", "인기글", "자유게시판", "질문게시판")
     val pagerState = rememberPagerState(pageCount = { tabs.size })
     val coroutineScope = rememberCoroutineScope()
 
@@ -77,8 +78,9 @@ fun CommunityScreen(
         ) { page ->
             when (page) {
                 0 -> HomeTabRoute()
-                1 -> FreeBoardTabRoute()
-                2 -> QnABoardTabRoute()
+                1 -> HotBoardTabRoute()
+                2 -> FreeBoardTabRoute()
+                3 -> QnABoardTabRoute()
             }
         }
     }
