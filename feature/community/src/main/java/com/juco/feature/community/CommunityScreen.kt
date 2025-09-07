@@ -23,6 +23,7 @@ import com.juco.designsystem.topbar.MainTopBar
 import com.juco.feature.community.freeboard.FreeBoardTabRoute
 import com.juco.feature.community.home.HomeTabRoute
 import com.juco.feature.community.hotboard.HotBoardTabRoute
+import com.juco.feature.community.model.BoardEnum
 import com.juco.feature.community.qnaboard.QnABoardTabRoute
 import kotlinx.coroutines.launch
 
@@ -77,13 +78,28 @@ fun CommunityScreen(
                 .weight(1f)
         ) { page ->
             when (page) {
-                0 -> HomeTabRoute()
+                0 -> HomeTabRoute(
+                    onNavigateToBoard = { board ->
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(boardToPage(board))
+                        }
+                    },
+                    onOpenPost = { postId ->
+                        // TODO: 게시글 상세로 네비게이트 할것,
+                    }
+                )
                 1 -> HotBoardTabRoute()
                 2 -> FreeBoardTabRoute()
                 3 -> QnABoardTabRoute()
             }
         }
     }
+}
+
+private fun boardToPage(board: BoardEnum): Int = when (board) {
+    BoardEnum.POPULAR -> 1
+    BoardEnum.FREE    -> 2
+    BoardEnum.QNA     -> 3
 }
 
 @Preview(showBackground = true)
