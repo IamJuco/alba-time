@@ -59,6 +59,7 @@ import com.juco.common.model.UiTaxType
 import com.juco.common.model.UiWorkTime
 import com.juco.common.model.WorkDayType
 import com.juco.designsystem.theme.LightBlue
+import com.juco.designsystem.topbar.PreviousTopBar
 import java.time.LocalDate
 
 @Composable
@@ -178,27 +179,10 @@ fun WorkPlaceAdderScreen(
             .imePadding()
             .background(color = MaterialTheme.colorScheme.background)
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
-        ) {
-            IconButton(
-                onClick = { popBackStack() },
-                modifier = Modifier.align(Alignment.CenterStart)
-            ) {
-                Icon(
-                    modifier = Modifier.size(24.dp),
-                    imageVector = Icons.Default.KeyboardArrowLeft,
-                    contentDescription = "뒤로가기",
-                    tint = Color.Black,
-                )
-            }
-            TitleText(
-                text = "근무지 추가",
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
+        PreviousTopBar(
+            title = "근무지 추가",
+            onPopBackStack = popBackStack
+        )
 
         Column {
             Row(verticalAlignment = Alignment.CenterVertically) {

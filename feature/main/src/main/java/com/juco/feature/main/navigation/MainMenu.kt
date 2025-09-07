@@ -21,6 +21,11 @@ enum class MainMenu(
         iconResId = R.drawable.ic_calendar_24dp,
         contentDescription = "Calendar",
         route = MainMenuRoute.Calendar,
+    ),
+    COMMUNITY(
+        iconResId = R.drawable.ic_community_24dp,
+        contentDescription = "Community",
+        route = MainMenuRoute.Community
     );
 
     companion object {

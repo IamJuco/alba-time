@@ -19,4 +19,7 @@ sealed interface MainMenuRoute : RouteModel {
 
     @Serializable
     data object Calendar : RouteModel
+
+    @Serializable
+    data object Community : RouteModel
 }
