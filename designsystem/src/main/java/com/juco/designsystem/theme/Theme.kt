@@ -13,13 +13,15 @@ import androidx.compose.ui.platform.LocalContext
 private val DarkColorScheme = darkColorScheme(
     primary = White,
     background = Black,
-    error = DeepRed
+    error = DeepRed,
+    surface = DarkGray
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Black,
     background = White,
-    error = DeepRed
+    error = DeepRed,
+    surface = LightGray
 )
 
 @Composable

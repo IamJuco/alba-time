@@ -12,6 +12,8 @@ val Pink40 = Color(0xFF7D5260)
 
 val White = Color(0xFFFFFFFF)
 val Black = Color(0xFF000000)
+val LightGray = Color(0xFF757575)
+val DarkGray = Color(0xFFB0B0B0)
 
 // 진한 레드
 val DeepRed = Color(0xFFEE0000)
