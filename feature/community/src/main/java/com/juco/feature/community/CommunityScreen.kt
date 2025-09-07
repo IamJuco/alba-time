@@ -22,7 +22,7 @@ import com.juco.designsystem.theme.AlbaTimeTheme
 import com.juco.designsystem.topbar.MainTopBar
 import com.juco.feature.community.freeboard.FreeBoardTabRoute
 import com.juco.feature.community.home.HomeTabRoute
-import com.juco.feature.community.hotboard.HotBoardTabRoute
+import com.juco.feature.community.popularboard.PopularBoardTabRoute
 import com.juco.feature.community.model.BoardEnum
 import com.juco.feature.community.qnaboard.QnABoardTabRoute
 import kotlinx.coroutines.launch
@@ -88,7 +88,7 @@ fun CommunityScreen(
                         // TODO: 게시글 상세로 네비게이트 할것,
                     }
                 )
-                1 -> HotBoardTabRoute()
+                1 -> PopularBoardTabRoute()
                 2 -> FreeBoardTabRoute()
                 3 -> QnABoardTabRoute()
             }

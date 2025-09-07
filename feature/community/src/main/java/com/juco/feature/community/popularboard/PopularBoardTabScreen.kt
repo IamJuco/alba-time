@@ -1,4 +1,4 @@
-package com.juco.feature.community.hotboard
+package com.juco.feature.community.popularboard
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,12 +12,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.juco.designsystem.theme.AlbaTimeTheme
 
 @Composable
-fun HotBoardTabRoute() {
-    HotBoardTabScreen()
+fun PopularBoardTabRoute() {
+    PopularBoardTabScreen()
 }
 
 @Composable
-fun HotBoardTabScreen() {
+fun PopularBoardTabScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -33,8 +33,8 @@ fun HotBoardTabScreen() {
 
 @Preview(showBackground = true)
 @Composable
-private fun HotBoardTabScreenPreview() {
+private fun PopularBoardTabScreenPreview() {
     AlbaTimeTheme {
-        HotBoardTabScreen()
+        PopularBoardTabScreen()
     }
 }

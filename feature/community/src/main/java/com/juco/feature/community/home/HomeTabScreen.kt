@@ -120,7 +120,7 @@ private fun CategorySection(
                 )
             } else {
                 posts.forEach { post ->
-                    PostRow(post = post, onClick = { onPostClick(post) })
+                    DefaultPostRow(post = post, onClick = { onPostClick(post) })
                 }
             }
         }
@@ -144,7 +144,7 @@ private fun CategorySection(
 }
 
 @Composable
-private fun PostRow(
+private fun DefaultPostRow(
     post: Post,
     onClick: () -> Unit
 ) {
@@ -190,10 +190,12 @@ private fun PostRow(
 private fun samplePosts(prefix: String, count: Int) = List(count) { i ->
     Post(
         id = "$prefix-$i",
-        title = "$prefix 게시글 제목 $i - 길어지면 말줄임",
+        title = "$prefix 게시글 제목 $i",
         author = "익명$i",
         likeCount = (i + 1) * 3,
-        commentCount = i
+        commentCount = i,
+        body = "",
+        boardType = "",
     )
 }
 
