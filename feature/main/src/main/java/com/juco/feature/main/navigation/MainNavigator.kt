@@ -13,6 +13,7 @@ import com.juco.common.navigation.RouteModel
 import com.juco.feature.calendar.navigation.navigateCalendar
 import com.juco.feature.community.navigation.navigateCommunity
 import com.juco.feature.home.navigation.navigateHome
+import com.juco.feature.post.read.navigation.navigatePostRead
 import com.juco.workplacedetail.navigation.navigateToWorkPlaceDetail
 import com.juco.workplaceedit.navigation.navigateToWorkPlaceEdit
 import com.juco.workplacesetting.navigation.navigateWorkPlaceAdder
@@ -50,6 +51,7 @@ class MainNavigator(
     fun navigateToWorkPlaceAdder() = navController.navigateWorkPlaceAdder(navOptions = singleTopOptions)
     fun navigateToWorkPlaceDetail(workPlaceId: Int) = navController.navigateToWorkPlaceDetail(workPlaceId = workPlaceId, navOptions = singleTopOptions)
     fun navigateToWorkPlaceEdit(workPlaceId: Int) = navController.navigateToWorkPlaceEdit(workPlaceId = workPlaceId, navOptions = singleTopOptions)
+    fun navigateToPostRead(postId: Int) = navController.navigatePostRead(postId = postId, navOptions = singleTopOptions)
 
     fun popBackStack() {
         navController.popBackStack()

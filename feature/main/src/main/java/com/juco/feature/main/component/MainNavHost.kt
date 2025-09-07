@@ -7,6 +7,7 @@ import com.juco.feature.calendar.navigation.calendarNavGraph
 import com.juco.feature.community.navigation.communityNavGraph
 import com.juco.feature.home.navigation.homeNavGraph
 import com.juco.feature.main.navigation.MainNavigator
+import com.juco.feature.post.read.navigation.postReadNavGraph
 import com.juco.workplacedetail.navigation.workPlaceDetailNavGraph
 import com.juco.workplaceedit.navigation.workPlaceEditNavGraph
 import com.juco.workplacesetting.navigation.workPlaceAdderNavGraph
@@ -49,6 +50,10 @@ fun MainNavHost(
             padding = padding,
             popBackStack = navigator::popBackStack,
             popAllBackStack = navigator::popAllBackStack
+        )
+        postReadNavGraph(
+            padding = padding,
+            popBackStack = navigator::popBackStack
         )
     }
 }
