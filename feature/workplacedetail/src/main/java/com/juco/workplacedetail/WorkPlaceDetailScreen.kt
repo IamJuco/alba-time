@@ -47,6 +47,7 @@ import com.juco.common.util.formatWithComma
 import com.juco.designsystem.theme.LightBlue
 import com.juco.designsystem.theme.Vanilla
 import com.juco.designsystem.theme.White
+import com.juco.designsystem.topbar.PreviousTopBar
 import com.juco.domain.model.WorkPlace
 import java.time.YearMonth
 
@@ -120,27 +121,10 @@ fun WorkPlaceDetailScreen(
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background)
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
-        ) {
-            IconButton(
-                onClick = { popBackStack() },
-                modifier = Modifier.align(Alignment.CenterStart)
-            ) {
-                Icon(
-                    modifier = Modifier.size(24.dp),
-                    imageVector = Icons.Default.KeyboardArrowLeft,
-                    contentDescription = "뒤로가기",
-                    tint = Color.Black,
-                )
-            }
-            TitleText(
-                text = "근무지 상세 정보",
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
+        PreviousTopBar(
+            title = "근무지 상세 정보",
+            onPopBackStack = popBackStack
+        )
 
         Card(
             modifier = Modifier
