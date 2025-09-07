@@ -70,6 +70,7 @@ dependencies {
     implementation(projects.feature.home)
     implementation(projects.feature.calendar)
     implementation(projects.feature.community)
+    implementation(projects.feature.post)
     implementation(projects.feature.workplacedetail)
     implementation(projects.feature.workplacesetting)
     implementation(projects.feature.workplaceedit)
