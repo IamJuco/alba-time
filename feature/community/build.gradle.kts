@@ -33,6 +33,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
         isCoreLibraryDesugaringEnabled = true // desugar
     }
+
+    buildFeatures {
+        compose = true
+    }
 }
 
 kotlin {
