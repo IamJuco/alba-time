@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import com.juco.common.navigation.RouteModel
 import com.juco.feature.post.read.PostReadRoute
 
-fun NavController.navigatePostRead(postId: Int, navOptions: NavOptions) {
+fun NavController.navigateToPostRead(postId: Int, navOptions: NavOptions) {
     navigate(RouteModel.PostRead(postId), navOptions)
 }
 
