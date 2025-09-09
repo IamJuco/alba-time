@@ -22,7 +22,7 @@ import com.juco.workplacesetting.navigation.navigateWorkPlaceAdder
 class MainNavigator(
     val navController: NavHostController
 ) {
-    val startDestination = MainMenu.HOME.route
+    val startDestination = RouteModel.PostCreate
     val currentDestination: NavDestination?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
     val currentMenu: MainMenu?

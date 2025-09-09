@@ -1,7 +1,6 @@
 package com.juco.feature.community.home
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,16 +25,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import com.juco.designsystem.theme.Blue
 import com.juco.designsystem.theme.White
-import com.juco.feature.community.model.BoardEnum
+import com.juco.feature.community.model.BoardCategoryEnum
 import com.juco.feature.community.model.Post
 
 @Composable
 fun HomeTabRoute(
-    onNavigateToBoard: (BoardEnum) -> Unit = {},
+    onNavigateToBoard: (BoardCategoryEnum) -> Unit = {},
     onOpenPost: (String) -> Unit = {}
 ) {
     // TODO: ViewModel state로 교체 예정
@@ -57,7 +55,7 @@ fun HomeTabScreen(
     popular: List<Post>,
     free: List<Post>,
     qna: List<Post>,
-    onMoreClick: (BoardEnum) -> Unit = {},
+    onMoreClick: (BoardCategoryEnum) -> Unit = {},
     onPostClick: (Post) -> Unit = {}
 ) {
     LazyColumn(
@@ -70,7 +68,7 @@ fun HomeTabScreen(
             CategorySection(
                 title = "인기글",
                 posts = popular.take(3),
-                onMoreClick = { onMoreClick(BoardEnum.POPULAR) },
+                onMoreClick = { onMoreClick(BoardCategoryEnum.POPULAR) },
                 onPostClick = onPostClick
             )
         }
@@ -78,7 +76,7 @@ fun HomeTabScreen(
             CategorySection(
                 title = "자유게시판",
                 posts = free.take(3),
-                onMoreClick = { onMoreClick(BoardEnum.FREE) },
+                onMoreClick = { onMoreClick(BoardCategoryEnum.FREE) },
                 onPostClick = onPostClick
             )
         }
@@ -86,7 +84,7 @@ fun HomeTabScreen(
             CategorySection(
                 title = "질문게시판",
                 posts = qna.take(3),
-                onMoreClick = { onMoreClick(BoardEnum.QNA) },
+                onMoreClick = { onMoreClick(BoardCategoryEnum.QNA) },
                 onPostClick = onPostClick
             )
         }
