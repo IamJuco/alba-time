@@ -33,7 +33,7 @@
 - 국가에서 지정한 대체공휴일을 제외한 주말에 겹친 법정 공휴일을 주말 이후의 다음날로 대체공휴일을 계산하여 캘린더에 반영하였습니다.
 
 # ⚙️ TechStack & AndroidSkill
-`Kotlin` `JetPackCompose` `CleanArchitecture` `Multi-Module` `MVI` `Google Admob` `Hilt` `Room` `Navigation` `JitPack` `KoreanLunarCalendar` 
+`Kotlin` `JetPackCompose` `CleanArchitecture` `Multi-Module` `MVVM` `Google Admob` `Hilt` `Room` `Navigation` `JitPack` `KoreanLunarCalendar` 
 `Coroutine & Flow`
 
 # 📸 UI
