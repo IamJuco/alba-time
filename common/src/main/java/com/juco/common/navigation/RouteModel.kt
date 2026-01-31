@@ -11,6 +11,12 @@ sealed interface RouteModel {
 
     @Serializable
     data class WorkPlaceEdit(val workPlaceId: Int) : RouteModel
+
+    @Serializable
+    data class PostRead(val postId: Int) : RouteModel
+
+    @Serializable
+    data object PostCreate : RouteModel
 }
 
 sealed interface MainMenuRoute : RouteModel {

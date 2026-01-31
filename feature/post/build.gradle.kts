@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.library)
@@ -7,24 +6,10 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
-//    alias(libs.plugins.ktlint)
-//    alias(libs.plugins.detekt)
 }
-
-val admobTestId = "ca-app-pub-3940256099942544~3347511713"
-val admobTestBannerId = "ca-app-pub-3940256099942544/9214589741"
-
-val properties = Properties()
-val localFile = rootProject.file("local.properties")
-if (localFile.exists()) {
-    localFile.inputStream().use { properties.load(it) }
-} else {
-    properties["ADMOB_ID"] = admobTestId
-}
-
 
 android {
-    namespace = "com.juco.feature.main"
+    namespace = "com.juco.feature.post"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -32,11 +17,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-
-        manifestPlaceholders["ADMOB_ID"] = properties["ADMOB_ID"]?.toString() ?: admobTestId
-        resValue("string", "ADMOB_ID", properties["ADMOB_ID"]?.toString() ?: admobTestId)
-        
-        buildConfigField("String", "ADMOB_BANNER_ID", "\"${properties["ADMOB_BANNER_ID"]?.toString() ?: admobTestBannerId}\"")
     }
 
     buildTypes {
@@ -54,7 +34,6 @@ android {
         isCoreLibraryDesugaringEnabled = true // desugar
     }
     buildFeatures {
-        buildConfig = true
         compose = true
     }
 }
@@ -67,19 +46,9 @@ kotlin {
 }
 
 dependencies {
-    implementation(projects.feature.home)
-    implementation(projects.feature.calendar)
-    implementation(projects.feature.community)
-    implementation(projects.feature.post)
-    implementation(projects.feature.workplacedetail)
-    implementation(projects.feature.workplacesetting)
-    implementation(projects.feature.workplaceedit)
-    implementation(projects.designsystem)
-    implementation(projects.common)
     implementation(projects.domain)
-    implementation(projects.data)
-
-    implementation(libs.play.services.ads)
+    implementation(projects.common)
+    implementation(projects.designsystem)
 
     implementation(libs.navigation.compose)
     implementation(libs.hilt.navigation.compose)

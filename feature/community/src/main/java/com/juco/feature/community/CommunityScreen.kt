@@ -22,7 +22,7 @@ import com.juco.designsystem.topbar.MainTopBar
 import com.juco.feature.community.freeboard.FreeBoardTabRoute
 import com.juco.feature.community.home.HomeTabRoute
 import com.juco.feature.community.popularboard.PopularBoardTabRoute
-import com.juco.feature.community.model.BoardEnum
+import com.juco.feature.community.model.BoardCategoryEnum
 import com.juco.feature.community.qnaboard.QnABoardTabRoute
 import kotlinx.coroutines.launch
 
@@ -94,10 +94,10 @@ fun CommunityScreen(
     }
 }
 
-private fun boardToPage(board: BoardEnum): Int = when (board) {
-    BoardEnum.POPULAR -> 1
-    BoardEnum.FREE    -> 2
-    BoardEnum.QNA     -> 3
+private fun boardToPage(board: BoardCategoryEnum): Int = when (board) {
+    BoardCategoryEnum.POPULAR -> 1
+    BoardCategoryEnum.FREE    -> 2
+    BoardCategoryEnum.QNA     -> 3
 }
 
 @Preview(showBackground = true)
